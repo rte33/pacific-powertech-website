@@ -13,25 +13,31 @@ const products = homeData.featuredSolutions.items;
   description="Explore Pacific Powertech's industrial product portfolio: Distribution Transformers (100–3000 kVA), LT/HT Switchgear, PFI Plants, and PLC Automation in Bangladesh."
 >
   <!-- Page Header -->
-  <section class="bg-slate-900 text-white py-14 sm:py-20 border-b border-slate-800">
+  <section class="bg-[#070707] text-white py-12 sm:py-16 border-b-2 border-[#0C53A4]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl">
-        <span class="inline-block text-xs font-bold uppercase tracking-widest text-amber-400 mb-3">
-          Manufacturing & Engineering Portfolio
+      <div class="max-w-3xl space-y-2">
+        <span class="inline-block text-xs font-bold uppercase tracking-widest text-[#FAB218] font-mono">
+          Engineering &bull; Manufacturing Catalog
         </span>
-        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-          Products &amp; Engineered Solutions
+        <h1 class="font-heading text-3xl sm:text-5xl font-bold uppercase tracking-tight text-white leading-none">
+          Products &amp; Engineered Systems
         </h1>
-        <p class="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
-          Custom-designed, factory-tested power distribution equipment and intelligent automation control systems engineered to IEC, BS, ANSI, and VDE standards.
+        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-sans pt-2">
+          Custom-designed, factory-tested electrical substation equipment and automation control architectures built in compliance with IEC 76, BS, ANSI, and VDE standards.
         </p>
       </div>
     </div>
   </section>
 
   <!-- Product Catalog Grid -->
-  <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  <section class="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="border-b border-gray-300 pb-3 mb-8">
+      <h2 class="font-heading text-2xl font-bold uppercase text-gray-950">
+        Primary Equipment Classifications
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {products.map((item: any) => (
         <ProductCard
           title={item.title}
@@ -44,27 +50,26 @@ const products = homeData.featuredSolutions.items;
     </div>
   </section>
 
-  <!-- Direct Technical Inquiries Box -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-    <div class="bg-blue-50 border border-blue-200 rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+  <!-- Technical Inquiry Callout -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+    <div class="bg-white border-l-4 border-l-[#0C53A4] border border-gray-300 p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
       <div>
-        <h2 class="text-xl font-bold text-slate-900">Custom Engineering or Tender Specifications?</h2>
-        <p class="text-sm text-slate-600 mt-1 max-w-2xl">
-          We manufacture substation equipment tailored to exact architectural and electrical utility requirements (DESCO, DPDC, BPDB, REB). Speak directly with our design department.
+        <h2 class="font-heading text-xl sm:text-2xl font-bold uppercase text-gray-950">Custom Substation or Utility Tender Specifications?</h2>
+        <p class="text-xs sm:text-sm text-gray-600 mt-1 max-w-2xl font-sans">
+          We manufacture equipment tailored to local utility guidelines (DESCO, DPDC, BPDB, BREB). Contact our design engineers directly for custom drawings and single-line diagrams.
         </p>
       </div>
       <a
         href={formatUrl('/contact')}
-        class="px-6 py-3 text-sm font-bold rounded-lg bg-pptl-blue text-white hover:bg-blue-800 transition-colors whitespace-nowrap shadow-sm"
+        class="px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-none bg-[#0C53A4] text-white hover:bg-[#213C94] transition-colors whitespace-nowrap shadow-xs"
       >
         Submit Technical RFQ &rarr;
       </a>
     </div>
   </section>
 
-  <!-- Catalog Banner -->
+  <!-- Catalog Download Banner -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <CatalogDownloadBanner />
   </div>
 </BaseLayout>
-

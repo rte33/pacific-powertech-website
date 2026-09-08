@@ -1,0 +1,84 @@
+name: BrowserStack Cross-Browser & Device Matrix
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Test Target (local candidate build or deployed GitHub Pages)'
+        required: true
+        default: 'local'
+        type: choice
+        options:
+          - local
+          - deployed
+
+permissions:
+  contents: read
+
+jobs:
+  browserstack-matrix:
+    name: BrowserStack & Playwright E2E Matrix
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium & WebKit
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Validate YAML Content & Assets
+        run: npm run test:content
+
+      - name: Build Static Site
+        env:
+          BASE_PATH: '/pacific-powertech-website'
+          SITE_URL: 'https://rte33.github.io'
+        run: npm run build
+
+      - name: Verify Secret Presence & Add Output Masks
+        env:
+          BS_USER: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+        run: |
+          if [ -z "$BS_KEY" ]; then
+            echo "::error::BROWSERSTACK_ACCESS_KEY secret is missing or empty."
+            exit 1
+          fi
+          if [ -z "$BS_USER" ]; then
+            echo "::error::BROWSERSTACK_USERNAME secret is missing or empty."
+            exit 1
+          fi
+          echo "::add-mask::$BS_KEY"
+          echo "BrowserStack Username configured: [YES]"
+          echo "BrowserStack Access Key configured: [YES]"
+
+      - name: Run E2E Test Suite with BrowserStack Integration
+        env:
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          BROWSERSTACK_TARGET: ${{ inputs.target || 'local' }}
+          PLAYWRIGHT_TEST_BASE_URL: ${{ inputs.target == 'deployed' && 'https://rte33.github.io/pacific-powertech-website/' || '' }}
+        run: |
+          node scripts/run-browserstack.mjs
+
+      - name: Upload Test Results & Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-browserstack-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
+

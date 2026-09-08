@@ -6,36 +6,36 @@ export default {
       colors: {
         pptl: {
           blue: {
-            50: '#eef4ff',
-            100: '#dbe6fe',
-            200: '#bfd3fe',
-            300: '#93b8fd',
-            400: '#6093fa',
-            500: '#3b71f6',
-            DEFAULT: '#21409a',
-            600: '#21409a',
-            700: '#1b357f',
-            800: '#172a64',
-            900: '#121e48',
-            950: '#0a1028',
+            DEFAULT: '#0C53A4', // Primary brand blue
+            primary: '#0C53A4',
+            deep: '#213C94',    // Deep structural navy/blue
+            50: '#f0f5fc',
+            100: '#e1ebf9',
+            200: '#c3d7f3',
+            600: '#0C53A4',
+            700: '#213C94',
+            800: '#172a6b',
+            900: '#0f1c48',
           },
           red: {
-            50: '#fef2f2',
-            100: '#fee2e2',
-            500: '#ef4444',
-            DEFAULT: '#df1a23',
-            600: '#df1a23',
-            700: '#b9121a',
-            800: '#991b1b',
+            DEFAULT: '#D81A21', // Signal red (used sparingly for decisive actions)
+            signal: '#D81A21',
+            hover: '#b5151c',
+            50: '#fdf2f2',
+            100: '#fae2e2',
+            700: '#b5151c',
+            800: '#941117',
           },
-          amber: {
-            50: '#fffbeb',
-            100: '#fef3c7',
-            400: '#fbbf24',
-            DEFAULT: '#ffc010',
-            500: '#ffc010',
-            600: '#d97706',
+          gold: {
+            DEFAULT: '#FAB218', // Industrial gold highlight
+            50: '#fef9e8',
+            100: '#fef1c8',
+            400: '#fbc54b',
+            500: '#FAB218',
+            600: '#d99408',
           },
+          graphite: '#070707',
+          white: '#F6F6F6',
           steel: {
             50: '#f8fafc',
             100: '#f1f5f9',
@@ -47,24 +47,31 @@ export default {
             700: '#334155',
             800: '#1e293b',
             900: '#0f172a',
-            950: '#080d1a',
-          }
-        }
+            950: '#070707',
+          },
+        },
       },
       fontFamily: {
         sans: [
-          'Inter',
+          '"IBM Plex Sans"',
           'system-ui',
           '-apple-system',
           'BlinkMacSystemFont',
           '"Segoe UI"',
           'Roboto',
-          'Helvetica',
-          'Arial',
+          'sans-serif',
+        ],
+        condensed: [
+          '"Barlow Condensed"',
+          '"Arial Narrow"',
+          'sans-serif',
+        ],
+        heading: [
+          '"Barlow Condensed"',
+          '"Arial Narrow"',
           'sans-serif',
         ],
         mono: [
-          '"JetBrains Mono"',
           'ui-monospace',
           'SFMono-Regular',
           'Menlo',
@@ -74,7 +81,7 @@ export default {
         ],
       },
       animation: {
-        'marquee': 'marquee 35s linear infinite',
+        'marquee': 'marquee 40s linear infinite',
       },
       keyframes: {
         marquee: {
@@ -86,4 +93,3 @@ export default {
   },
   plugins: [],
 };
-

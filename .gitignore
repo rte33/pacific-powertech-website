@@ -12,4 +12,6 @@ dist/
 catalog_extracted_text.txt
 .DS_Store
 Thumbs.db
+playwright-report/
+test-results/
 

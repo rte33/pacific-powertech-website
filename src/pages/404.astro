@@ -7,76 +7,75 @@ import { formatUrl } from '../utils/content';
   title="Page Not Found (404) | Pacific Powertech Ltd."
   description="The requested page could not be located. Browse Pacific Powertech's electrical substation and automation engineering solutions."
 >
-  <section class="py-20 sm:py-28 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 text-pptl-red mb-6 font-mono text-2xl font-bold">
-      404
+  <section class="py-16 sm:py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="inline-block px-3 py-1 bg-red-100 text-[#D81A21] border border-red-300 font-mono text-sm font-bold uppercase tracking-wider mb-4">
+      ERROR 404 &bull; FILE NOT FOUND
     </div>
 
-    <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
-      Page Not Found
+    <h1 class="font-heading text-4xl sm:text-6xl font-bold uppercase tracking-tight text-gray-950">
+      Requested Resource Not Located
     </h1>
 
-    <p class="mt-4 text-base text-slate-600 max-w-xl mx-auto leading-relaxed">
-      The specification sheet, route, or resource you were searching for has moved or does not exist. Use the shortcuts below to return to our core power engineering solutions.
+    <p class="mt-3 text-xs sm:text-sm text-gray-600 max-w-lg mx-auto font-sans leading-relaxed">
+      The specification sheet or route you requested does not exist or has been relocated. Use the technical navigation index below to return to active product lines.
     </p>
 
-    <!-- Quick Navigation Hub -->
-    <div class="mt-10 max-w-2xl mx-auto bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-left">
-      <h2 class="text-xs font-bold uppercase tracking-wider text-pptl-blue mb-4">
-        Recommended Navigation Links
+    <!-- Navigation Hub -->
+    <div class="mt-8 max-w-2xl mx-auto bg-white p-6 border border-gray-300 border-t-2 border-t-[#0C53A4] text-left">
+      <h2 class="font-heading text-xs font-bold uppercase tracking-wider text-[#0C53A4] mb-3">
+        Active Technical Routes
       </h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-        <a href={formatUrl('/')} class="p-2.5 rounded-lg hover:bg-slate-50 text-slate-700 hover:text-pptl-blue flex items-center gap-2 transition-colors">
-          <span class="text-pptl-red">&rsaquo;</span>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-sans">
+        <a href={formatUrl('/')} class="p-2 hover:bg-gray-50 text-gray-800 hover:text-[#0C53A4] flex items-center gap-1.5 border border-transparent hover:border-gray-200">
+          <span class="text-[#D81A21] font-bold">&rsaquo;</span>
           <strong>Home</strong> &mdash; Main Portal
         </a>
-        <a href={formatUrl('/about')} class="p-2.5 rounded-lg hover:bg-slate-50 text-slate-700 hover:text-pptl-blue flex items-center gap-2 transition-colors">
-          <span class="text-pptl-red">&rsaquo;</span>
-          <strong>About Us</strong> &mdash; Infrastructure & Lab
+        <a href={formatUrl('/about')} class="p-2 hover:bg-gray-50 text-gray-800 hover:text-[#0C53A4] flex items-center gap-1.5 border border-transparent hover:border-gray-200">
+          <span class="text-[#D81A21] font-bold">&rsaquo;</span>
+          <strong>About Us</strong> &mdash; Works &amp; Testing Lab
         </a>
-        <a href={formatUrl('/products/transformers')} class="p-2.5 rounded-lg hover:bg-slate-50 text-slate-700 hover:text-pptl-blue flex items-center gap-2 transition-colors">
-          <span class="text-pptl-red">&rsaquo;</span>
+        <a href={formatUrl('/products/transformers')} class="p-2 hover:bg-gray-50 text-gray-800 hover:text-[#0C53A4] flex items-center gap-1.5 border border-transparent hover:border-gray-200">
+          <span class="text-[#D81A21] font-bold">&rsaquo;</span>
           <strong>Distribution Transformers</strong>
         </a>
-        <a href={formatUrl('/products/lt-switchgear')} class="p-2.5 rounded-lg hover:bg-slate-50 text-slate-700 hover:text-pptl-blue flex items-center gap-2 transition-colors">
-          <span class="text-pptl-red">&rsaquo;</span>
+        <a href={formatUrl('/products/lt-switchgear')} class="p-2 hover:bg-gray-50 text-gray-800 hover:text-[#0C53A4] flex items-center gap-1.5 border border-transparent hover:border-gray-200">
+          <span class="text-[#D81A21] font-bold">&rsaquo;</span>
           <strong>LT Switchgear &amp; ACB</strong>
         </a>
-        <a href={formatUrl('/products/pfi-systems')} class="p-2.5 rounded-lg hover:bg-slate-50 text-slate-700 hover:text-pptl-blue flex items-center gap-2 transition-colors">
-          <span class="text-pptl-red">&rsaquo;</span>
+        <a href={formatUrl('/products/pfi-systems')} class="p-2 hover:bg-gray-50 text-gray-800 hover:text-[#0C53A4] flex items-center gap-1.5 border border-transparent hover:border-gray-200">
+          <span class="text-[#D81A21] font-bold">&rsaquo;</span>
           <strong>PFI Plants &amp; APFC</strong>
         </a>
-        <a href={formatUrl('/products/ht-switchgear')} class="p-2.5 rounded-lg hover:bg-slate-50 text-slate-700 hover:text-pptl-blue flex items-center gap-2 transition-colors">
-          <span class="text-pptl-red">&rsaquo;</span>
+        <a href={formatUrl('/products/ht-switchgear')} class="p-2 hover:bg-gray-50 text-gray-800 hover:text-[#0C53A4] flex items-center gap-1.5 border border-transparent hover:border-gray-200">
+          <span class="text-[#D81A21] font-bold">&rsaquo;</span>
           <strong>11 kV HT Switchgear</strong>
         </a>
-        <a href={formatUrl('/products/industrial-automation')} class="p-2.5 rounded-lg hover:bg-slate-50 text-slate-700 hover:text-pptl-blue flex items-center gap-2 transition-colors">
-          <span class="text-pptl-red">&rsaquo;</span>
+        <a href={formatUrl('/products/industrial-automation')} class="p-2 hover:bg-gray-50 text-gray-800 hover:text-[#0C53A4] flex items-center gap-1.5 border border-transparent hover:border-gray-200">
+          <span class="text-[#D81A21] font-bold">&rsaquo;</span>
           <strong>PLC &amp; Automation Panels</strong>
         </a>
-        <a href={formatUrl('/services')} class="p-2.5 rounded-lg hover:bg-slate-50 text-slate-700 hover:text-pptl-blue flex items-center gap-2 transition-colors">
-          <span class="text-pptl-red">&rsaquo;</span>
+        <a href={formatUrl('/services')} class="p-2 hover:bg-gray-50 text-gray-800 hover:text-[#0C53A4] flex items-center gap-1.5 border border-transparent hover:border-gray-200">
+          <span class="text-[#D81A21] font-bold">&rsaquo;</span>
           <strong>Engineering Services &amp; AMC</strong>
         </a>
-        <a href={formatUrl('/contact')} class="p-2.5 rounded-lg hover:bg-slate-50 text-slate-700 hover:text-pptl-blue flex items-center gap-2 transition-colors">
-          <span class="text-pptl-red">&rsaquo;</span>
-          <strong>Contact Us</strong> &mdash; Head Works
+        <a href={formatUrl('/contact')} class="p-2 hover:bg-gray-50 text-gray-800 hover:text-[#0C53A4] flex items-center gap-1.5 border border-transparent hover:border-gray-200">
+          <span class="text-[#D81A21] font-bold">&rsaquo;</span>
+          <strong>Contact Us</strong> &mdash; Dhaka Works
         </a>
-        <a href={formatUrl('/assets/PPL Catalog.pdf')} download="Pacific-Powertech-Catalog.pdf" class="p-2.5 rounded-lg hover:bg-slate-50 text-slate-700 hover:text-pptl-blue flex items-center gap-2 transition-colors">
-          <span class="text-pptl-red">&rsaquo;</span>
+        <a href={formatUrl('/assets/PPL Catalog.pdf')} download="Pacific-Powertech-Catalog.pdf" class="p-2 hover:bg-gray-50 text-gray-800 hover:text-[#0C53A4] flex items-center gap-1.5 border border-transparent hover:border-gray-200">
+          <span class="text-[#D81A21] font-bold">&rsaquo;</span>
           <strong>Catalog PDF (1.2 MB)</strong>
         </a>
       </div>
     </div>
 
-    <div class="mt-8">
+    <div class="mt-6">
       <a
         href={formatUrl('/')}
-        class="inline-flex items-center px-6 py-3 text-sm font-bold rounded-lg bg-pptl-blue text-white hover:bg-blue-800 transition-colors shadow-md"
+        class="inline-block px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-none bg-[#0C53A4] text-white hover:bg-[#213C94] transition-colors"
       >
         &larr; Return to Homepage
       </a>
     </div>
   </section>
 </BaseLayout>
-

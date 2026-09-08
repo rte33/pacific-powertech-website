@@ -9,33 +9,33 @@ interface Props {
 const { headers, rows, notes, caption = "Technical Engineering Specifications" } = Astro.props;
 ---
 
-<div class="my-8">
-  <div class="flex items-center justify-between mb-2">
-    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+<div class="my-6">
+  <div class="flex items-center justify-between mb-1.5">
+    <span class="text-xs font-bold uppercase tracking-wider text-gray-700 font-heading">
       {caption}
     </span>
-    <span class="text-xs text-pptl-blue md:hidden flex items-center font-medium">
-      Swipe horizontally &rarr;
+    <span class="text-xs text-[#0C53A4] md:hidden flex items-center font-medium font-sans">
+      Scroll horizontally &rarr;
     </span>
   </div>
 
-  <div class="table-responsive-container shadow-sm border border-slate-200">
+  <div class="table-responsive-container border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#0C53A4]" tabindex="0" role="region" aria-label={caption}>
     <table class="w-full text-left border-collapse" role="table">
       <caption class="sr-only">{caption}</caption>
       <thead>
-        <tr class="bg-slate-900 text-white text-xs uppercase tracking-wider font-semibold">
+        <tr>
           {headers.map((header) => (
-            <th scope="col" class="py-3 px-4 border-b border-slate-800 whitespace-nowrap">
+            <th scope="col" class="py-2.5 px-3.5 whitespace-nowrap">
               {header}
             </th>
           ))}
         </tr>
       </thead>
-      <tbody class="divide-y divide-slate-100 text-sm font-normal">
+      <tbody class="divide-y divide-gray-200 text-xs font-sans tabular-nums">
         {rows.map((row, idx) => (
-          <tr class={idx % 2 === 0 ? 'bg-white hover:bg-blue-50/50 transition-colors' : 'bg-slate-50/80 hover:bg-blue-50/50 transition-colors'}>
+          <tr class={idx % 2 === 0 ? 'bg-white hover:bg-blue-50/50' : 'bg-gray-50/80 hover:bg-blue-50/50'}>
             {row.map((cell, cellIdx) => (
-              <td class={`py-2.5 px-4 text-slate-700 whitespace-nowrap ${cellIdx === 0 ? 'font-semibold text-slate-900' : ''}`}>
+              <td class={`py-2 px-3.5 text-gray-800 whitespace-nowrap ${cellIdx === 0 ? 'font-semibold text-black bg-gray-50/50' : ''}`}>
                 {cell}
               </td>
             ))}
@@ -46,9 +46,8 @@ const { headers, rows, notes, caption = "Technical Engineering Specifications" }
   </div>
 
   {notes && (
-    <p class="text-xs text-slate-500 italic mt-2">
+    <p class="text-[11px] text-gray-700 italic mt-1 font-sans">
       * {notes}
     </p>
   )}
 </div>
-

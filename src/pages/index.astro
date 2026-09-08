@@ -1,151 +1,219 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getHomePage, formatUrl } from '../utils/content';
-import ProductCard from '../components/ProductCard.astro';
 import CatalogDownloadBanner from '../components/CatalogDownloadBanner.astro';
 import { Image } from 'astro:assets';
-import heroBgImage from '../assets/images/substation-switchgear-control-room-lineup.jpeg';
+import { resolveImage } from '../utils/assets';
 
 const homeData = getHomePage();
 const { meta, hero, featuredSolutions, manufacturingPillars, catalogCta } = homeData;
+
+// Resolve hero image dynamically (Priority 6: eliminates mixed static/dynamic Vite warning)
+const heroBgImage = await resolveImage('substation-switchgear-control-room-lineup.jpeg');
+
+// Resolve featured solution images
+const solutionsWithImages = await Promise.all(
+  featuredSolutions.items.map(async (item: any) => {
+    const imgMeta = await resolveImage(item.image);
+    return { ...item, imgMeta };
+  })
+);
 ---
 
 <BaseLayout title={meta.title} description={meta.description}>
-  <!-- Hero Section -->
-  <section class="relative bg-slate-950 text-white overflow-hidden py-16 sm:py-24 lg:py-28 border-b border-slate-800">
-    <!-- Background Image with Dark Gradient Overlay -->
-    <div class="absolute inset-0 z-0 opacity-25">
-      <Image
-        src={heroBgImage}
-        alt="Substation Control Room Lineup"
-        class="w-full h-full object-cover"
-        loading="eager"
-      />
-      <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 to-blue-950/80"></div>
-    </div>
+  <!-- Hero Section: Confident Editorial Engineering Composition -->
+  <section class="relative bg-[#070707] text-white border-b-2 border-[#0C53A4]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <!-- Editorial Left Column -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="inline-flex items-center gap-2 border-l-2 border-[#FAB218] pl-3 text-xs font-semibold uppercase tracking-widest text-[#FAB218]">
+            <span>Pacific Powertech Ltd. &bull; Substation &amp; Automation Works</span>
+          </div>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl">
-        <!-- Badge -->
-        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/20 text-blue-300 text-xs font-semibold uppercase tracking-wider border border-blue-400/30 mb-6">
-          <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-          {hero.badge}
+          <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-white leading-none">
+            {hero.headline}
+          </h1>
+
+          <p class="text-sm sm:text-base text-gray-300 leading-relaxed font-sans max-w-2xl">
+            {hero.subheadline}
+          </p>
+
+          <!-- Direct Industrial Action Controls -->
+          <div class="pt-2 flex flex-wrap gap-3 items-center">
+            <a
+              href={formatUrl('/products')}
+              class="px-6 py-3 text-xs font-bold uppercase tracking-wider rounded-none bg-[#0C53A4] text-white hover:bg-[#213C94] transition-colors focus:ring-2 focus:ring-[#0C53A4]"
+            >
+              View Engineering Portfolio &rarr;
+            </a>
+
+            <a
+              href={formatUrl('/assets/PPL Catalog.pdf')}
+              download="Pacific-Powertech-Catalog.pdf"
+              class="px-5 py-3 text-xs font-semibold uppercase tracking-wider rounded-none border border-gray-600 text-gray-200 hover:bg-gray-800 transition-colors flex items-center gap-2"
+            >
+              <svg class="w-4 h-4 text-[#D81A21]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+              Download Catalog (1.2 MB PDF)
+            </a>
+          </div>
         </div>
 
-        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
-          {hero.headline}
-        </h1>
-
-        <p class="mt-6 text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl">
-          {hero.subheadline}
-        </p>
-
-        <!-- CTA Action Buttons -->
-        <div class="mt-8 flex flex-wrap gap-4 items-center">
-          <a
-            href={formatUrl(hero.primaryCta.url)}
-            class="px-6 py-3.5 text-sm font-bold rounded-lg bg-pptl-blue text-white hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-500/25 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            {hero.primaryCta.label} &rarr;
-          </a>
-
-          <a
-            href={formatUrl(hero.secondaryCta.url)}
-            download="Pacific-Powertech-Catalog.pdf"
-            class="px-6 py-3.5 text-sm font-semibold rounded-lg bg-slate-800/80 hover:bg-slate-700 text-white border border-slate-700 transition-all flex items-center gap-2 focus:ring-2 focus:ring-slate-500"
-          >
-            <svg class="w-4 h-4 text-pptl-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-            </svg>
-            {hero.secondaryCta.label}
-          </a>
-
-          <a
-            href={hero.emergencyCta.url}
-            class="inline-flex items-center text-xs font-semibold text-amber-400 hover:text-amber-300 gap-1.5 px-3 py-2 rounded-md hover:bg-slate-800/60 transition-colors"
-          >
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 4V3z"/>
-            </svg>
-            {hero.emergencyCta.label}
-          </a>
+        <!-- Real Photography Showcase (Right Column) -->
+        <div class="lg:col-span-5">
+          <div class="border border-gray-700 bg-gray-900 p-1.5 shadow-xl">
+            {heroBgImage && (
+              <Image
+                src={heroBgImage}
+                alt="Substation switchgear control room lineup manufactured by Pacific Powertech"
+                class="w-full h-auto object-cover max-h-[360px]"
+                loading="eager"
+              />
+            )}
+            <div class="p-2.5 bg-black text-[11px] text-gray-400 font-mono flex justify-between items-center border-t border-gray-800">
+              <span>FIG 01: SUBSTATION CONTROL LINEUP</span>
+              <span class="text-[#FAB218]">EST. 2013</span>
+            </div>
+          </div>
         </div>
       </div>
+    </div>
 
-      <!-- Key Statistics Bar -->
-      <div class="mt-16 pt-10 border-t border-slate-800 grid grid-cols-2 lg:grid-cols-4 gap-6">
-        {hero.stats.map((stat: any) => (
-          <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800/80">
-            <div class="text-2xl sm:text-3xl font-extrabold text-amber-400 tracking-tight">{stat.value}</div>
-            <div class="text-sm font-bold text-white mt-1">{stat.label}</div>
-            <div class="text-xs text-slate-400 mt-0.5">{stat.subtext}</div>
-          </div>
-        ))}
+    <!-- Integrated Ruled Technical Data Strip (Replaces floating cards) -->
+    <div class="border-t border-gray-800 bg-black/70">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-gray-800">
+          {hero.stats.map((stat: any) => (
+            <div class="py-4 px-3 sm:px-6 flex flex-col justify-center">
+              <span class="font-heading text-2xl sm:text-3xl font-bold uppercase text-[#FAB218] tabular-nums">
+                {stat.value}
+              </span>
+              <span class="font-sans text-xs font-bold uppercase tracking-wider text-white mt-0.5">
+                {stat.label}
+              </span>
+              <span class="font-sans text-[11px] text-gray-400 mt-0.5">
+                {stat.subtext}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Core Engineering Solutions Grid -->
-  <section class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center max-w-3xl mx-auto mb-12">
-      <h2 class="text-xs font-bold uppercase tracking-widest text-pptl-blue">
-        Power Systems Portfolio
-      </h2>
-      <p class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-2">
+  <!-- Core Engineering Portfolio: Alternating Structured Rows (Breaks up repetitive card grid) -->
+  <section class="py-14 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="border-b-2 border-gray-300 pb-4 mb-10">
+      <span class="text-xs font-bold uppercase tracking-widest text-[#0C53A4] block">
+        Engineering Capabilities &bull; Technical Index
+      </span>
+      <h2 class="font-heading text-3xl sm:text-4xl font-bold uppercase tracking-tight text-[#070707] mt-1">
         {featuredSolutions.sectionTitle}
-      </p>
-      <p class="text-sm sm:text-base text-slate-600 mt-3 leading-relaxed">
+      </h2>
+      <p class="text-xs sm:text-sm text-gray-600 mt-1 font-sans max-w-3xl">
         {featuredSolutions.sectionSubtitle}
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {featuredSolutions.items.map((item: any) => (
-        <ProductCard
-          title={item.title}
-          image={item.image}
-          summary={item.summary}
-          highlights={item.highlights}
-          url={item.url}
-        />
-      ))}
+    <div class="space-y-12">
+      {solutionsWithImages.map((sol, index) => {
+        const isReversed = index % 2 !== 0;
+        return (
+          <article class="bg-white border border-gray-300 hover:border-[#0C53A4] transition-colors p-6 sm:p-8">
+            <div class={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-center ${isReversed ? 'lg:flex-row-reverse' : ''}`}>
+              <!-- Image Column -->
+              <div class={`lg:col-span-5 ${isReversed ? 'lg:order-2' : ''}`}>
+                <div class="border border-gray-200 bg-gray-100 aspect-[16/10] overflow-hidden">
+                  {sol.imgMeta ? (
+                    <Image
+                      src={sol.imgMeta}
+                      alt={sol.title}
+                      class="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-200"
+                      widths={[320, 480, 640]}
+                    />
+                  ) : (
+                    <div class="w-full h-full flex items-center justify-center text-xs text-gray-400">Photo pending</div>
+                  )}
+                </div>
+              </div>
+
+              <!-- Information Column -->
+              <div class={`lg:col-span-7 space-y-4 ${isReversed ? 'lg:order-1' : ''}`}>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-xs text-[#0C53A4] font-bold">SECTION 0{index + 1}</span>
+                  <span class="text-gray-300">/</span>
+                  <span class="text-xs text-gray-500 uppercase tracking-wider font-semibold">Industrial Power Systems</span>
+                </div>
+
+                <h3 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-gray-950">
+                  <a href={formatUrl(sol.url)} class="hover:text-[#0C53A4] focus:outline-none focus:underline">
+                    {sol.title}
+                  </a>
+                </h3>
+
+                <p class="text-xs sm:text-sm text-gray-700 leading-relaxed font-sans">
+                  {sol.summary}
+                </p>
+
+                <!-- Technical Specification Highlights -->
+                {sol.highlights && sol.highlights.length > 0 && (
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-gray-100">
+                    {sol.highlights.map((item: string) => (
+                      <div class="text-xs text-gray-800 flex items-start gap-1.5 font-sans">
+                        <span class="text-[#0C53A4] font-bold">&ndash;</span>
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <div class="pt-3">
+                  <a
+                    href={formatUrl(sol.url)}
+                    class="inline-flex items-center text-xs font-bold uppercase tracking-wider text-[#0C53A4] hover:text-[#213C94] border-b-2 border-[#0C53A4] pb-0.5"
+                  >
+                    <span>View Technical Specifications &amp; Data Sheet</span>
+                    <span class="ml-1.5">&rarr;</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </article>
+        );
+      })}
     </div>
   </section>
 
-  <!-- Precision Engineering & Manufacturing Standards -->
-  <section class="py-16 bg-slate-900 text-white border-y border-slate-800">
+  <!-- Manufacturing & Infrastructure Engineering Standards (Ruled Industrial Band) -->
+  <section class="bg-[#070707] text-white py-14 sm:py-16 border-t-2 border-[#0C53A4] border-b border-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-3xl mx-auto mb-12">
-        <h2 class="text-xs font-bold uppercase tracking-widest text-amber-400">
-          Build Quality & Reliability
-        </h2>
-        <p class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-2">
+      <div class="border-b border-gray-800 pb-4 mb-8">
+        <span class="text-xs font-bold uppercase tracking-widest text-[#FAB218]">
+          Quality Assurance &bull; Factory Standards
+        </span>
+        <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-white mt-1">
           {manufacturingPillars.title}
-        </p>
-        <p class="text-sm text-slate-300 mt-3">
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-300 mt-1 font-sans">
           {manufacturingPillars.subtitle}
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {manufacturingPillars.pillars.map((pillar: any) => (
-          <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-700/80 flex flex-col justify-between">
-            <div>
-              <div class="w-10 h-10 rounded-lg bg-pptl-blue flex items-center justify-center text-white mb-4 shadow-md">
-                <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                </svg>
-              </div>
-              <h3 class="text-lg font-bold text-white mb-2">{pillar.title}</h3>
-              <p class="text-xs text-slate-300 leading-relaxed">{pillar.description}</p>
-            </div>
+        {manufacturingPillars.pillars.map((pillar: any, pIdx: number) => (
+          <div class="border-l-2 border-gray-700 hover:border-[#0C53A4] pl-4 py-1 transition-colors space-y-2">
+            <span class="font-mono text-xs text-[#FAB218] font-bold block">SPEC 0{pIdx + 1}</span>
+            <h3 class="font-heading text-lg font-bold uppercase tracking-wide text-white">{pillar.title}</h3>
+            <p class="text-xs text-gray-400 leading-relaxed font-sans">{pillar.description}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Catalog CTA Banner -->
+  <!-- Official Catalog Download Banner -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <CatalogDownloadBanner
       title={catalogCta.title}
@@ -153,4 +221,3 @@ const { meta, hero, featuredSolutions, manufacturingPillars, catalogCta } = home
     />
   </div>
 </BaseLayout>
-

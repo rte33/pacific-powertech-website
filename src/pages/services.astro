@@ -9,16 +9,16 @@ const { meta, header, servicesList, industriesServed, utilitiesInfrastructure } 
 
 <BaseLayout title={meta.title} description={meta.description}>
   <!-- Page Header -->
-  <section class="bg-slate-900 text-white py-14 sm:py-20 border-b border-slate-800">
+  <section class="bg-[#070707] text-white py-12 sm:py-16 border-b-2 border-[#0C53A4]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl">
-        <span class="inline-block text-xs font-bold uppercase tracking-widest text-amber-400 mb-3">
-          {header.badge}
+      <div class="max-w-3xl space-y-2">
+        <span class="inline-block text-xs font-bold uppercase tracking-widest text-[#FAB218] font-mono">
+          Engineering &bull; Lifecycle Operations
         </span>
-        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+        <h1 class="font-heading text-3xl sm:text-5xl font-bold uppercase tracking-tight text-white leading-none">
           {header.title}
         </h1>
-        <p class="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
+        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-sans pt-2">
           {header.subtitle}
         </p>
       </div>
@@ -26,59 +26,49 @@ const { meta, header, servicesList, industriesServed, utilitiesInfrastructure } 
   </section>
 
   <!-- Core Engineering Services -->
-  <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center max-w-3xl mx-auto mb-12">
-      <h2 class="text-xs font-bold uppercase tracking-widest text-pptl-blue">
-        Field & Engineering Capabilities
+  <section class="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="border-b border-gray-300 pb-3 mb-8">
+      <span class="text-xs font-bold uppercase tracking-widest text-[#0C53A4] font-mono">
+        Field Engineering
+      </span>
+      <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-gray-950 mt-1">
+        Comprehensive Substation &amp; Automation Services
       </h2>
-      <p class="text-3xl font-extrabold text-slate-900 tracking-tight mt-2">
-        Full Lifecycle Engineering Support
-      </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {servicesList.map((service: any) => (
-        <div class="bg-white p-7 rounded-xl border border-slate-200 shadow-sm hover:border-blue-300 transition-all flex flex-col justify-between">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {servicesList.map((service: any, sIdx: number) => (
+        <div class="bg-white p-6 border border-gray-300 border-t-2 border-t-[#0C53A4] flex flex-col justify-between space-y-3">
           <div>
-            <div class="w-10 h-10 rounded-lg bg-blue-50 text-pptl-blue flex items-center justify-center font-bold mb-4">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-              </svg>
-            </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">{service.title}</h3>
-            <p class="text-sm text-slate-600 leading-relaxed">{service.description}</p>
+            <span class="font-mono text-xs font-bold text-[#0C53A4]">SERVICE 0{sIdx + 1}</span>
+            <h3 class="font-heading text-lg font-bold uppercase text-gray-950 mt-1 mb-2">{service.title}</h3>
+            <p class="text-xs text-gray-600 leading-relaxed font-sans">{service.description}</p>
           </div>
         </div>
       ))}
     </div>
   </section>
 
-  <!-- Manufacturing & Industrial Sectors Served -->
-  <section class="py-16 bg-slate-100 border-y border-slate-200">
+  <!-- Sector Experience Grid -->
+  <section class="py-12 bg-white border-y border-gray-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-3xl mx-auto mb-12">
-        <h2 class="text-xs font-bold uppercase tracking-widest text-pptl-blue">
-          Sector Experience
-        </h2>
-        <p class="text-3xl font-extrabold text-slate-900 tracking-tight mt-2">
+      <div class="border-b border-gray-200 pb-3 mb-8">
+        <span class="text-xs font-bold uppercase tracking-widest text-[#0C53A4] font-mono">
+          Industry Deployments
+        </span>
+        <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-gray-950 mt-1">
           {industriesServed.title}
-        </p>
-        <p class="text-slate-600 text-sm mt-2">
+        </h2>
+        <p class="text-xs text-gray-600 font-sans mt-0.5">
           {industriesServed.subtitle}
         </p>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {industriesServed.sectors.map((sec: any) => (
-          <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
-            <div>
-              <div class="w-8 h-8 rounded bg-red-50 text-pptl-red flex items-center justify-center mb-3">
-                <span class="text-xs font-bold">&bull;</span>
-              </div>
-              <h3 class="text-base font-bold text-slate-900 mb-2">{sec.name}</h3>
-              <p class="text-xs text-slate-600 leading-relaxed">{sec.description}</p>
-            </div>
+          <div class="p-4 bg-[#F6F6F6] border border-gray-200 border-l-2 border-l-[#D81A21]">
+            <h3 class="font-heading text-base font-bold uppercase text-gray-950 mb-1">{sec.name}</h3>
+            <p class="text-xs text-gray-600 font-sans leading-relaxed">{sec.description}</p>
           </div>
         ))}
       </div>
@@ -86,39 +76,36 @@ const { meta, header, servicesList, industriesServed, utilitiesInfrastructure } 
   </section>
 
   <!-- Utilities & Environmental Infrastructure -->
-  <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="max-w-3xl mb-10">
-      <h2 class="text-xs font-bold uppercase tracking-widest text-pptl-blue">
-        Public Utilities & Facilities
-      </h2>
-      <p class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-2">
+  <section class="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="border-b border-gray-300 pb-3 mb-6">
+      <h2 class="font-heading text-2xl font-bold uppercase tracking-tight text-gray-950">
         {utilitiesInfrastructure.title}
-      </p>
+      </h2>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       {utilitiesInfrastructure.items.map((util: any) => (
-        <div class="p-6 rounded-xl bg-white border border-slate-200 shadow-sm">
-          <h3 class="text-base font-bold text-slate-900 mb-2">{util.name}</h3>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{util.description}</p>
+        <div class="p-5 bg-white border border-gray-300">
+          <h3 class="font-heading text-base font-bold uppercase text-gray-950 mb-1">{util.name}</h3>
+          <p class="text-xs text-gray-600 font-sans leading-relaxed">{util.description}</p>
         </div>
       ))}
     </div>
   </section>
 
-  <!-- Direct AMC Quotation Box -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-    <div class="bg-slate-900 text-white rounded-2xl p-8 sm:p-10 border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="max-w-2xl">
-        <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Scheduled Plant Reliability</span>
-        <h2 class="text-2xl font-bold text-white mt-1">Need an Annual Maintenance Contract (AMC)?</h2>
-        <p class="text-xs sm:text-sm text-slate-300 mt-2">
-          Keep your electrical transformers, VCB switchgear, and APFC plants operating at peak reliability with scheduled thermal scans, oil dielectric testing, and 24/7 priority emergency callouts.
+  <!-- Direct AMC Callout Strip -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+    <div class="bg-[#070707] text-white p-8 border-l-4 border-l-[#FAB218] border border-gray-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div class="max-w-2xl space-y-1">
+        <span class="text-xs font-bold uppercase tracking-wider text-[#FAB218] font-mono">Preventive Maintenance</span>
+        <h2 class="font-heading text-2xl font-bold uppercase text-white">Need an Annual Maintenance Contract (AMC)?</h2>
+        <p class="text-xs text-gray-400 font-sans leading-relaxed">
+          Ensure zero downtime with scheduled thermographic scanning, transformer oil breakdown voltage testing, and 24/7 priority emergency response.
         </p>
       </div>
       <a
         href={formatUrl('/contact')}
-        class="px-6 py-3.5 text-xs sm:text-sm font-bold rounded-lg bg-pptl-red text-white hover:bg-red-700 transition-colors whitespace-nowrap shadow-md"
+        class="px-5 py-3 text-xs font-bold uppercase tracking-wider rounded-none bg-[#D81A21] text-white hover:bg-[#b5151c] transition-colors whitespace-nowrap shadow-xs"
       >
         Inquire About AMC &rarr;
       </a>
@@ -130,4 +117,3 @@ const { meta, header, servicesList, industriesServed, utilitiesInfrastructure } 
     <CatalogDownloadBanner />
   </div>
 </BaseLayout>
-

@@ -9,19 +9,21 @@
     "build": "node scripts/validate-content.mjs && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test:content": "node scripts/validate-content.mjs"
+    "test:content": "node scripts/validate-content.mjs",
+    "test": "playwright test",
+    "test:e2e": "playwright test"
   },
-  "dependencies": {
+  "devDependencies": {
     "@astrojs/sitemap": "3.1.6",
     "@astrojs/tailwind": "^5.1.5",
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.13.9",
     "astro": "^4.16.18",
+    "browserstack-local": "^1.5.13",
     "js-yaml": "^4.1.0",
     "tailwindcss": "^3.4.17",
     "zod": "^3.24.2"
-  },
-  "devDependencies": {
-    "@types/js-yaml": "^4.0.9",
-    "@types/node": "^22.13.9"
   }
 }
-

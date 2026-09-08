@@ -77,6 +77,11 @@ const organizationJsonLd = {
     <meta name="description" content={description} />
     <link rel="canonical" href={currentUrl} />
 
+    <!-- Self-Hosted Critical Fonts Preload -->
+    <link rel="preload" href={formatUrl('/fonts/ibm-plex-sans-400.woff2')} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={formatUrl('/fonts/ibm-plex-sans-600.woff2')} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={formatUrl('/fonts/barlow-condensed-700.woff2')} as="font" type="font/woff2" crossorigin />
+
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href={formatUrl('/favicon.ico')} />
     <link rel="icon" type="image/png" sizes="32x32" href={formatUrl('/favicon.png')} />
@@ -104,7 +109,7 @@ const organizationJsonLd = {
       <script type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />
     )}
   </head>
-  <body class="flex flex-col min-h-full bg-slate-50 text-slate-800 antialiased font-sans">
+  <body class="flex flex-col min-h-full bg-[#F6F6F6] text-[#070707] antialiased font-sans">
     <!-- Accessible Skip Link for Keyboard Users -->
     <a href="#main-content" class="skip-to-content">
       Skip to main content
@@ -125,4 +130,3 @@ const organizationJsonLd = {
     <Footer />
   </body>
 </html>
-

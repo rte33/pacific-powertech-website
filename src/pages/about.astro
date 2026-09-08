@@ -8,7 +8,7 @@ import CatalogDownloadBanner from '../components/CatalogDownloadBanner.astro';
 const aboutData = getAboutPage();
 const { meta, header, story, visionMission, infrastructure, complianceStandards, teamValues } = aboutData;
 
-// Resolve facility images
+// Resolve facility images dynamically
 const facilitiesWithImages = await Promise.all(
   infrastructure.facilities.map(async (fac: any) => {
     const imgMeta = fac.image ? await resolveImage(fac.image) : null;
@@ -19,16 +19,16 @@ const facilitiesWithImages = await Promise.all(
 
 <BaseLayout title={meta.title} description={meta.description}>
   <!-- Page Header -->
-  <section class="bg-slate-900 text-white py-14 sm:py-20 border-b border-slate-800">
+  <section class="bg-[#070707] text-white py-12 sm:py-16 border-b-2 border-[#0C53A4]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl">
-        <span class="inline-block text-xs font-bold uppercase tracking-widest text-amber-400 mb-3">
-          {header.badge}
+      <div class="max-w-3xl space-y-2">
+        <span class="inline-block text-xs font-bold uppercase tracking-widest text-[#FAB218] font-mono">
+          Corporate Profile &bull; Est. 2013
         </span>
-        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+        <h1 class="font-heading text-3xl sm:text-5xl font-bold uppercase tracking-tight text-white leading-none">
           {header.title}
         </h1>
-        <p class="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
+        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-sans pt-2">
           {header.subtitle}
         </p>
       </div>
@@ -36,129 +36,117 @@ const facilitiesWithImages = await Promise.all(
   </section>
 
   <!-- Corporate Story & Operational Model -->
-  <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-      <div class="lg:col-span-7 space-y-6">
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+  <section class="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      <div class="lg:col-span-7 space-y-4">
+        <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-gray-950">
           {story.title}
         </h2>
         {story.paragraphs.map((p: string) => (
-          <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
+          <p class="text-gray-700 leading-relaxed text-xs sm:text-sm font-sans">
             {p}
           </p>
         ))}
 
-        <div class="pt-4 flex flex-wrap gap-4">
+        <div class="pt-3 flex flex-wrap gap-3">
           <a
             href={formatUrl('/contact')}
-            class="px-6 py-3 text-sm font-bold rounded-md bg-pptl-blue text-white hover:bg-blue-800 transition-colors shadow-sm"
+            class="px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-none bg-[#0C53A4] text-white hover:bg-[#213C94] transition-colors"
           >
-            Visit Our Factory & Works &rarr;
+            Visit Our Factory &amp; Works &rarr;
           </a>
           <a
             href={formatUrl('/products')}
-            class="px-6 py-3 text-sm font-semibold rounded-md border border-slate-300 text-slate-700 hover:bg-slate-50 transition-colors"
+            class="px-5 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-none border border-gray-400 text-gray-800 hover:bg-gray-100 transition-colors"
           >
-            Explore Product Portfolio
+            Explore Product Range
           </a>
         </div>
       </div>
 
-      <div class="lg:col-span-5 bg-blue-50/50 p-8 rounded-2xl border border-blue-100 shadow-sm space-y-6">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-pptl-blue">
-          Quick Facts at a Glance
+      <!-- Quick Facts Panel -->
+      <div class="lg:col-span-5 bg-white p-6 border border-gray-300 border-t-2 border-t-[#0C53A4] space-y-4">
+        <h3 class="font-heading text-base font-bold uppercase tracking-wider text-gray-900 border-b border-gray-200 pb-2">
+          Technical Fact Sheet
         </h3>
-        <dl class="space-y-4 text-sm divide-y divide-blue-100/80">
-          <div class="pt-2 flex justify-between">
-            <dt class="font-medium text-slate-600">Established:</dt>
-            <dd class="font-bold text-slate-900">2013 (Dhaka, Bangladesh)</dd>
+        <dl class="space-y-2.5 text-xs divide-y divide-gray-100 font-sans">
+          <div class="pt-2 flex justify-between items-center">
+            <dt class="font-medium text-gray-600">Establishment:</dt>
+            <dd class="font-bold text-gray-950 tabular-nums">2013 (Dhaka, Bangladesh)</dd>
           </div>
-          <div class="pt-2 flex justify-between">
-            <dt class="font-medium text-slate-600">Active Workforce:</dt>
-            <dd class="font-bold text-slate-900">23 Engineers & Technicians</dd>
+          <div class="pt-2 flex justify-between items-center">
+            <dt class="font-medium text-gray-600">Active Workforce:</dt>
+            <dd class="font-bold text-gray-950 tabular-nums">23 Engineers &amp; Technicians</dd>
           </div>
-          <div class="pt-2 flex justify-between">
-            <dt class="font-medium text-slate-600">Core Specialization:</dt>
-            <dd class="font-bold text-slate-900 text-right">Substations & Automation</dd>
+          <div class="pt-2 flex justify-between items-center">
+            <dt class="font-medium text-gray-600">Core Engineering:</dt>
+            <dd class="font-bold text-gray-950 text-right">Substations, Switchgear &amp; Automation</dd>
           </div>
-          <div class="pt-2 flex justify-between">
-            <dt class="font-medium text-slate-600">Laboratory Accreditation:</dt>
-            <dd class="font-bold text-slate-900 text-right">BSTI & BUET Approved</dd>
+          <div class="pt-2 flex justify-between items-center">
+            <dt class="font-medium text-gray-600">Laboratory Accreditation:</dt>
+            <dd class="font-bold text-gray-950 text-right">BSTI &amp; BUET Approved</dd>
           </div>
-          <div class="pt-2 flex justify-between">
-            <dt class="font-medium text-slate-600">Design Code Compliance:</dt>
-            <dd class="font-bold text-slate-900 text-right">IEC 76, BS, ANSI, VDE, BNBC</dd>
+          <div class="pt-2 flex justify-between items-center">
+            <dt class="font-medium text-gray-600">Design Code Compliance:</dt>
+            <dd class="font-bold text-gray-950 text-right">IEC 76, BS, ANSI, VDE, BNBC</dd>
           </div>
         </dl>
       </div>
     </div>
   </section>
 
-  <!-- Vision & Mission Cards -->
-  <section class="py-14 bg-slate-100 border-y border-slate-200">
+  <!-- Vision & Mission Strip -->
+  <section class="py-10 bg-white border-y border-gray-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Vision -->
-        <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
-          <div>
-            <div class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-blue-100 text-pptl-blue mb-4">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-              </svg>
-            </div>
-            <h2 class="text-xl font-bold text-slate-900 mb-2">{visionMission.vision.title}</h2>
-            <p class="text-slate-600 text-sm leading-relaxed">{visionMission.vision.statement}</p>
-          </div>
+        <div class="p-6 border-l-4 border-l-[#0C53A4] bg-[#F6F6F6] border border-gray-200">
+          <span class="font-mono text-xs font-bold text-[#0C53A4] uppercase">Strategic Direction</span>
+          <h2 class="font-heading text-xl font-bold uppercase text-gray-950 mt-1 mb-2">{visionMission.vision.title}</h2>
+          <p class="text-xs sm:text-sm text-gray-700 leading-relaxed font-sans">{visionMission.vision.statement}</p>
         </div>
 
         <!-- Mission -->
-        <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
-          <div>
-            <div class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-red-100 text-pptl-red mb-4">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-              </svg>
-            </div>
-            <h2 class="text-xl font-bold text-slate-900 mb-2">{visionMission.mission.title}</h2>
-            <p class="text-slate-600 text-sm leading-relaxed">{visionMission.mission.statement}</p>
-          </div>
+        <div class="p-6 border-l-4 border-l-[#D81A21] bg-[#F6F6F6] border border-gray-200">
+          <span class="font-mono text-xs font-bold text-[#D81A21] uppercase">Engineering Commitment</span>
+          <h2 class="font-heading text-xl font-bold uppercase text-gray-950 mt-1 mb-2">{visionMission.mission.title}</h2>
+          <p class="text-xs sm:text-sm text-gray-700 leading-relaxed font-sans">{visionMission.mission.statement}</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Manufacturing Facilities & Infrastructure -->
-  <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center max-w-3xl mx-auto mb-12">
-      <h2 class="text-xs font-bold uppercase tracking-widest text-pptl-blue">
-        Production Infrastructure
-      </h2>
-      <p class="text-3xl font-extrabold text-slate-900 tracking-tight mt-2">
+  <section class="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="border-b border-gray-300 pb-3 mb-8">
+      <span class="text-xs font-bold uppercase tracking-widest text-[#0C53A4] font-mono">
+        Factory Capabilities
+      </span>
+      <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-gray-950 mt-1">
         {infrastructure.title}
-      </p>
-      <p class="text-slate-600 text-sm mt-2">
+      </h2>
+      <p class="text-xs sm:text-sm text-gray-600 mt-0.5 font-sans">
         {infrastructure.subtitle}
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       {facilitiesWithImages.map((fac) => (
-        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+        <div class="bg-white border border-gray-300 flex flex-col">
           {fac.imgMeta && (
-            <div class="aspect-[16/10] bg-slate-100 overflow-hidden">
+            <div class="aspect-[16/10] bg-gray-100 border-b border-gray-200 overflow-hidden">
               <Image
                 src={fac.imgMeta}
                 alt={fac.title}
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                class="w-full h-full object-cover"
                 widths={[320, 480]}
               />
             </div>
           )}
-          <div class="p-6 flex-1 flex flex-col justify-between">
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-2">
             <div>
-              <h3 class="text-lg font-bold text-slate-900 mb-2">{fac.title}</h3>
-              <p class="text-xs text-slate-600 leading-relaxed">{fac.description}</p>
+              <h3 class="font-heading text-lg font-bold uppercase text-gray-950 mb-1">{fac.title}</h3>
+              <p class="text-xs text-gray-600 leading-relaxed font-sans">{fac.description}</p>
             </div>
           </div>
         </div>
@@ -166,23 +154,23 @@ const facilitiesWithImages = await Promise.all(
     </div>
   </section>
 
-  <!-- Compliance & Regulatory Standards -->
-  <section class="py-16 bg-slate-900 text-white border-t border-slate-800">
+  <!-- Governance & Standards Strip -->
+  <section class="py-12 bg-[#070707] text-white border-t-2 border-[#0C53A4]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl mb-10">
-        <h2 class="text-xs font-bold uppercase tracking-widest text-amber-400">
-          Governance & Standards
-        </h2>
-        <p class="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-2">
+      <div class="border-b border-gray-800 pb-3 mb-6">
+        <span class="text-xs font-bold uppercase tracking-widest text-[#FAB218] font-mono">
+          Code Compliance
+        </span>
+        <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-white mt-1">
           {complianceStandards.title}
-        </p>
+        </h2>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {complianceStandards.items.map((item: any) => (
-          <div class="p-5 rounded-lg bg-slate-800/80 border border-slate-700/80">
-            <span class="text-sm font-bold text-amber-400 block mb-1">{item.code}</span>
-            <p class="text-xs text-slate-300 leading-relaxed">{item.description}</p>
+          <div class="p-4 border-l-2 border-gray-700 bg-gray-900/60">
+            <span class="font-heading text-base font-bold text-[#FAB218] block uppercase">{item.code}</span>
+            <p class="text-xs text-gray-400 mt-1 leading-relaxed font-sans">{item.description}</p>
           </div>
         ))}
       </div>
@@ -194,4 +182,3 @@ const facilitiesWithImages = await Promise.all(
     <CatalogDownloadBanner />
   </div>
 </BaseLayout>
-
