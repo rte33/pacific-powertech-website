@@ -1,0 +1,73 @@
+meta:
+  title: "Contact Pacific Powertech Ltd. | Dhaka Substation & Automation Inquiries"
+  description: "Get in touch with Pacific Powertech Ltd. for technical specifications, quotations, tender bids, and 24/7 emergency substation and automation support in Dhaka, Bangladesh."
+
+header:
+  badge: "Engineering Support & Inquiries"
+  title: "Contact Our Technical Engineering Team"
+  subtitle: "Whether you need a custom transformer quotation, switchgear design verification, or emergency substation servicing, our engineers are ready to assist."
+
+office:
+  name: "Head Office & Manufacturing Works"
+  addressLine1: "Plot # 2249, Munshibari Goli, Shatarkul Road"
+  addressLine2: "Uttar Badda, Dhaka-1212"
+  country: "Bangladesh"
+  fullAddress: "2249, Munshibari, Shatarkul Road, Uttar Badda, Dhaka-1212, Bangladesh"
+  mapCoordinates: "23.7850, 90.4350"
+  googleMapsUrl: "https://maps.google.com/?q=2249+Shatarkul+Road+Uttar+Badda+Dhaka+1212+Bangladesh"
+
+contactNumbers:
+  - label: "Primary Engineering Hotline"
+    phone: "+880 1303 075 003"
+    telLink: "tel:+8801303075003"
+    description: "Available 24/7 for operational breakdowns, quotations, and urgent support."
+  - label: "Corporate Office & Technical Inquiries"
+    phone: "+880 1711 464 802"
+    telLink: "tel:+8801711464802"
+    description: "Direct line for commercial project bidding, specifications, and client visits."
+
+emails:
+  - label: "Official Correspondence & Inquiries"
+    email: "info@pacificpowertech.com.bd"
+    mailtoLink: "mailto:info@pacificpowertech.com.bd"
+    description: "Standard inquiry desk for tender documents, technical schematics, and billing."
+
+businessHours:
+  weekdays: "Saturday – Thursday: 9:00 AM – 6:00 PM"
+  weekend: "Friday: Closed (Emergency Support On-Call)"
+  emergencyNote: "24/7 on-call technical engineers for active substation breakdown emergencies."
+
+prefilledInquiries:
+  title: "Quick Email Quotation Generators"
+  description: "Select an inquiry type below to open a prefilled technical request directly in your email client addressed to info@pacificpowertech.com.bd."
+  templates:
+    - title: "Distribution Transformer Quotation"
+      badge: "Transformer Inquiry"
+      subject: "RFQ: Distribution Transformer Specification Inquiry"
+      body: "Hello Pacific Powertech Team,%0D%0A%0D%0AI would like to request a formal quotation and technical data sheet for a distribution transformer.%0D%0A%0D%0ARequired Capacity (kVA): [e.g., 250 kVA / 500 kVA / 1000 kVA]%0D%0AType: [Conservator Type / Hermetically Sealed]%0D%0ACooling: [ONAN / ONAF]%0D%0AInstallation Site / Sector: [e.g., Factory / Commercial Building]%0D%0AProject Location: %0D%0APreferred Delivery Timeline: %0D%0A%0D%0AContact Details:%0D%0ACompany Name: %0D%0AContact Person: %0D%0APhone Number: "
+      summary: "Request ratings from 100 kVA to 3000 kVA with loss guarantees."
+
+    - title: "LT / HT Switchgear Panel Inquiry"
+      badge: "Switchgear RFQ"
+      subject: "RFQ: LT / HT Switchgear Panel Design & Quotation"
+      body: "Hello Pacific Powertech Team,%0D%0A%0D%0APlease provide engineering specifications and a quotation for electrical switchgear.%0D%0A%0D%0APanel Type: [LT Switchgear / 11kV HT Switchgear / LBS Panel]%0D%0ACircuit Breaker Preference: [ABB VD4 / ACB / MCCB]%0D%0ARated Current: [e.g., 800A / 1250A / 2000A / 6300A]%0D%0AApplication & Load Details: %0D%0A%0D%0AContact Details:%0D%0ACompany Name: %0D%0AContact Person: %0D%0APhone Number: "
+      summary: "Inquire about ACB, VCB, MCCB, and 11kV modular cubicles."
+
+    - title: "PFI Plant & Power Factor Optimization"
+      badge: "PFI Plant Inquiry"
+      subject: "Inquiry: Power Factor Improvement (PFI) Plant Design"
+      body: "Hello Pacific Powertech Team,%0D%0A%0D%0AWe require an automatic Power Factor Correction (PFI) system to resolve reactive energy penalties and stabilize our system.%0D%0A%0D%0AConnected Transformer Capacity (kVA): %0D%0ACurrent Power Factor: %0D%0ATarget Power Factor: [e.g., 0.98 - 0.99]%0D%0AExisting Harmonic Filter Need: [Yes / No / Need Audit]%0D%0A%0D%0AContact Details:%0D%0ACompany Name: %0D%0AContact Person: %0D%0APhone Number: "
+      summary: "Optimize power factor, eliminate penalties, and size capacitor banks."
+
+    - title: "Industrial Automation & PLC/SCADA"
+      badge: "Automation Inquiry"
+      subject: "Inquiry: Industrial Automation & Control Panel Engineering"
+      body: "Hello Pacific Powertech Team,%0D%0A%0D%0AWe are seeking an automation and control panel solution for our manufacturing facility.%0D%0A%0D%0AIndustry Vertical: [Textile / Food / Pharma / Plastics / Water Treatment / Other]%0D%0ASystem Type: [PLC-HMI Control Panel / Motor Control Center (MCC) / VFD System / SCADA]%0D%0AHardware Preference: [Siemens / Mitsubishi / Yaskawa / Omron / None]%0D%0ABrief Scope of Work: %0D%0A%0D%0AContact Details:%0D%0ACompany Name: %0D%0AContact Person: %0D%0APhone Number: "
+      summary: "Discuss PLC programming, SCADA development, and custom control panels."
+
+    - title: "Annual Maintenance Contract (AMC) & Testing"
+      badge: "AMC & Service Inquiry"
+      subject: "Request: Substation AMC & In-House Testing Services"
+      body: "Hello Pacific Powertech Service Team,%0D%0A%0D%0AWe would like to discuss an Annual Maintenance Contract (AMC) or testing service for our electrical substation.%0D%0A%0D%0ASubstation Capacity & Age: %0D%0AScope Needed: [Routine Preventive Maintenance / Transformer Oil Testing / Calibration / Load Sanction]%0D%0AFacility Location: %0D%0A%0D%0AContact Details:%0D%0ACompany Name: %0D%0AContact Person: %0D%0APhone Number: "
+      summary: "Preventive maintenance, transformer oil dielectric testing, and calibrations."
+

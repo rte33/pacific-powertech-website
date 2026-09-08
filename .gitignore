@@ -1,0 +1,15 @@
+# Build & dependency directories
+node_modules/
+dist/
+.astro/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Temporary / Scratch
+catalog_extracted_text.txt
+.DS_Store
+Thumbs.db
+

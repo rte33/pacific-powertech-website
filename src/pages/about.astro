@@ -1,0 +1,197 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getAboutPage, formatUrl } from '../utils/content';
+import { Image } from 'astro:assets';
+import { resolveImage } from '../utils/assets';
+import CatalogDownloadBanner from '../components/CatalogDownloadBanner.astro';
+
+const aboutData = getAboutPage();
+const { meta, header, story, visionMission, infrastructure, complianceStandards, teamValues } = aboutData;
+
+// Resolve facility images
+const facilitiesWithImages = await Promise.all(
+  infrastructure.facilities.map(async (fac: any) => {
+    const imgMeta = fac.image ? await resolveImage(fac.image) : null;
+    return { ...fac, imgMeta };
+  })
+);
+---
+
+<BaseLayout title={meta.title} description={meta.description}>
+  <!-- Page Header -->
+  <section class="bg-slate-900 text-white py-14 sm:py-20 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <span class="inline-block text-xs font-bold uppercase tracking-widest text-amber-400 mb-3">
+          {header.badge}
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+          {header.title}
+        </h1>
+        <p class="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
+          {header.subtitle}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Corporate Story & Operational Model -->
+  <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-7 space-y-6">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+          {story.title}
+        </h2>
+        {story.paragraphs.map((p: string) => (
+          <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
+            {p}
+          </p>
+        ))}
+
+        <div class="pt-4 flex flex-wrap gap-4">
+          <a
+            href={formatUrl('/contact')}
+            class="px-6 py-3 text-sm font-bold rounded-md bg-pptl-blue text-white hover:bg-blue-800 transition-colors shadow-sm"
+          >
+            Visit Our Factory & Works &rarr;
+          </a>
+          <a
+            href={formatUrl('/products')}
+            class="px-6 py-3 text-sm font-semibold rounded-md border border-slate-300 text-slate-700 hover:bg-slate-50 transition-colors"
+          >
+            Explore Product Portfolio
+          </a>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 bg-blue-50/50 p-8 rounded-2xl border border-blue-100 shadow-sm space-y-6">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-pptl-blue">
+          Quick Facts at a Glance
+        </h3>
+        <dl class="space-y-4 text-sm divide-y divide-blue-100/80">
+          <div class="pt-2 flex justify-between">
+            <dt class="font-medium text-slate-600">Established:</dt>
+            <dd class="font-bold text-slate-900">2013 (Dhaka, Bangladesh)</dd>
+          </div>
+          <div class="pt-2 flex justify-between">
+            <dt class="font-medium text-slate-600">Active Workforce:</dt>
+            <dd class="font-bold text-slate-900">23 Engineers & Technicians</dd>
+          </div>
+          <div class="pt-2 flex justify-between">
+            <dt class="font-medium text-slate-600">Core Specialization:</dt>
+            <dd class="font-bold text-slate-900 text-right">Substations & Automation</dd>
+          </div>
+          <div class="pt-2 flex justify-between">
+            <dt class="font-medium text-slate-600">Laboratory Accreditation:</dt>
+            <dd class="font-bold text-slate-900 text-right">BSTI & BUET Approved</dd>
+          </div>
+          <div class="pt-2 flex justify-between">
+            <dt class="font-medium text-slate-600">Design Code Compliance:</dt>
+            <dd class="font-bold text-slate-900 text-right">IEC 76, BS, ANSI, VDE, BNBC</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision & Mission Cards -->
+  <section class="py-14 bg-slate-100 border-y border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Vision -->
+        <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-blue-100 text-pptl-blue mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+            </div>
+            <h2 class="text-xl font-bold text-slate-900 mb-2">{visionMission.vision.title}</h2>
+            <p class="text-slate-600 text-sm leading-relaxed">{visionMission.vision.statement}</p>
+          </div>
+        </div>
+
+        <!-- Mission -->
+        <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-red-100 text-pptl-red mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <h2 class="text-xl font-bold text-slate-900 mb-2">{visionMission.mission.title}</h2>
+            <p class="text-slate-600 text-sm leading-relaxed">{visionMission.mission.statement}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Manufacturing Facilities & Infrastructure -->
+  <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <h2 class="text-xs font-bold uppercase tracking-widest text-pptl-blue">
+        Production Infrastructure
+      </h2>
+      <p class="text-3xl font-extrabold text-slate-900 tracking-tight mt-2">
+        {infrastructure.title}
+      </p>
+      <p class="text-slate-600 text-sm mt-2">
+        {infrastructure.subtitle}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {facilitiesWithImages.map((fac) => (
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+          {fac.imgMeta && (
+            <div class="aspect-[16/10] bg-slate-100 overflow-hidden">
+              <Image
+                src={fac.imgMeta}
+                alt={fac.title}
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                widths={[320, 480]}
+              />
+            </div>
+          )}
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900 mb-2">{fac.title}</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">{fac.description}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Compliance & Regulatory Standards -->
+  <section class="py-16 bg-slate-900 text-white border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-10">
+        <h2 class="text-xs font-bold uppercase tracking-widest text-amber-400">
+          Governance & Standards
+        </h2>
+        <p class="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-2">
+          {complianceStandards.title}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {complianceStandards.items.map((item: any) => (
+          <div class="p-5 rounded-lg bg-slate-800/80 border border-slate-700/80">
+            <span class="text-sm font-bold text-amber-400 block mb-1">{item.code}</span>
+            <p class="text-xs text-slate-300 leading-relaxed">{item.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Catalog Banner -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <CatalogDownloadBanner />
+  </div>
+</BaseLayout>
+

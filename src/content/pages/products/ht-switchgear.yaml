@@ -1,0 +1,69 @@
+meta:
+  title: "11 kV HT Switchgear & ABB VD4 VCB Panels | Pacific Powertech Ltd."
+  description: "11 kV indoor metal-clad vacuum switchgear with authentic ABB VD4 circuit breakers, Load Break Switches (LBS), lightning arresters, and dropout fuses in Bangladesh."
+
+product:
+  name: "HT Switchgear Panels (11 kV)"
+  category: "Medium Voltage Distribution"
+  shortDescription: "11 kV metal-clad modular switchgear cubicles featuring authentic ABB VD4 vacuum circuit breakers, high-capacity Load Break Switches (LBS), and advanced safety interlocks."
+  primaryImage: "ht-switchgear-vcb-cubicles-lineup.jpeg"
+  gallery:
+    - "xgn66-12-ht-switchgear-panel.jpeg"
+    - "abb-vd4-vacuum-circuit-breaker-components.jpeg"
+    - "withdrawable-vcb-switchgear-panel-truck.jpeg"
+    - "substation-switchgear-control-room-lineup.jpeg"
+    - "dropout-fuse-cutout-11kv.jpeg"
+    - "lightning-arrester-surge-arrester-11kv.jpeg"
+
+parameters:
+  ratedVoltage: "12 kV"
+  nominalSystemVoltage: "11 kV"
+  ratedFrequency: "50 Hz"
+  powerFrequencyWithstand: "28 / 36 kV rms (1 min)"
+  impulseWithstandVoltage: "75 / 95 kV peak (1.2/50 µs BIL)"
+  ratedCurrentOptions: "630 A / 1250 A / 2000 A / 3000 A"
+  shortCircuitBreakingCurrent: "25 kA / 31.5 kA / 40 kA"
+
+switchgearVariants:
+  - name: "Vacuum Circuit Breaker (VCB) Panel"
+    description: "Built with ABB VD4 fixed or horizontally withdrawable vacuum circuit breakers. Employs ceramic vacuum interrupters for superior arc-quenching, mechanical stability, and motor-charged spring closing mechanisms."
+  - name: "Load Break Switch (LBS) Panel"
+    description: "Economical 11kV protective cubicle rated at 630A with integrated HRC fuses, 3 CTs, 3 PTs, and analog/digital metering. Dimensions: 900 × 1000 × 1800 mm, weight approx. 450 kg."
+  - name: "Metering & Protection Cubicle"
+    description: "Houses utility-compliant tariff metering CTs/PTs, multifunctional digital protection relays, and auxiliary DC tripping supplies."
+
+protectionEquipment:
+  - name: "11 kV Dropout Fuse Cutout"
+    description: "High-grade porcelain outdoor cutout rated for 11–15 kV, 75 kV BIL, 100 A RMS continuous current, and 10 kA interrupting capacity for transformer feeder overcurrent protection."
+  - name: "12 kV Lightning / Surge Arrester"
+    description: "Zinc-oxide surge arresters rated at 9–12 kV system voltage, with 45 kV impulse spark crest, 55 kA impulse current withstand, shielding substations from lightning and switching overvoltage."
+
+features:
+  - title: "Authentic ABB VD4 Breaker Core"
+    description: "We standardize on genuine ABB VD4 vacuum circuit breakers offering long maintenance-free operational cycles and exceptional breaking reliability."
+  - title: "Fully Interlocked Truck Mechanism"
+    description: "Horizontally withdrawable truck features mechanical and electrical safety interlocks preventing racked movement while the breaker is closed, with secure test-position door locking."
+  - title: "Heat-Shrink High-Dielectric Sleeving"
+    description: "Main busbars are clad in high-dielectric heat-shrinkable insulation sleeves, supported by fire-retardant barriers for optimum phase-to-phase and phase-to-ground clearance."
+  - title: "Dust & Vermin-Proof Enclosure"
+    description: "Manufactured from heavy gauge electro-galvanized sheet steel with IP4X/IP54 degree of protection, treated via the 7-tank hot phosphate powder coating process."
+
+specificationsTable:
+  headers:
+    - "Technical Specification"
+    - "VCB Panel Rating"
+    - "LBS Panel Rating"
+  notes: "Tested in accordance with IEC 62271-100, IEC 62271-200, BS 5311, and BSTI regulatory standards."
+  rows:
+    - ["Rated System Voltage", "12 kV (11 kV Nominal)", "12 kV (11 kV Nominal)"]
+    - ["Rated Frequency", "50 Hz", "50 Hz"]
+    - ["Rated Normal Current", "630 / 1250 / 2000 / 3000 A", "630 A"]
+    - ["Power Frequency Withstand (1 min)", "28 / 36 kV rms", "28 / 36 kV rms"]
+    - ["Lightning Impulse Withstand (BIL)", "75 / 95 kV peak", "75 / 95 kV peak"]
+    - ["Short-Time Withstand Current (3 sec)", "25 / 31.5 / 40 kA", "25 kA"]
+    - ["Short-Circuit Making Current (Peak)", "63 / 80 / 100 kA", "63 kA"]
+    - ["Operating Duty Sequence", "O - 0.3s - CO - 15s - CO", "O - 3 min - CO - 3 min - CO"]
+    - ["Operating Opening Time", "< 50 ms", "< 70 ms"]
+    - ["Enclosure Dimensions (W × D × H)", "900 × 1250 × 2200 mm", "900 × 1000 × 1800 mm"]
+    - ["Total Weight (Approx.)", "750 – 950 kg", "450 kg"]
+

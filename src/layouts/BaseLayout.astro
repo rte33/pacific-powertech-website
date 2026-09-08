@@ -1,0 +1,128 @@
+---
+import { getSiteSettings, formatUrl } from '../utils/content';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ClientCarousel from '../components/ClientCarousel.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+  productJsonLd?: Record<string, any>;
+}
+
+const site = getSiteSettings();
+const {
+  title = site.seo.defaultTitle,
+  description = site.seo.defaultDescription,
+  ogImage = '/assets/pacific-powertech-logo-banner-wide.jpeg',
+  canonicalUrl,
+  productJsonLd,
+} = Astro.props;
+
+const siteUrl = Astro.site?.toString() || site.company.contact.website;
+const currentUrl = canonicalUrl || new URL(Astro.url.pathname, siteUrl).toString();
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : new URL(formatUrl(ogImage), siteUrl).toString();
+
+// Schema.org Organization structured data
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": site.company.name,
+  "legalName": site.company.legalName,
+  "url": site.company.contact.website,
+  "logo": new URL(formatUrl('/assets/pacific-powertech-logo-icon.jpeg'), siteUrl).toString(),
+  "foundingDate": "2013",
+  "numberOfEmployees": {
+    "@type": "QuantitativeValue",
+    "value": site.company.employees
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": site.company.address.street,
+    "addressLocality": site.company.address.area,
+    "addressRegion": site.company.address.city,
+    "postalCode": site.company.address.postalCode,
+    "addressCountry": "BD"
+  },
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": site.company.contact.primaryPhone,
+      "contactType": "emergency customer support",
+      "areaServed": "BD",
+      "availableLanguage": ["English", "Bengali"]
+    },
+    {
+      "@type": "ContactPoint",
+      "telephone": site.company.contact.secondaryPhone,
+      "contactType": "sales",
+      "areaServed": "BD",
+      "availableLanguage": ["English", "Bengali"]
+    }
+  ]
+};
+---
+
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={currentUrl} />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href={formatUrl('/favicon.ico')} />
+    <link rel="icon" type="image/png" sizes="32x32" href={formatUrl('/favicon.png')} />
+    <link rel="apple-touch-icon" href={formatUrl('/favicon.png')} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={site.seo.openGraphType} />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:site_name" content={site.company.name} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- Schema.org Organization Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(organizationJsonLd)} />
+
+    <!-- Optional Product Structured Data -->
+    {productJsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />
+    )}
+  </head>
+  <body class="flex flex-col min-h-full bg-slate-50 text-slate-800 antialiased font-sans">
+    <!-- Accessible Skip Link for Keyboard Users -->
+    <a href="#main-content" class="skip-to-content">
+      Skip to main content
+    </a>
+
+    <!-- Header Navigation -->
+    <Header currentPath={Astro.url.pathname} />
+
+    <!-- Main Content Area -->
+    <main id="main-content" class="flex-1 focus:outline-none" tabindex="-1">
+      <slot />
+    </main>
+
+    <!-- Client Logo Carousel (Positioned directly above footer per specification) -->
+    <ClientCarousel />
+
+    <!-- Footer -->
+    <Footer />
+  </body>
+</html>
+

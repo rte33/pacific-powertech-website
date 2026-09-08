@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getHomePage, formatUrl } from '../../utils/content';
+import ProductCard from '../../components/ProductCard.astro';
+import CatalogDownloadBanner from '../../components/CatalogDownloadBanner.astro';
+
+const homeData = getHomePage();
+const products = homeData.featuredSolutions.items;
+---
+
+<BaseLayout
+  title="Electrical Substation Products & Automation Solutions | Pacific Powertech Ltd."
+  description="Explore Pacific Powertech's industrial product portfolio: Distribution Transformers (100–3000 kVA), LT/HT Switchgear, PFI Plants, and PLC Automation in Bangladesh."
+>
+  <!-- Page Header -->
+  <section class="bg-slate-900 text-white py-14 sm:py-20 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <span class="inline-block text-xs font-bold uppercase tracking-widest text-amber-400 mb-3">
+          Manufacturing & Engineering Portfolio
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+          Products &amp; Engineered Solutions
+        </h1>
+        <p class="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
+          Custom-designed, factory-tested power distribution equipment and intelligent automation control systems engineered to IEC, BS, ANSI, and VDE standards.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Catalog Grid -->
+  <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {products.map((item: any) => (
+        <ProductCard
+          title={item.title}
+          image={item.image}
+          summary={item.summary}
+          highlights={item.highlights}
+          url={item.url}
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- Direct Technical Inquiries Box -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div>
+        <h2 class="text-xl font-bold text-slate-900">Custom Engineering or Tender Specifications?</h2>
+        <p class="text-sm text-slate-600 mt-1 max-w-2xl">
+          We manufacture substation equipment tailored to exact architectural and electrical utility requirements (DESCO, DPDC, BPDB, REB). Speak directly with our design department.
+        </p>
+      </div>
+      <a
+        href={formatUrl('/contact')}
+        class="px-6 py-3 text-sm font-bold rounded-lg bg-pptl-blue text-white hover:bg-blue-800 transition-colors whitespace-nowrap shadow-sm"
+      >
+        Submit Technical RFQ &rarr;
+      </a>
+    </div>
+  </section>
+
+  <!-- Catalog Banner -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <CatalogDownloadBanner />
+  </div>
+</BaseLayout>
+

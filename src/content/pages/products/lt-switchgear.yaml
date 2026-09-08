@@ -1,0 +1,75 @@
+meta:
+  title: "LT Switchgear & ACB Panels (Up to 6300A) | Pacific Powertech Ltd."
+  description: "Custom-engineered Low Voltage (LT) Switchgear, Air Circuit Breaker (ACB) panels, and motor distribution boards manufactured with 7-tank anti-corrosion coating in Dhaka, Bangladesh."
+
+product:
+  name: "LT Switchgear Panels"
+  category: "Low Voltage Distribution"
+  shortDescription: "Custom-built Low Voltage Switchgear engineered as the core distribution nexus of industrial installations, integrating Air Circuit Breakers up to 6300A and tested to IEC standards."
+  primaryImage: "lt-switchgear-acb-panel-lineup.jpeg"
+  gallery:
+    - "lv-distribution-panel-cabinet.jpeg"
+    - "mccb-circuit-breaker-installation.jpeg"
+    - "miniature-circuit-breakers-mcb-din-rail.jpeg"
+    - "copper-busbar-connectors.jpeg"
+    - "substation-switchgear-room-lineup.jpeg"
+
+parameters:
+  ratedServiceVoltage: "690 V AC"
+  ratedInsulationVoltage: "1000 V"
+  ratedImpulseWithstand: "12 kV"
+  powerFrequencyTestVoltage: "3500 V (1 min)"
+  frequencyRange: "50 / 60 Hz"
+  serviceTemperature: "-25°C to +70°C"
+  enclosureType: "Form 3b / Form 4b Metal Clad"
+
+breakerOptions:
+  - type: "Air Circuit Breakers (ACB)"
+    range: "800A to 6300A"
+    description: "Microprocessor-controlled breakers with true RMS current sensing for main incomers and heavy feeder protection."
+  - type: "Vacuum Circuit Breakers (VCB)"
+    range: "630A to 3000A"
+    description: "High-endurance vacuum interruption technology for intensive switching operations."
+  - type: "Molded Case Circuit Breakers (MCCB)"
+    range: "10A to 1600A"
+    description: "Compact branch distribution and motor feeder protection with adjustable thermal and magnetic trip units."
+  - type: "Miniature Circuit Breakers (MCB)"
+    range: "10A to 63A"
+    description: "Din-rail mounted final sub-circuit protection for lighting, instrumentation, and auxiliary power."
+
+features:
+  - title: "7-Tank Hot Phosphate Powder Coating"
+    description: "Fabricated from prime sheet steel, every metal component undergoes our rigorous 7-tank anti-corrosion chemical bath (alkali pickling, acid pickling, and hot phosphate at 70–80°C) depositing a 10–15µ phosphate barrier before electrostatic powder coating."
+  - title: "Segregated Busbar Architecture"
+    description: "Electrolytic copper busbars are installed with horizontal layouts in segregated compartments at the rear or top to prevent accidental human contact and support seamless future expansion."
+  - title: "High Dynamic & Thermal Withstand"
+    description: "Engineered to withstand severe short-circuit electromagnetic stresses up to 50 kA for 1 second, reinforced by fire-retardant high-dielectric insulators."
+  - title: "Microprocessor-Based Protection"
+    description: "Equipped with intelligent trip units sensitive to true RMS current values, providing overcurrent, short-circuit, ground-fault, and instantaneous protection."
+  - title: "Comprehensive Instrumentation"
+    description: "Integrated digital ammeters, voltmeters with selector switches, multifunctional energy meters (kWh), and precision Class 0.5/1.0 Current Transformers."
+
+specificationsTable:
+  headers:
+    - "Parameter"
+    - "Value / Rating"
+  notes: "Manufactured and factory tested in accordance with IEC 61439-1/2, BS, and VDE standards."
+  rows:
+    - ["Rated Service Voltage (Ue)", "690 V ~"]
+    - ["Rated Insulation Voltage (Ui)", "1000 V"]
+    - ["Rated Impulse Withstand Voltage (Uimp)", "12 kV"]
+    - ["Industrial Frequency Test Voltage (1 min)", "3500 V ~"]
+    - ["Service Ambient Temperature", "-25°C to +70°C"]
+    - ["Rated Frequency (f)", "50 – 60 Hz"]
+    - ["Number of Poles", "3 – 4 Poles"]
+    - ["Construction Versions", "Fixed / Horizontally Withdrawable"]
+    - ["Rated Uninterrupted Current (Iu at 40°C)", "800 A to 6300 A"]
+    - ["Neutral Pole Capacity (4-Pole Breakers)", "100% Iu"]
+    - ["Rated Ultimate Short-Circuit Breaking Capacity (Icu)", "42 – 50 kA"]
+    - ["Rated Service Short-Circuit Breaking Capacity (Ics)", "42 – 50 kA"]
+    - ["Rated Short-Time Withstand Current (Icw, 1s)", "36 – 50 kA"]
+    - ["Rated Short-Circuit Making Capacity (Icm, peak)", "88.2 – 105 kA"]
+    - ["Maximum Closing Time", "80 ms"]
+    - ["Break Time (for I < Icw)", "70 ms"]
+    - ["Break Time (for I > Icw)", "30 ms"]
+

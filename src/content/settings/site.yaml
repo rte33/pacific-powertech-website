@@ -1,0 +1,69 @@
+company:
+  name: "Pacific Powertech Ltd."
+  legalName: "PACIFIC POWERTECH LTD."
+  shortName: "Pacific Powertech"
+  tagline: "Reliable 24/7 Industrial Substation, Switchgear & Automation Solutions"
+  established: 2013
+  employees: 23
+  address:
+    street: "2249, Munshibari, Shatarkul Road"
+    area: "Uttar Badda"
+    city: "Dhaka"
+    postalCode: "1212"
+    country: "Bangladesh"
+    full: "2249, Munshibari, Shatarkul Road, Uttar Badda, Dhaka-1212, Bangladesh"
+  contact:
+    primaryPhone: "+880 1303 075 003"
+    secondaryPhone: "+880 1711 464 802"
+    email: "info@pacificpowertech.com.bd"
+    salesEmail: "info@pacificpowertech.com.bd"
+    supportEmail: "info@pacificpowertech.com.bd"
+    website: "https://www.pacificpowertech.com.bd"
+  branding:
+    logoBannerWide: "pacific-powertech-logo-banner-wide.jpeg"
+    logoBannerMedium: "pacific-powertech-logo-banner-medium.jpeg"
+    logoStacked: "pacific-powertech-logo-stacked.jpeg"
+    logoIcon: "pacific-powertech-logo-icon.jpeg"
+    catalogPdf: "/assets/PPL Catalog.pdf"
+  certifications:
+    - "Approved Test Laboratory by BSTI (Bangladesh Standards and Testing Institution)"
+    - "Approved by Electrical Licensing Authority, Ministry of Power, Energy and Mineral Resources"
+    - "BUET (Bangladesh University of Engineering and Technology) Tested & Certified Instruments"
+    - "Compliance with International Standards: IEC 76, BS, ANSI & VDE"
+    - "LEED / BNBC Standard Electrical Design Architecture"
+
+navigation:
+  - title: "Home"
+    path: "/"
+  - title: "About Us"
+    path: "/about"
+  - title: "Products & Solutions"
+    path: "/products"
+    children:
+      - title: "Distribution Transformers"
+        path: "/products/transformers"
+        description: "100 kVA to 3000 kVA oil-immersed ONAN/ONAF distribution transformers"
+      - title: "LT Switchgear"
+        path: "/products/lt-switchgear"
+        description: "Low voltage switchgear, ACB panels (800A–6300A), 7-tank powder coated"
+      - title: "PFI Systems"
+        path: "/products/pfi-systems"
+        description: "Microprocessor-controlled Power Factor Improvement plants & capacitor banks"
+      - title: "HT Switchgear"
+        path: "/products/ht-switchgear"
+        description: "11 kV indoor vacuum switchgear with ABB VD4 circuit breakers & LBS"
+      - title: "Industrial Automation"
+        path: "/products/industrial-automation"
+        description: "PLC, HMI, SCADA, MCC panels, VFDs, RTU, and automated control systems"
+  - title: "Engineering Services"
+    path: "/services"
+  - title: "Contact Us"
+    path: "/contact"
+
+seo:
+  defaultTitle: "Pacific Powertech Ltd. | Substation, Switchgear & Industrial Automation Bangladesh"
+  titleTemplate: "%s | Pacific Powertech Ltd."
+  defaultDescription: "Pacific Powertech Ltd. (est. 2013) is a premier industrial substation manufacturer and automation engineering company in Bangladesh, delivering custom transformers, LT/HT switchgear, PFI plants, and PLC control panels."
+  openGraphType: "website"
+  locale: "en_US"
+

@@ -1,0 +1,229 @@
+---
+import { getSiteSettings, formatUrl } from '../utils/content';
+import { Image } from 'astro:assets';
+import logoImg from '../assets/images/pacific-powertech-logo-banner-medium.jpeg';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+const site = getSiteSettings();
+const navItems = site.navigation;
+const primaryPhone = site.company.contact.primaryPhone;
+const email = site.company.contact.email;
+---
+
+<header class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+  <!-- Top Utility Bar -->
+  <div class="bg-slate-900 text-slate-300 text-xs py-1.5 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+      <div class="flex items-center space-x-4">
+        <span class="inline-flex items-center text-amber-400 font-medium">
+          <svg class="w-3.5 h-3.5 mr-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"/>
+          </svg>
+          24/7 Substation Emergency Support
+        </span>
+        <span class="hidden md:inline text-slate-500">|</span>
+        <a href={`tel:${primaryPhone.replace(/\s+/g, '')}`} class="hover:text-white transition-colors focus:outline-none focus:ring-1 focus:ring-amber-400 rounded px-1">
+          Hotline: <strong class="text-white">{primaryPhone}</strong>
+        </a>
+      </div>
+      <div class="hidden sm:flex items-center space-x-4">
+        <a href={`mailto:${email}`} class="hover:text-white transition-colors focus:outline-none focus:ring-1 focus:ring-amber-400 rounded px-1">
+          {email}
+        </a>
+        <span class="text-slate-500">|</span>
+        <span class="text-slate-400">Dhaka, Bangladesh</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation Bar -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <!-- Logo -->
+      <a href={formatUrl('/')} class="flex items-center focus:outline-none focus:ring-2 focus:ring-pptl-blue rounded p-1" aria-label="Pacific Powertech Home">
+        <Image
+          src={logoImg}
+          alt="Pacific Powertech Ltd."
+          class="h-12 w-auto object-contain"
+          height={48}
+          loading="eager"
+        />
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="hidden lg:flex items-center space-x-1 xl:space-x-2" aria-label="Main Navigation">
+        {navItems.map((item: any) => {
+          const isActive = currentPath === item.path || (item.path !== '/' && currentPath.startsWith(item.path));
+          if (item.children && item.children.length > 0) {
+            return (
+              <div class="relative group">
+                <a
+                  href={formatUrl(item.path)}
+                  class={`px-3 py-2 text-sm font-semibold rounded-md transition-colors flex items-center gap-1 ${
+                    isActive
+                      ? 'text-pptl-blue bg-blue-50'
+                      : 'text-slate-700 hover:text-pptl-blue hover:bg-slate-50'
+                  }`}
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                >
+                  {item.title}
+                  <svg class="w-4 h-4 text-slate-400 group-hover:text-pptl-blue transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </a>
+
+                <!-- Dropdown Menu -->
+                <div class="absolute left-0 mt-1 w-80 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50 p-2">
+                  <div class="border-b border-slate-100 pb-2 mb-2 px-3 pt-1">
+                    <a href={formatUrl(item.path)} class="text-xs font-bold uppercase tracking-wider text-pptl-blue hover:underline">
+                      View All Solutions &rarr;
+                    </a>
+                  </div>
+                  {item.children.map((sub: any) => (
+                    <a
+                      href={formatUrl(sub.path)}
+                      class="block px-3 py-2.5 rounded-md hover:bg-slate-50 transition-colors focus:bg-slate-50 focus:outline-none"
+                    >
+                      <div class="text-sm font-semibold text-slate-900 hover:text-pptl-blue">{sub.title}</div>
+                      {sub.description && (
+                        <div class="text-xs text-slate-500 line-clamp-1 mt-0.5">{sub.description}</div>
+                      )}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            );
+          }
+
+          return (
+            <a
+              href={formatUrl(item.path)}
+              class={`px-3 py-2 text-sm font-semibold rounded-md transition-colors ${
+                isActive
+                  ? 'text-pptl-blue bg-blue-50 font-bold'
+                  : 'text-slate-700 hover:text-pptl-blue hover:bg-slate-50'
+              }`}
+            >
+              {item.title}
+            </a>
+          );
+        })}
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="hidden sm:flex items-center space-x-3">
+        <a
+          href={formatUrl('/assets/PPL Catalog.pdf')}
+          download="Pacific-Powertech-Catalog.pdf"
+          class="inline-flex items-center px-3.5 py-2 text-xs font-semibold rounded-md border border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 transition-colors focus:ring-2 focus:ring-pptl-blue"
+        >
+          <svg class="w-4 h-4 mr-1.5 text-pptl-red" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          Catalog PDF
+        </a>
+
+        <a
+          href={formatUrl('/contact')}
+          class="inline-flex items-center px-4 py-2 text-xs font-bold rounded-md bg-pptl-blue text-white hover:bg-blue-800 transition-colors shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-pptl-blue"
+        >
+          Request RFQ
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <div class="flex items-center lg:hidden">
+        <button
+          type="button"
+          id="mobile-menu-btn"
+          class="inline-flex items-center justify-center p-2 rounded-md text-slate-700 hover:text-pptl-blue hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-pptl-blue"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+          aria-label="Toggle navigation menu"
+        >
+          <svg id="icon-menu" class="h-6 w-6 block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <svg id="icon-close" class="h-6 w-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobile-nav" class="hidden lg:hidden border-t border-slate-200 bg-white shadow-xl px-4 pt-3 pb-6 max-h-[85vh] overflow-y-auto">
+    <div class="space-y-1">
+      {navItems.map((item: any) => {
+        const isActive = currentPath === item.path || (item.path !== '/' && currentPath.startsWith(item.path));
+        return (
+          <div class="py-1">
+            <a
+              href={formatUrl(item.path)}
+              class={`block px-3 py-2 rounded-md text-base font-medium ${
+                isActive ? 'bg-blue-50 text-pptl-blue font-bold' : 'text-slate-800 hover:bg-slate-100'
+              }`}
+            >
+              {item.title}
+            </a>
+            {item.children && (
+              <div class="pl-4 mt-1 space-y-1 border-l-2 border-slate-200 ml-3">
+                {item.children.map((sub: any) => (
+                  <a
+                    href={formatUrl(sub.path)}
+                    class="block px-3 py-1.5 rounded-md text-sm text-slate-600 hover:text-pptl-blue hover:bg-slate-50"
+                  >
+                    {sub.title}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+
+    <div class="mt-6 pt-4 border-t border-slate-200 flex flex-col gap-3">
+      <a
+        href={formatUrl('/assets/PPL Catalog.pdf')}
+        download="Pacific-Powertech-Catalog.pdf"
+        class="flex items-center justify-center w-full px-4 py-2.5 text-sm font-semibold rounded-md border border-slate-300 text-slate-800 hover:bg-slate-50"
+      >
+        <svg class="w-4 h-4 mr-2 text-pptl-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        Download Catalog (1.2 MB PDF)
+      </a>
+      <a
+        href={formatUrl('/contact')}
+        class="flex items-center justify-center w-full px-4 py-2.5 text-sm font-bold rounded-md bg-pptl-blue text-white hover:bg-blue-800"
+      >
+        Request Technical Quotation
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const nav = document.getElementById('mobile-nav');
+  const iconMenu = document.getElementById('icon-menu');
+  const iconClose = document.getElementById('icon-close');
+
+  if (btn && nav && iconMenu && iconClose) {
+    btn.addEventListener('click', () => {
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isExpanded));
+      nav.classList.toggle('hidden');
+      iconMenu.classList.toggle('hidden');
+      iconClose.classList.toggle('hidden');
+    });
+  }
+</script>
+

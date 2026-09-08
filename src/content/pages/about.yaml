@@ -1,0 +1,67 @@
+meta:
+  title: "About Pacific Powertech Ltd. | Electrical Substation & Automation Leaders"
+  description: "Established in 2013, Pacific Powertech Ltd. is an established engineering enterprise in Bangladesh providing industrial electrical substations, custom transformers, switchgear, and PLC automation."
+
+header:
+  badge: "About Pacific Powertech"
+  title: "Powering Bangladesh's Industrial Growth Since 2013"
+  subtitle: "We combine domestic manufacturing excellence with international technical standards to deliver safe, resilient, and energy-efficient electrical power infrastructure."
+
+story:
+  title: "Our Heritage and Operational Model"
+  paragraphs:
+    - "Pacific Powertech Ltd. was founded in 2013 as an industrial automation engineering, electric substation manufacturing, and control panel building enterprise in Dhaka, Bangladesh. Over the past decade, our operations have expanded from foundational power distribution and automation consultancy to turnkey substation manufacturing, generator synchronization, and complex industrial process control."
+    - "We operate with a core team of 23 specialized electrical engineers, technicians, and assembly craftsmen. Our traditional business foundation rests on delivering uncompromising technical build quality, honest price offerings, and industry-leading after-sales support."
+    - "Returning clients represent our greatest organizational asset. Because we design and build each product to withstand local power grid fluctuations and extreme tropical operating conditions, industrial facilities across manufacturing, utility, and commercial sectors place their ongoing trust in Pacific Powertech."
+
+visionMission:
+  vision:
+    title: "Our Vision"
+    statement: "To be a leader in HV, MV & LV Substation, Elevator/Lift, Generator & Automation industry by providing enhanced services, long-term relationships, and sustainable profitability while consistently exceeding customer expectations."
+  mission:
+    title: "Our Mission"
+    statement: "To build enduring client partnerships and deliver exceptional customer service by pursuing engineering business through relentless technological innovation, rigorous testing, and advanced manufacturing practices."
+
+infrastructure:
+  title: "Manufacturing Facilities & Infrastructure"
+  subtitle: "Purpose-built fabrication and assembly units engineered to meet international safety and durability benchmarks."
+  facilities:
+    - title: "Radiator & Tank Fabrication Plant"
+      description: "Equipped with specialized press machinery, seam welders, and MIG/TIG welding infrastructure. All transformer tanks and pressed steel radiators undergo pressurized leakage tests and complete chemical degreasing before assembly."
+      image: "substation-switchgear-panel-lineup.jpeg"
+    - title: "7-Tank Chemical Treatment & Coating"
+      description: "To prevent rust in humid environments, our sheet metal components undergo a 7-stage hot phosphate process (alkali pickling, acid pickling, rinse cycles, and 70–80°C hot phosphate bath) to apply a durable 10–15 micron protective barrier."
+      image: "lt-switchgear-acb-panel-lineup.jpeg"
+    - title: "Calibrated Electrical Testing Laboratory"
+      description: "Our in-house test laboratory is accredited by BSTI and BUET and adheres to the Electrical Licensing Authority of the Ministry of Power. We execute routine and type tests on calibrated instrumentation for insulation resistance, induced overvoltage, turns ratio, no-load losses, and temperature rise."
+      image: "electrical-panel-testing-multimeter.jpeg"
+
+complianceStandards:
+  title: "Codes and Regulatory Standards"
+  items:
+    - code: "IEC 76 / IEC 60076"
+      description: "International standard for power and distribution transformer manufacturing and testing."
+    - code: "BSTI Approved"
+      description: "Laboratory testing procedures verified and certified by Bangladesh Standards and Testing Institution."
+    - code: "BUET Certified"
+      description: "Calibrated instrumentation and prototype evaluations tested in partnership with BUET."
+    - code: "Ministry of Power"
+      description: "Authorized by the Electrical Licensing Authority under the Ministry of Power, Energy and Mineral Resources."
+    - code: "BS, ANSI & VDE"
+      description: "Compliant with British Standards, American National Standards, and German VDE specifications."
+    - code: "BNBC & LEED"
+      description: "Electrical panel and substation room layouts aligned with Bangladesh National Building Code and green building criteria."
+
+teamValues:
+  title: "Engineering Pillars"
+  values:
+    - number: "01"
+      name: "Authentic Components Only"
+      description: "We source authentic high-grade components directly from globally recognized manufacturers including ABB, Siemens, Schneider, and Come Italy."
+    - number: "02"
+      name: "Zero Compromise on Quality"
+      description: "We utilize locally available materials to the highest extent possible without compromising engineering rigor, backed by 100% factory routine testing."
+    - number: "03"
+      name: "24/7 After-Sales Commitment"
+      description: "Power outages halt industrial revenue. Our rapid-response engineering team provides 24/7 breakdown support and scheduled preventive maintenance."
+

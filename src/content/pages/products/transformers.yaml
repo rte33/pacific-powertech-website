@@ -1,0 +1,105 @@
+meta:
+  title: "Distribution Transformers (100–3000 kVA) | Pacific Powertech Ltd."
+  description: "High-efficiency oil-immersed 11/.415kV distribution transformers engineered in Bangladesh with imported CRGO silicon steel, electrolytic copper windings, and BSTI/BUET certified testing."
+
+product:
+  name: "Distribution Transformers"
+  category: "Substation Equipment"
+  shortDescription: "Heavy-duty oil-immersed distribution transformers engineered for high electrical efficiency, minimum operational losses, and exceptional lifespan under tropical operating conditions."
+  primaryImage: "distribution-transformer-conservator-type.jpeg"
+  gallery:
+    - "hermetically-sealed-distribution-transformer.jpeg"
+    - "hermetically-sealed-distribution-transformer-3d.jpeg"
+    - "pole-mounted-distribution-transformer.jpeg"
+    - "transformer-bushings-with-arcing-horns.jpeg"
+    - "transformer-substation-bushing-connections.jpeg"
+
+parameters:
+  primaryVoltage: "11 kV"
+  secondaryVoltage: "415 / 220 V"
+  frequency: "50 Hz"
+  phase: "3 Phase"
+  coolingSystems: "ONAN (Oil Natural Air Natural) / ONAF (Oil Natural Air Forced)"
+  insulationClass: "Class A"
+  designStandards: "IEC 76, BS 171, ANSI C57.12, VDE 0532"
+
+features:
+  - title: "CRGO Silicon Steel Core"
+    description: "Constructed from high-permeability cold-rolled grain-oriented (CRGO) silicon steel sheet imported from France and Japan. Stepped core assembly minimizes no-load losses, excitation currents, and acoustic humming."
+  - title: "Electrolytic Copper Windings"
+    description: "Manufactured using high-conductivity electrolytic copper with pinhole-free super enameled wire for HV windings and pure cellulose paper insulated copper strips for LV windings."
+  - title: "Seam-Welded Radiators & Heavy Tank"
+    description: "Fabricated from high-grade sheet steel with a rigid bottom and oil drainage outlet. Radiators are formed in-house with seam, MIG, and TIG welding, chemically degreased, and pressure tested for zero leakage."
+  - title: "Corrosion-Resistant Multi-Coat Finish"
+    description: "Tanks are sandblasted to international standards before applying a zinc-etching primer and two heavy protective coats, achieving a minimum thickness of 140 microns."
+  - title: "Precision Tap Changer"
+    description: "Fitted with off-circuit tap changers from Come (Italy) built with high-grade igneous insulating board or synthetic resin mould, allowing precise voltage adjustment."
+  - title: "Accredited In-House Routine Testing"
+    description: "Every unit is tested in our BSTI and BUET approved laboratory for insulation resistance, turns ratio, induced overvoltage, load and no-load losses, and oil breakdown voltage."
+
+accessories:
+  - name: "Buchholz Relay"
+    description: "Installed between tank and conservator to detect internal electrical faults and gas build-up, with micro-switch contacts rated at 5A 250VAC."
+  - name: "DGPT2 Hermetic Relay"
+    description: "Ideal for hermetically sealed designs to monitor gas discharge, temperature, and internal pressure surges in transformers >500 kVA."
+  - name: "Pressure Relief Valve"
+    description: "Spring-loaded valve that opens briefly during internal pressure surges and automatically reseals to protect tank integrity."
+  - name: "Silica Gel Breather"
+    description: "Unidirectional dehydrating breather with liquid silicon oil seal preventing moisture ingress into the insulating oil."
+  - name: "Magnetic Oil Level Indicator"
+    description: "Dual permanent magnet transmission displaying oil levels in the conservator without risk of oil leaks."
+  - name: "Dial Thermometer with Contacts"
+    description: "Max-pointer temperature gauge scaled up to 120°C with adjustable alarm and trip electrical contacts."
+
+testsConducted:
+  routineTests:
+    - "Insulation Resistance Test"
+    - "Induced Over-Voltage Test"
+    - "Separate Source Voltage Withstand Test (HV & LV)"
+    - "Turns Ratio, Polarity & Phase Relationship Test"
+    - "HV & LV Winding Resistance Test"
+    - "No-Load Current & No-Load Loss Measurement"
+    - "Full-Load Current & Full-Load Loss Test"
+    - "Load Loss at Rated Current & Frequency"
+    - "Percentage Impedance Verification"
+    - "Core Insulation Test"
+    - "Insulating Oil Dielectric Strength & Tan-Delta Test"
+    - "Tap Changer Functional Test"
+  typeTests:
+    - "Temperature Rise Test"
+    - "Short-Circuit & Overload Withstand Test"
+    - "Acoustic Noise Level Test"
+    - "Oil Leakage Pressure Test"
+
+specificationsTable:
+  headers:
+    - "Capacity (kVA)"
+    - "No-Load Loss (W)"
+    - "Full-Load Loss (W)"
+    - "Impedance (% Imp)"
+    - "Regulation (% at UPF)"
+    - "Efficiency (% at UPF)"
+    - "Height H (cm)"
+    - "Length L (cm)"
+    - "Width W (cm)"
+    - "Oil (Liters)"
+    - "Weight (kg)"
+  notes: "All dimensions include conservator tank. Dimensions and weights are subject to ±5% variation in line with ongoing engineering improvements."
+  rows:
+    - ["100", "245", "1700", "4.0", "1.62", "98.05", "132", "100", "63", "180", "650"]
+    - ["150", "320", "2412", "4.0", "1.40", "98.17", "145", "105", "88", "220", "900"]
+    - ["200", "435", "2550", "4.0", "1.20", "98.37", "150", "112", "93", "230", "975"]
+    - ["250", "520", "3265", "4.0", "1.22", "98.48", "158", "123", "95", "270", "1100"]
+    - ["315", "580", "4500", "4.0", "1.15", "98.38", "157", "120", "97", "350", "1250"]
+    - ["400", "722", "5420", "5.0", "1.10", "98.44", "162", "123", "98", "390", "1450"]
+    - ["500", "865", "6275", "5.5", "1.05", "98.57", "165", "124", "102", "325", "1725"]
+    - ["630", "920", "7740", "6.0", "0.98", "98.62", "170", "136", "103", "500", "1970"]
+    - ["750", "1150", "8850", "6.0", "0.94", "98.66", "185", "155", "112", "625", "2250"]
+    - ["800", "1300", "9800", "6.0", "0.90", "98.61", "225", "170", "113", "650", "2575"]
+    - ["1000", "1650", "11600", "6.5", "0.99", "98.67", "215", "185", "115", "800", "2850"]
+    - ["1250", "1820", "12300", "6.5", "0.95", "98.87", "225", "190", "116", "1000", "3725"]
+    - ["1500", "2100", "13275", "6.5", "0.87", "98.97", "230", "200", "120", "1200", "4300"]
+    - ["2000", "2650", "16470", "6.5", "0.83", "98.04", "250", "210", "135", "1450", "4750"]
+    - ["2500", "3140", "19700", "7.0", "0.82", "99.08", "285", "220", "150", "1800", "5600"]
+    - ["3000", "4500", "24500", "7.0", "0.82", "99.08", "290", "230", "160", "2000", "6000"]
+

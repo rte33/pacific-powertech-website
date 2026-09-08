@@ -1,0 +1,127 @@
+meta:
+  title: "Pacific Powertech Ltd. | Substation, Switchgear & Industrial Automation"
+  description: "Pacific Powertech Ltd. is a trusted engineering leader in Bangladesh specializing in electrical substations, custom distribution transformers, LT/HT switchgear, PFI plants, and industrial automation control panels."
+
+hero:
+  badge: "Engineering Excellence Since 2013"
+  headline: "Engineered Power Distribution & Industrial Automation"
+  subheadline: "Custom-designed substations, heavy-duty distribution transformers, certified switchgear, and intelligent PLC control systems built for Bangladesh's demanding industrial environments."
+  primaryCta:
+    label: "Explore Solutions"
+    url: "/products"
+  secondaryCta:
+    label: "Download Catalog"
+    url: "/assets/PPL Catalog.pdf"
+  emergencyCta:
+    label: "24/7 Service Support"
+    url: "tel:+8801303075003"
+  stats:
+    - value: "2013"
+      label: "Established"
+      subtext: "Over a decade of power engineering"
+    - value: "99.99%"
+      label: "On-Time Project Delivery"
+      subtext: "Proven execution on complex projects"
+    - value: "3000 kVA"
+      label: "Transformer Capacity"
+      subtext: "From 100 kVA to 3000 kVA ratings"
+    - value: "24/7"
+      label: "Technical Support"
+      subtext: "Nationwide on-site maintenance & AMC"
+
+featuredSolutions:
+  sectionTitle: "Core Engineering Solutions"
+  sectionSubtitle: "Complete electrical power infrastructure and automation systems engineered to IEC, BS, ANSI, and VDE standards."
+  items:
+    - title: "Distribution Transformers"
+      slug: "transformers"
+      image: "distribution-transformer-conservator-type.jpeg"
+      summary: "High-efficiency oil-immersed distribution transformers from 100 kVA to 3000 kVA, manufactured with high-permeability CRGO steel and pure electrolytic copper windings."
+      highlights:
+        - "100 kVA to 3000 kVA capacities"
+        - "CRGO silicon steel imported from France & Japan"
+        - "ONAN and ONAF cooling options"
+        - "Routine & type tested in BSTI-approved laboratory"
+      url: "/products/transformers"
+
+    - title: "LT Switchgear Panels"
+      slug: "lt-switchgear"
+      image: "lt-switchgear-acb-panel-lineup.jpeg"
+      summary: "Robust low-voltage switchgear engineered as the heart of your distribution system, featuring Air Circuit Breakers (ACB) up to 6300A and anti-corrosive 7-tank powder coating."
+      highlights:
+        - "ACB protection from 800A to 6300A"
+        - "Rated service voltage up to 690V / 1000V insulation"
+        - "7-tank hot phosphate anti-corrosive coating"
+        - "Microprocessor-based true RMS current sensing"
+      url: "/products/lt-switchgear"
+
+    - title: "Power Factor Improvement (PFI)"
+      slug: "pfi-systems"
+      image: "pfi-plant-apfc-control-panel.jpeg"
+      summary: "Centralized Automatic Power Factor Correction (APFC) plants with intelligent microprocessor relays to eliminate utility surcharges, reduce energy losses, and optimize transformer capacity."
+      highlights:
+        - "High inrush withstand capacitors (100 IR)"
+        - "Microprocessor-controlled multistage switching"
+        - "Detuned harmonic filter reactors"
+        - "Group overcurrent & thermal fan protection"
+      url: "/products/pfi-systems"
+
+    - title: "HT Switchgear (11 kV)"
+      slug: "ht-switchgear"
+      image: "ht-switchgear-vcb-cubicles-lineup.jpeg"
+      summary: "Metal-clad extensible 11 kV vacuum switchgear equipped with authentic ABB VD4 vacuum circuit breakers, load break switches (LBS), and ceramic interrupters for high operational safety."
+      highlights:
+        - "ABB VD4 vacuum circuit breaker integration"
+        - "Extensible, vermin-proof modular construction"
+        - "LBS mechanism for 630A with HRC fuse protection"
+        - "Interlocked mechanical safety with withdrawable truck"
+      url: "/products/ht-switchgear"
+
+    - title: "Industrial Automation & SCADA"
+      slug: "industrial-automation"
+      image: "control-panel-contactors-breakers-interior.jpeg"
+      summary: "Turnkey industrial automation, PLC-HMI-SCADA systems, Motor Control Centers (MCC), and VFD panels engineered with premier hardware from Siemens, Mitsubishi, and Omron."
+      highlights:
+        - "Siemens, Mitsubishi, Yaskawa & Omron platforms"
+        - "Real-time SCADA and remote machine monitoring"
+        - "Custom MCC, VFD, RTU, and ATS panel assembly"
+        - "Downtime reduction and automated production tracking"
+      url: "/products/industrial-automation"
+
+    - title: "Engineering Services & AMC"
+      slug: "services"
+      image: "electrical-panel-testing-multimeter.jpeg"
+      summary: "Comprehensive power engineering consultancy, Annual Maintenance Contracts (AMC), utility load sanctions (DESCO, DPDC, BPDB, REB), and precision instrument calibration."
+      highlights:
+        - "Official utility load sanction processing"
+        - "Field installation, cabling & containment systems"
+        - "Testing & commissioning with calibrated instruments"
+        - "Preventive & emergency Annual Maintenance Contracts"
+      url: "/services"
+
+manufacturingPillars:
+  title: "Precision Engineering & Manufacturing Standards"
+  subtitle: "Every Pacific Powertech product is engineered for longevity, low operational losses, and strict safety compliance."
+  pillars:
+    - icon: "shield-check"
+      title: "7-Tank Hot Phosphate Finishing"
+      description: "All panel sheet metal undergoes an industrial 7-tank anti-corrosive chemical process (alkali pickling, acid pickling, 70–80°C hot phosphate bath) creating a 10–15µ protective layer for humid climatic resilience."
+    - icon: "cpu"
+      title: "CRGO & Electrolytic Copper"
+      description: "Transformer cores use high-permeability cold-rolled grain-oriented silicon steel (CRGO) imported from France and Japan, paired with 99.9% pure electrolytic copper windings to minimize no-load losses."
+    - icon: "check-circle"
+      title: "Government & BUET Certified Lab"
+      description: "Our in-house test facility is approved by BSTI, the Ministry of Power's Electrical Licensing Authority, and BUET, executing rigorous routine tests on calibrated instruments before any panel leaves the factory."
+    - icon: "settings"
+      title: "Custom Local Engineering"
+      description: "All systems are custom designed by qualified electrical engineers to withstand local grid fluctuations, high ambient temperatures, and dust conditions in compliance with IEC, BS, and BNBC codes."
+
+catalogCta:
+  badge: "Authoritative Product Reference"
+  title: "Download the Official Pacific Powertech Product Catalog"
+  description: "Get full engineering schematics, product ratings, dimensional diagrams, and accessory specifications in a convenient, portable PDF format."
+  buttonText: "Download Catalog PDF (1.2 MB)"
+  buttonUrl: "/assets/PPL Catalog.pdf"
+  inquiryText: "Need a custom specification or tender quotation?"
+  inquiryUrl: "/contact"
+

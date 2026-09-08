@@ -1,0 +1,349 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllProductSlugs, getProductBySlug, formatUrl } from '../../utils/content';
+import { resolveImage } from '../../utils/assets';
+import { Image } from 'astro:assets';
+import SpecTable from '../../components/SpecTable.astro';
+import CatalogDownloadBanner from '../../components/CatalogDownloadBanner.astro';
+
+export async function getStaticPaths() {
+  const slugs = getAllProductSlugs();
+  return slugs.map((slug) => ({
+    params: { slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const productData = getProductBySlug(slug as string);
+
+if (!productData) {
+  throw new Error(`Product data not found for slug: ${slug}`);
+}
+
+const { meta, product, parameters, features, specificationsTable } = productData;
+
+// Resolve primary image
+const primaryImgMeta = product?.primaryImage ? await resolveImage(product.primaryImage) : null;
+
+// Resolve gallery images
+const galleryImgMetas = product?.gallery
+  ? await Promise.all(
+      product.gallery.map(async (imgName: string) => {
+        const meta = await resolveImage(imgName);
+        return { name: imgName, meta };
+      })
+    )
+  : [];
+
+// Schema.org Product structured data
+const productJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": product?.name,
+  "description": product?.shortDescription,
+  "category": product?.category,
+  "brand": {
+    "@type": "Brand",
+    "name": "Pacific Powertech Ltd."
+  },
+  "manufacturer": {
+    "@type": "Organization",
+    "name": "Pacific Powertech Ltd."
+  }
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  productJsonLd={productJsonLd}
+>
+  <!-- Product Hero Header -->
+  <section class="bg-slate-900 text-white py-12 sm:py-16 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center space-x-2 text-xs font-semibold text-slate-400 mb-4">
+        <a href={formatUrl('/')} class="hover:text-white">Home</a>
+        <span>&rsaquo;</span>
+        <a href={formatUrl('/products')} class="hover:text-white">Products</a>
+        <span>&rsaquo;</span>
+        <span class="text-amber-400">{product.name}</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-7">
+          <span class="inline-block text-xs font-bold uppercase tracking-widest text-pptl-red bg-red-950/60 px-2.5 py-1 rounded border border-red-800 mb-3">
+            {product.category}
+          </span>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white">
+            {product.name}
+          </h1>
+          <p class="mt-4 text-base text-slate-300 leading-relaxed max-w-2xl">
+            {product.shortDescription}
+          </p>
+
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a
+              href={formatUrl('/contact')}
+              class="px-5 py-2.5 text-xs sm:text-sm font-bold rounded-md bg-pptl-blue text-white hover:bg-blue-800 transition-colors shadow-sm"
+            >
+              Request Engineering Quote &rarr;
+            </a>
+            <a
+              href={formatUrl('/assets/PPL Catalog.pdf')}
+              download="Pacific-Powertech-Catalog.pdf"
+              class="px-5 py-2.5 text-xs sm:text-sm font-semibold rounded-md border border-slate-700 text-slate-300 hover:bg-slate-800 transition-colors flex items-center gap-2"
+            >
+              <svg class="w-4 h-4 text-pptl-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+              Download Catalog
+            </a>
+          </div>
+        </div>
+
+        {primaryImgMeta && (
+          <div class="lg:col-span-5 bg-slate-800 rounded-xl overflow-hidden border border-slate-700 shadow-2xl">
+            <Image
+              src={primaryImgMeta}
+              alt={product.name}
+              class="w-full h-auto object-cover max-h-[380px]"
+              loading="eager"
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Parameters Ribbon -->
+  {parameters && (
+    <section class="bg-slate-100 border-b border-slate-200 py-6">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Key Operational Ratings</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          {Object.entries(parameters).map(([key, val]) => (
+            <div class="bg-white p-3 rounded-lg border border-slate-200 shadow-xs">
+              <span class="text-[11px] font-medium text-slate-500 capitalize block truncate">
+                {key.replace(/([A-Z])/g, ' $1')}
+              </span>
+              <span class="text-xs sm:text-sm font-bold text-slate-900 mt-0.5 block truncate">
+                {val}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+    <!-- Key Engineering Features -->
+    {features && features.length > 0 && (
+      <section>
+        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mb-8">
+          Engineering & Design Features
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {features.map((feature: any) => (
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
+              <h3 class="text-base font-bold text-slate-900 mb-2 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-pptl-blue"></span>
+                {feature.title}
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                {feature.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Breaker Options (LT Switchgear) -->
+    {productData.breakerOptions && (
+      <section>
+        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mb-6">
+          Available Breaker Configurations
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {productData.breakerOptions.map((b: any) => (
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <span class="text-xs font-bold text-pptl-blue uppercase tracking-wider block">{b.range}</span>
+              <h3 class="text-base font-bold text-slate-900 mt-1 mb-2">{b.type}</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">{b.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- System Components (PFI Systems) -->
+    {productData.systemComponents && (
+      <section>
+        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mb-6">
+          Core System Components
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {productData.systemComponents.map((comp: any) => (
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <h3 class="text-sm font-bold text-slate-900 mb-1">{comp.name}</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">{comp.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Switchgear Variants & Protection (HT Switchgear) -->
+    {productData.switchgearVariants && (
+      <section>
+        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mb-6">
+          Switchgear Panel Variants
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {productData.switchgearVariants.map((v: any) => (
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <h3 class="text-base font-bold text-slate-900 mb-2">{v.name}</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">{v.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Panel Types (Industrial Automation) -->
+    {productData.panelTypes && (
+      <section>
+        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mb-6">
+          Custom Control Panels Built in Dhaka Works
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {productData.panelTypes.map((p: any) => (
+            <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-xs">
+              <h3 class="text-sm font-bold text-slate-900 mb-1">{p.name}</h3>
+              <p class="text-xs text-slate-600">{p.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- 10 Catalog Benefits (Industrial Automation) -->
+    {productData.benefits && (
+      <section>
+        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mb-6">
+          Operational Benefits of PPTL Automation
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          {productData.benefits.map((ben: any) => (
+            <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 flex flex-col justify-between">
+              <span class="text-xs font-mono font-bold text-amber-500">{ben.number}</span>
+              <div class="mt-2">
+                <h3 class="text-xs font-bold text-slate-900 mb-1">{ben.title}</h3>
+                <p class="text-[11px] text-slate-500">{ben.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Accessories & Testing (Transformers) -->
+    {productData.accessories && (
+      <section>
+        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mb-6">
+          Standard & Optional Protection Accessories
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {productData.accessories.map((acc: any) => (
+            <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-xs">
+              <h3 class="text-sm font-bold text-slate-900 mb-1">{acc.name}</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">{acc.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Testing Protocols (Transformers) -->
+    {productData.testsConducted && (
+      <section class="bg-slate-900 text-white p-8 rounded-2xl border border-slate-800">
+        <h2 class="text-xl font-bold text-amber-400 mb-2">
+          BSTI & BUET Approved Factory Testing Regime
+        </h2>
+        <p class="text-xs text-slate-300 mb-6 max-w-2xl">
+          Final tests are carried out strictly according to IEC 76 on completely assembled units in our calibrated test laboratory.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-white mb-3">Routine Tests (Every Unit)</h3>
+            <ul class="space-y-1.5 text-xs text-slate-300">
+              {productData.testsConducted.routineTests.map((t: string) => (
+                <li class="flex items-center gap-2">
+                  <span class="text-green-400 font-bold">&check;</span>
+                  <span>{t}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-white mb-3">Type Tests (Per Production Lot)</h3>
+            <ul class="space-y-1.5 text-xs text-slate-300">
+              {productData.testsConducted.typeTests.map((t: string) => (
+                <li class="flex items-center gap-2">
+                  <span class="text-amber-400 font-bold">&bull;</span>
+                  <span>{t}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Engineering Specification Table -->
+    {specificationsTable && (
+      <section>
+        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mb-2">
+          Engineering Specification Matrix
+        </h2>
+        <p class="text-xs text-slate-500 mb-4">
+          Verified electrical parameters, short-circuit ratings, and dimensional tolerances.
+        </p>
+        <SpecTable
+          headers={specificationsTable.headers}
+          rows={specificationsTable.rows}
+          notes={specificationsTable.notes}
+          caption={`${product.name} Specifications`}
+        />
+      </section>
+    )}
+
+    <!-- Product Image Gallery -->
+    {galleryImgMetas.length > 0 && (
+      <section>
+        <h2 class="text-xl font-bold text-slate-900 tracking-tight mb-4">
+          Assembly & Component Details
+        </h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {galleryImgMetas.map((item) => (
+            item.meta && (
+              <div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-xs hover:shadow-md transition-shadow">
+                <Image
+                  src={item.meta}
+                  alt={`${product.name} component`}
+                  class="w-full h-32 object-cover"
+                  widths={[180, 320]}
+                />
+              </div>
+            )
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Catalog Download Call to Action -->
+    <CatalogDownloadBanner />
+  </div>
+</BaseLayout>
+

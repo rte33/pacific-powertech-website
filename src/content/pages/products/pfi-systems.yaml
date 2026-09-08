@@ -1,0 +1,71 @@
+meta:
+  title: "Power Factor Improvement (PFI) Plants | Pacific Powertech Ltd."
+  description: "Automatic Power Factor Improvement (PFI/APFC) plants in Bangladesh with microprocessor relays, detuned harmonic filter reactors, and 100 IR high-inrush capacitors."
+
+product:
+  name: "Power Factor Improvement (PFI) Plants"
+  category: "Power Quality & Efficiency"
+  shortDescription: "Centralized Automatic Power Factor Correction (APFC) cubicles designed to eliminate utility low-power-factor surcharges, stabilize feeder voltage, and reduce thermal load on transformers."
+  primaryImage: "pfi-plant-apfc-control-panel.jpeg"
+  gallery:
+    - "pfi-capacitor-banks-close-up.jpeg"
+    - "pfi-plant-panel-interior-capacitors-contactors.jpeg"
+    - "control-panel-contactors-breakers-interior.jpeg"
+    - "heat-shrinkable-busbar-insulation-sleeves.jpeg"
+
+parameters:
+  systemVoltage: "415 V (3 Phase, 4 Wire)"
+  frequency: "50 Hz"
+  targetPowerFactor: "0.98 to 0.99 Lagging"
+  switchingSteps: "6, 8, 12, or 16 Steps (Rotational Cyclic)"
+  inrushCurrentCapacity: "Up to 100 × Rated Current (100 IR)"
+  capacitorTechnology: "Self-healing metallized polypropylene with overpressure disconnector"
+
+engineeringPrinciples:
+  title: "Why Power Factor Correction is Essential"
+  formula: "PF = P (kW) / S (kVA)"
+  explanation: "Reactive current circulating between the power utility and industrial inductive loads (motors, welders, transformers) converts usable energy into wasteful heat, dropping line voltage and forcing utilities to impose punitive surcharges. PPTL PFI plants supply local capacitive reactive power, restoring the power factor close to unity (0.98–0.99), releasing transformer capacity, and slashing utility bills."
+
+systemComponents:
+  - name: "Microprocessor-Based PFC Controller"
+    description: "Continuously samples voltage and current vectors via CTs to calculate real-time reactive demand. Intelligently rotates capacitor stages to equalize operating hours and prevent localized wear."
+  - name: "Heavy-Duty Power Capacitors"
+    description: "Premium low-loss dry-type capacitors capable of withstanding inrush currents up to 100 times nominal current (100 IR), featuring self-healing dielectric and internal overpressure safety disconnectors."
+  - name: "Specialized Capacitor Contactors"
+    description: "Equipped with pre-insertion damping resistors to suppress destructive inrush transients during energization, dramatically extending capacitor contact life."
+  - name: "Detuned Harmonic Filter Reactors (Optional)"
+    description: "Iron-core series reactors (7%, 14%) preventing electrical resonance and shielding capacitors from high harmonic distortion created by VFDs and nonlinear industrial loads."
+  - name: "HRC Fuse Protection & Isolation"
+    description: "Fitted with high-breaking-capacity (HRC) fuses rated at 1.6 to 1.8 times nominal capacitor current for rapid isolation of individual stages under short-circuit conditions."
+  - name: "Forced Ventilation & Thermal Interlocks"
+    description: "Thermostatically controlled louvers and exhaust fans ensuring operating ambient temperatures stay within optimal parameters."
+
+features:
+  - title: "Automatic Multi-Stage Switching"
+    description: "Configurable in 6 to 16 automatic steps with selectable switching delay times, avoiding unnecessary hunting under fluctuating loads."
+  - title: "Dynamic Real-Time Monitoring"
+    description: "Front-panel LCD displays active power, reactive power, line voltage, active current, capacitor current, power factor, and harmonic distortion (THD-V / THD-I)."
+  - title: "Modular Extensible Design"
+    description: "Built within standard cubicles allowing plug-and-play capacity expansion as facility manufacturing loads increase."
+  - title: "Comprehensive Safety Interlocks"
+    description: "Includes discharge resistor networks reducing terminal voltage to <50V within 60 seconds of disconnection, plus door safety interlocks."
+
+specificationsTable:
+  headers:
+    - "System Attribute"
+    - "Engineering Standard / Value"
+  notes: "Custom PFI plants are sized based on comprehensive facility load audits and harmonic spectrum evaluations."
+  rows:
+    - ["Rated Operating Voltage", "415 V AC (Line-to-Line) ±10%"]
+    - ["Rated Frequency", "50 Hz"]
+    - ["Power Factor Adjustment Range", "0.80 Inductive to 0.98–1.00 Target"]
+    - ["Controller Architecture", "Microprocessor Digital True RMS Sensing"]
+    - ["Capacitor Dielectric", "Metallized Polypropylene Film (Self-Healing)"]
+    - ["Capacitor Inrush Withstand", "100 × In (Rated Current)"]
+    - ["Discharge Resistors", "Integrated (Reduces residual voltage <50V in 60s)"]
+    - ["Switching Elements", "Capacitor-Duty Contactors with Damping Resistors / Thyristor Switches"]
+    - ["Harmonic Filtering", "5.67%, 7%, or 14% Detuned Reactors Available"]
+    - ["Overcurrent Protection", "HRC Fuses (1.6 – 1.8 × In)"]
+    - ["Ventilation System", "Thermostatically Controlled Forced Air Cooling"]
+    - ["Enclosure Finish", "7-Tank Hot Phosphate Electrostatic Powder Coated Sheet Steel"]
+
