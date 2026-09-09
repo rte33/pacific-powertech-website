@@ -14,7 +14,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 2 : undefined,
+  workers: 2,
   reporter: [
     ['list'],
     ['html', { outputFolder: 'playwright-report', open: 'never' }],
@@ -50,7 +50,7 @@ export default defineConfig({
     ? undefined
     : {
         command: `npx astro preview --port ${PORT} --host 127.0.0.1`,
-        url: `${BASE_URL}/`,
+        url: BASE_URL,
         reuseExistingServer: !process.env.CI,
         timeout: 30000,
       },

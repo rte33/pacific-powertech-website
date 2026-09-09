@@ -24,6 +24,7 @@ company:
     logoBannerMedium: "pacific-powertech-logo-banner-medium.jpeg"
     logoStacked: "pacific-powertech-logo-stacked.jpeg"
     logoIcon: "pacific-powertech-logo-icon.jpeg"
+    approvalTick: "approval-check-badge.svg"
     catalogPdf: "/assets/PPL Catalog.pdf"
   certifications:
     - "Approved Test Laboratory by BSTI (Bangladesh Standards and Testing Institution)"
@@ -31,6 +32,22 @@ company:
     - "BUET (Bangladesh University of Engineering and Technology) Tested & Certified Instruments"
     - "Compliance with International Standards: IEC 76, BS, ANSI & VDE"
     - "LEED / BNBC Standard Electrical Design Architecture"
+  approvalMarks:
+    - name: "BSTI"
+      statement: "Approved Test Laboratory by BSTI"
+      logo: "bsti-standard-mark.svg"
+      altText: "BSTI standard mark"
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:BSTI_Logo.svg"
+    - name: "BUET"
+      statement: "BUET Tested & Certified Instruments"
+      logo: "buet-official-seal.svg"
+      altText: "Bangladesh University of Engineering and Technology seal"
+      sourceUrl: "https://eee.buet.ac.bd/outreach/branding"
+    - name: "Bangladesh Government"
+      statement: "Electrical Licensing Authority Approved"
+      logo: "bangladesh-government-emblem.png"
+      altText: "Government of the People's Republic of Bangladesh emblem"
+      sourceUrl: "https://bsti.gov.bd/site-assets/images/logo.png"
 
 navigation:
   - title: "Home"
@@ -66,4 +83,3 @@ seo:
   defaultDescription: "Pacific Powertech Ltd. (est. 2013) is a premier industrial substation manufacturer and automation engineering company in Bangladesh, delivering custom transformers, LT/HT switchgear, PFI plants, and PLC control panels."
   openGraphType: "website"
   locale: "en_US"
-

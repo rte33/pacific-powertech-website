@@ -45,6 +45,9 @@ function checkForRawHtml(value, filePath, currentPath = '') {
 function verifyAssetExists(assetRef, filePath, currentPath) {
   if (typeof assetRef !== 'string' || !assetRef.trim()) return;
 
+  // Source/website URLs are attribution metadata, not local build assets.
+  if (/^https?:\/\//i.test(assetRef)) return;
+
   // If path starts with /assets/ or /
   if (assetRef.startsWith('/')) {
     const publicPath = path.join(PUBLIC_DIR, assetRef.replace(/^\//, ''));
@@ -118,9 +121,19 @@ const SiteSchema = z.object({
       logoBannerMedium: z.string(),
       logoStacked: z.string(),
       logoIcon: z.string(),
+      approvalTick: z.string(),
       catalogPdf: z.string(),
     }),
     certifications: z.array(z.string()).min(1),
+    approvalMarks: z.array(
+      z.object({
+        name: z.string().min(1),
+        statement: z.string().min(1),
+        logo: z.string().min(1),
+        altText: z.string().min(1),
+        sourceUrl: z.string().url(),
+      })
+    ).min(1),
   }),
   navigation: z.array(
     z.object({
@@ -157,6 +170,12 @@ const ClientItemSchema = z.object({
   enabled: z.boolean(),
   category: z.string().optional(),
   statusNote: z.string().optional(),
+  crop: z.object({
+    x: z.number().nonnegative(),
+    y: z.number().nonnegative(),
+    width: z.number().positive(),
+    height: z.number().positive(),
+  }).optional(),
 });
 
 const ClientsSchema = z.object({
@@ -172,11 +191,18 @@ const HomeSchema = z.object({
   meta: MetaSchema,
   hero: z.object({
     badge: z.string(),
+    image: z.string().min(1),
     headline: z.string(),
     subheadline: z.string(),
     primaryCta: z.object({ label: z.string(), url: z.string() }),
     secondaryCta: z.object({ label: z.string(), url: z.string() }),
     emergencyCta: z.object({ label: z.string(), url: z.string() }),
+    capabilities: z.array(
+      z.object({
+        code: z.string().regex(/^0[1-9]$/),
+        label: z.string().min(1),
+      })
+    ).length(4),
     stats: z.array(
       z.object({
         value: z.string(),
@@ -198,6 +224,19 @@ const HomeSchema = z.object({
         url: z.string(),
       })
     ),
+  }),
+  additionalProducts: z.object({
+    sectionTitle: z.string().min(1),
+    sectionSubtitle: z.string().min(1),
+    items: z.array(
+      z.object({
+        title: z.string().min(1),
+        category: z.string().min(1),
+        image: z.string().min(1),
+        specification: z.string().min(1),
+        url: z.string().min(1),
+      })
+    ).min(1),
   }),
   manufacturingPillars: z.object({
     title: z.string(),
@@ -396,14 +435,21 @@ console.log('--- PACIFIC POWERTECH CONTENT VALIDATION ---');
 validateFile('settings/site.yaml', SiteSchema);
 const clientsData = validateFile('settings/clients.yaml', ClientsSchema);
 if (clientsData && Array.isArray(clientsData.clients)) {
-  const enabledClients = clientsData.clients.filter((c) => c.enabled === true);
-  if (enabledClients.length > 0) {
+  const enabledEntries = clientsData.clients.filter((c) => c.enabled === true);
+  const enabledRelationships = enabledEntries.filter(
+    (entry) => entry.category !== 'Technology & Component Brand'
+  );
+  const enabledComponentBrands = enabledEntries.filter(
+    (entry) => entry.category === 'Technology & Component Brand'
+  );
+
+  if (enabledRelationships.length > 0) {
     console.warn(
-      `\x1b[33m[CLIENT GOVERNANCE NOTICE]\x1b[0m ${enabledClients.length} clients are marked enabled: true. Ensure sign-off is logged in docs/CLIENT_APPROVAL_CHECKLIST.md.`
+      `\x1b[33m[CLIENT GOVERNANCE NOTICE]\x1b[0m ${enabledRelationships.length} client/partner relationship entries are enabled. Ensure sign-off is logged in docs/CLIENT_APPROVAL_CHECKLIST.md.`
     );
   } else {
     console.log(
-      '\x1b[32m[CLIENT GOVERNANCE OK]\x1b[0m All client entries are disabled (enabled: false) pending owner approval.'
+      `\x1b[32m[CLIENT GOVERNANCE OK]\x1b[0m No client or partner relationship claims are published. ${enabledComponentBrands.length} owner-approved technology/component brands are enabled.`
     );
   }
 }
@@ -431,4 +477,3 @@ if (totalErrors > 0) {
   console.log('\x1b[32mAll content and assets passed validation successfully!\x1b[0m');
   process.exit(0);
 }
-

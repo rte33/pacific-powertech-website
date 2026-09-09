@@ -53,22 +53,21 @@ export default {
       },
       fontFamily: {
         sans: [
-          '"IBM Plex Sans"',
+          '"Source Sans 3"',
           'system-ui',
           '-apple-system',
           'BlinkMacSystemFont',
           '"Segoe UI"',
-          'Roboto',
           'sans-serif',
         ],
         condensed: [
-          '"Barlow Condensed"',
-          '"Arial Narrow"',
+          '"Archivo"',
+          '"Arial Black"',
           'sans-serif',
         ],
         heading: [
-          '"Barlow Condensed"',
-          '"Arial Narrow"',
+          '"Archivo"',
+          '"Arial Black"',
           'sans-serif',
         ],
         mono: [

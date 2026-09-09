@@ -11,6 +11,7 @@ interface Props {
   ogImage?: string;
   canonicalUrl?: string;
   productJsonLd?: Record<string, any>;
+  headerVariant?: 'default' | 'overlay';
 }
 
 const site = getSiteSettings();
@@ -20,6 +21,7 @@ const {
   ogImage = '/assets/pacific-powertech-logo-banner-wide.jpeg',
   canonicalUrl,
   productJsonLd,
+  headerVariant = 'default',
 } = Astro.props;
 
 const siteUrl = Astro.site?.toString() || site.company.contact.website;
@@ -72,20 +74,15 @@ const organizationJsonLd = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#031525" />
 
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={currentUrl} />
 
-    <!-- Self-Hosted Critical Fonts Preload -->
-    <link rel="preload" href={formatUrl('/fonts/ibm-plex-sans-400.woff2')} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={formatUrl('/fonts/ibm-plex-sans-600.woff2')} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={formatUrl('/fonts/barlow-condensed-700.woff2')} as="font" type="font/woff2" crossorigin />
-
     <!-- Favicons -->
-    <link rel="icon" type="image/x-icon" href={formatUrl('/favicon.ico')} />
-    <link rel="icon" type="image/png" sizes="32x32" href={formatUrl('/favicon.png')} />
-    <link rel="apple-touch-icon" href={formatUrl('/favicon.png')} />
+    <link rel="icon" type="image/png" sizes="512x512" href={formatUrl('/favicon-transparent.png')} />
+    <link rel="apple-touch-icon" href={formatUrl('/favicon-transparent.png')} />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content={site.seo.openGraphType} />
@@ -116,14 +113,14 @@ const organizationJsonLd = {
     </a>
 
     <!-- Header Navigation -->
-    <Header currentPath={Astro.url.pathname} />
+    <Header currentPath={Astro.url.pathname} variant={headerVariant} />
 
     <!-- Main Content Area -->
-    <main id="main-content" class="flex-1 focus:outline-none" tabindex="-1">
+    <main id="main-content" class="flex-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0C53A4]" tabindex="-1">
       <slot />
     </main>
 
-    <!-- Client Logo Carousel (Positioned directly above footer per specification) -->
+    <!-- Approved technology-brand registry, directly above the footer. -->
     <ClientCarousel />
 
     <!-- Footer -->

@@ -12,16 +12,16 @@ const {
 } = Astro.props;
 ---
 
-<section class="bg-[#070707] text-white p-8 sm:p-10 my-12 border-l-4 border-[#0C53A4] border-y border-r border-gray-800">
+<section class="my-12 border-y border-slate-700 border-l-4 border-l-[#FAB218] bg-[#031525] p-8 text-white sm:p-10">
   <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
     <div class="space-y-2 max-w-2xl">
-      <span class="inline-block text-xs font-bold uppercase tracking-widest text-[#FAB218]">
+      <span class="inline-block text-xs font-bold uppercase tracking-[0.2em] text-[#FAB218]">
         Engineering Publication &bull; 20-Page Comprehensive Edition
       </span>
-      <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-white">
+      <h2 class="font-heading text-2xl font-bold tracking-tight text-white sm:text-3xl">
         {title}
       </h2>
-      <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-sans">
+      <p class="text-sm leading-7 text-slate-300 sm:text-base">
         {description}
       </p>
     </div>
@@ -30,9 +30,9 @@ const {
       <a
         href={formatUrl('/assets/PPL Catalog.pdf')}
         download="Pacific-Powertech-Catalog.pdf"
-        class="inline-flex items-center justify-center px-5 py-3 text-xs font-bold uppercase tracking-wider rounded-none bg-[#D81A21] text-white hover:bg-[#b5151c] transition-colors shadow-sm focus:ring-2 focus:ring-[#D81A21]"
+        class="inline-flex min-h-12 items-center justify-center bg-[#0C53A4] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#084584] focus-visible:ring-2 focus-visible:ring-[#FAB218]"
       >
-        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
         </svg>
         Download Product Catalog (1.2 MB PDF)
@@ -40,7 +40,7 @@ const {
 
       <a
         href={formatUrl('/contact')}
-        class="inline-flex items-center justify-center px-5 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-none bg-transparent hover:bg-gray-800 text-gray-300 border border-gray-700 transition-colors text-center"
+        class="inline-flex min-h-12 items-center justify-center border border-white/35 bg-transparent px-5 py-2.5 text-sm font-bold text-white transition-colors hover:border-white hover:bg-white/10"
       >
         Email an Engineer
       </a>

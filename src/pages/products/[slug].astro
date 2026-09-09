@@ -21,9 +21,7 @@ if (!productData) {
 }
 
 const { meta, product, parameters, features, specificationsTable } = productData;
-
-// Resolve primary image dynamically
-const primaryImgMeta = product?.primaryImage ? await resolveImage(product.primaryImage) : null;
+const primaryImageMeta = product?.primaryImage ? await resolveImage(product.primaryImage) : null;
 
 // Resolve gallery images
 const galleryImgMetas = product?.gallery
@@ -58,110 +56,71 @@ const productJsonLd = {
   description={meta.description}
   productJsonLd={productJsonLd}
 >
-  <!-- Product Hero Header: Editorial Industrial Style -->
-  <section class="bg-[#070707] text-white py-10 sm:py-14 border-b-2 border-[#0C53A4]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Breadcrumb Navigation -->
-      <nav class="flex items-center space-x-2 text-xs font-mono text-gray-400 mb-4" aria-label="Breadcrumb">
-        <a href={formatUrl('/')} class="hover:text-white">HOME</a>
-        <span>/</span>
-        <a href={formatUrl('/products')} class="hover:text-white">PRODUCTS</a>
-        <span>/</span>
-        <span class="text-[#FAB218] uppercase">{product.name}</span>
+  <section class="border-b border-slate-300 bg-white">
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <nav class="text-sm text-slate-500" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-2"><li><a href={formatUrl('/')} class="hover:text-[#0C53A4]">Home</a></li><li aria-hidden="true">/</li><li><a href={formatUrl('/products')} class="hover:text-[#0C53A4]">Products</a></li><li aria-hidden="true">/</li><li aria-current="page" class="text-[#031525]">{product.name}</li></ol>
       </nav>
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        <div class="lg:col-span-7 space-y-4">
-          <div class="inline-block text-xs font-bold uppercase tracking-widest text-[#FAB218] bg-black/60 px-2.5 py-0.5 border border-[#FAB218]/40 font-mono">
-            {product.category || 'Substation Equipment'}
-          </div>
-          <h1 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight text-white">
-            {product.name}
-          </h1>
-          <p class="text-sm text-gray-300 leading-relaxed font-sans max-w-2xl">
-            {product.shortDescription}
-          </p>
-
-          <div class="pt-2 flex flex-wrap gap-3">
-            <a
-              href={formatUrl('/contact')}
-              class="px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-none bg-[#0C53A4] text-white hover:bg-[#213C94] transition-colors focus:ring-2 focus:ring-[#0C53A4]"
-            >
-              Request Engineering Quotation &rarr;
-            </a>
-            <a
-              href={formatUrl('/assets/PPL Catalog.pdf')}
-              download="Pacific-Powertech-Catalog.pdf"
-              class="px-4 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-none border border-gray-600 text-gray-300 hover:bg-gray-800 transition-colors flex items-center gap-2"
-            >
-              <svg class="w-4 h-4 text-[#D81A21]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-              </svg>
-              Download Catalog PDF
-            </a>
+      <div class="mt-9 grid gap-10 pb-10 lg:grid-cols-12 lg:items-center lg:pb-16">
+        <div class="lg:col-span-7">
+          <p class="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-[#0C53A4]"><span class="h-0.5 w-8 bg-[#D81A21]" aria-hidden="true"></span>{product.category || 'Substation Equipment'}</p>
+          <h1 class="mt-5 max-w-4xl font-heading text-[clamp(2.8rem,6vw,5.5rem)] font-bold leading-[0.95] tracking-[-0.055em] text-[#031525]">{product.name}</h1>
+          <p class="mt-7 max-w-2xl text-lg leading-8 text-slate-600">{product.shortDescription}</p>
+          <div class="mt-9 flex flex-wrap gap-4">
+            <a href={formatUrl('/contact')} class="inline-flex min-h-12 items-center bg-[#0C53A4] px-6 font-bold text-white transition-colors hover:bg-[#084584]">Request Engineering Quotation <span class="ml-3" aria-hidden="true">→</span></a>
+            <a href={formatUrl('/assets/PPL Catalog.pdf')} download="Pacific-Powertech-Catalog.pdf" class="inline-flex min-h-12 items-center border-b-2 border-[#031525] px-1 font-bold text-[#031525] hover:border-[#0C53A4] hover:text-[#0C53A4]">Download Catalog</a>
           </div>
         </div>
-
-        {primaryImgMeta && (
-          <div class="lg:col-span-5 bg-gray-900 border border-gray-700 p-1.5 shadow-lg">
-            <Image
-              src={primaryImgMeta}
-              alt={product.name}
-              class="w-full h-auto object-cover max-h-[350px]"
-              loading="eager"
-            />
-            <div class="p-2 bg-black text-[11px] text-gray-400 font-mono flex justify-between border-t border-gray-800">
-              <span>{product.name.toUpperCase()}</span>
-              <span class="text-[#FAB218]">BSTI / IEC 76</span>
-            </div>
-          </div>
-        )}
+        <div class="relative lg:col-span-5">
+          {primaryImageMeta && <Image src={primaryImageMeta} alt={product.name} class="aspect-square w-full object-cover" widths={[480, 720, 960]} loading="eager" />}
+          <div class="absolute bottom-0 left-0 bg-[#031525] px-5 py-3 text-xs font-bold uppercase tracking-[0.14em] text-white">Made to project specification</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Key Operational Parameters Ribbon -->
+  <!-- Key Operational Parameters -->
   {parameters && (
-    <section class="bg-white border-b border-gray-300 py-4">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <span class="font-heading text-xs font-bold uppercase tracking-wider text-gray-700 block mb-2">
+    <section class="border-b border-slate-300 bg-[#eef1f3] py-6">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <span class="mb-4 block text-xs font-bold uppercase tracking-[0.18em] text-slate-700">
           Verified Operating Ratings
         </span>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+        <dl class="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-6">
           {Object.entries(parameters).map(([key, val]) => (
-            <div class="bg-[#F6F6F6] p-2.5 border border-gray-200">
-              <span class="text-[10px] font-mono uppercase text-gray-700 block truncate font-semibold">
+            <div class="min-w-0 border-l-2 border-[#0C53A4] py-1 pl-3">
+              <dt class="block break-words text-xs font-semibold uppercase tracking-[0.08em] text-slate-600">
                 {key.replace(/([A-Z])/g, ' $1')}
-              </span>
-              <span class="text-xs font-bold text-gray-900 font-sans mt-0.5 block truncate tabular-nums">
+              </dt>
+              <dd class="mt-1 block break-words text-base font-bold text-[#031525] tabular-nums">
                 {val}
-              </span>
+              </dd>
             </div>
           ))}
-        </div>
+        </dl>
       </div>
     </section>
   )}
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+  <div class="mx-auto max-w-7xl space-y-16 px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
     <!-- Key Engineering Features -->
     {features && features.length > 0 && (
       <section>
-        <div class="border-b border-gray-300 pb-2 mb-6">
-          <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-gray-950">
+        <div class="mb-7 border-b border-slate-300 pb-3">
+          <h2 class="font-heading text-2xl font-bold tracking-tight text-[#031525] sm:text-3xl">
             Engineering &amp; Manufacturing Architecture
           </h2>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="grid grid-cols-1 gap-x-8 gap-y-7 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature: any) => (
-            <div class="bg-white p-5 border border-gray-300 border-t-2 border-t-[#0C53A4] space-y-2">
-              <h3 class="font-heading text-lg font-bold uppercase tracking-wide text-gray-900">
+            <article class="space-y-2 border-t-2 border-[#0C53A4] pt-5">
+              <h3 class="font-heading text-lg font-bold tracking-wide text-[#031525]">
                 {feature.title}
               </h3>
-              <p class="text-xs text-gray-700 leading-relaxed font-sans">
+              <p class="text-sm leading-6 text-slate-700">
                 {feature.description}
               </p>
-            </div>
+            </article>
           ))}
         </div>
       </section>
@@ -170,18 +129,18 @@ const productJsonLd = {
     <!-- Breaker Options (LT Switchgear) -->
     {productData.breakerOptions && (
       <section>
-        <div class="border-b border-gray-300 pb-2 mb-6">
-          <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-gray-950">
+        <div class="mb-7 border-b border-slate-300 pb-3">
+          <h2 class="font-heading text-2xl font-bold tracking-tight text-[#031525] sm:text-3xl">
             Available Breaker Configurations
           </h2>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 gap-x-8 gap-y-7 sm:grid-cols-2 lg:grid-cols-4">
           {productData.breakerOptions.map((b: any) => (
-            <div class="bg-white p-4 border border-gray-300 space-y-1">
-              <span class="font-mono text-xs font-bold text-[#0C53A4] tabular-nums block">{b.range}</span>
-              <h3 class="font-heading text-base font-bold uppercase text-gray-950">{b.type}</h3>
-              <p class="text-xs text-gray-600 leading-relaxed font-sans">{b.description}</p>
-            </div>
+            <article class="space-y-1 border-t-2 border-[#0C53A4] pt-5">
+              <span class="block text-sm font-bold text-[#0C53A4] tabular-nums">{b.range}</span>
+              <h3 class="font-heading text-base font-bold text-[#031525]">{b.type}</h3>
+              <p class="text-sm leading-6 text-slate-700">{b.description}</p>
+            </article>
           ))}
         </div>
       </section>
@@ -190,17 +149,17 @@ const productJsonLd = {
     <!-- System Components (PFI Systems) -->
     {productData.systemComponents && (
       <section>
-        <div class="border-b border-gray-300 pb-2 mb-6">
-          <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-gray-950">
+        <div class="mb-7 border-b border-slate-300 pb-3">
+          <h2 class="font-heading text-2xl font-bold tracking-tight text-[#031525] sm:text-3xl">
             Core System Components
           </h2>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 gap-x-8 gap-y-7 md:grid-cols-3">
           {productData.systemComponents.map((comp: any) => (
-            <div class="bg-white p-4 border border-gray-300">
-              <h3 class="font-heading text-base font-bold uppercase text-gray-950 mb-1">{comp.name}</h3>
-              <p class="text-xs text-gray-600 leading-relaxed font-sans">{comp.description}</p>
-            </div>
+            <article class="border-t border-slate-300 pt-5">
+              <h3 class="mb-1 font-heading text-base font-bold text-[#031525]">{comp.name}</h3>
+              <p class="text-sm leading-6 text-slate-700">{comp.description}</p>
+            </article>
           ))}
         </div>
       </section>
@@ -209,17 +168,17 @@ const productJsonLd = {
     <!-- Switchgear Variants & Protection (HT Switchgear) -->
     {productData.switchgearVariants && (
       <section>
-        <div class="border-b border-gray-300 pb-2 mb-6">
-          <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-gray-950">
+        <div class="mb-7 border-b border-slate-300 pb-3">
+          <h2 class="font-heading text-2xl font-bold tracking-tight text-[#031525] sm:text-3xl">
             Switchgear Panel Variants
           </h2>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 gap-x-8 gap-y-7 md:grid-cols-3">
           {productData.switchgearVariants.map((v: any) => (
-            <div class="bg-white p-5 border border-gray-300 border-l-4 border-l-[#0C53A4]">
-              <h3 class="font-heading text-lg font-bold uppercase text-gray-950 mb-1">{v.name}</h3>
-              <p class="text-xs text-gray-600 leading-relaxed font-sans">{v.description}</p>
-            </div>
+            <article class="border-l-2 border-[#0C53A4] py-1 pl-5">
+              <h3 class="mb-1 font-heading text-lg font-bold text-[#031525]">{v.name}</h3>
+              <p class="text-sm leading-6 text-slate-700">{v.description}</p>
+            </article>
           ))}
         </div>
       </section>
@@ -228,20 +187,17 @@ const productJsonLd = {
     <!-- 10 Catalog Benefits (Industrial Automation) -->
     {productData.benefits && (
       <section>
-        <div class="border-b border-gray-300 pb-2 mb-6">
-          <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-gray-950">
+        <div class="mb-7 border-b border-slate-300 pb-3">
+          <h2 class="font-heading text-2xl font-bold tracking-tight text-[#031525] sm:text-3xl">
             Operational Benefits of PPTL Automation
           </h2>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+        <div class="grid grid-cols-1 gap-x-8 gap-y-7 sm:grid-cols-2 lg:grid-cols-3">
           {productData.benefits.map((ben: any) => (
-            <div class="bg-white p-3.5 border border-gray-300 flex flex-col justify-between">
-              <span class="font-mono text-xs font-bold text-[#FAB218]">{ben.number}</span>
-              <div class="mt-2">
-                <h3 class="font-heading text-sm font-bold uppercase text-gray-950 mb-0.5">{ben.title}</h3>
-                <p class="text-[11px] text-gray-600 font-sans">{ben.description}</p>
-              </div>
-            </div>
+            <article class="border-t border-slate-300 pt-5">
+              <h3 class="mb-1 font-heading text-base font-bold text-[#031525]">{ben.title}</h3>
+              <p class="text-sm leading-6 text-slate-700">{ben.description}</p>
+            </article>
           ))}
         </div>
       </section>
@@ -250,17 +206,17 @@ const productJsonLd = {
     <!-- Accessories & Testing (Transformers) -->
     {productData.accessories && (
       <section>
-        <div class="border-b border-gray-300 pb-2 mb-6">
-          <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-gray-950">
+        <div class="mb-7 border-b border-slate-300 pb-3">
+          <h2 class="font-heading text-2xl font-bold tracking-tight text-[#031525] sm:text-3xl">
             Standard &amp; Optional Protection Accessories
           </h2>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+        <div class="grid grid-cols-1 gap-x-8 gap-y-7 sm:grid-cols-2 lg:grid-cols-3">
           {productData.accessories.map((acc: any) => (
-            <div class="bg-white p-3.5 border border-gray-300">
-              <h3 class="font-heading text-sm font-bold uppercase text-gray-950 mb-0.5">{acc.name}</h3>
-              <p class="text-xs text-gray-600 font-sans leading-relaxed">{acc.description}</p>
-            </div>
+            <article class="border-t border-slate-300 pt-5">
+              <h3 class="mb-1 font-heading text-base font-bold text-[#031525]">{acc.name}</h3>
+              <p class="text-sm leading-6 text-slate-700">{acc.description}</p>
+            </article>
           ))}
         </div>
       </section>
@@ -268,22 +224,22 @@ const productJsonLd = {
 
     <!-- Factory Testing Regime (Transformers) -->
     {productData.testsConducted && (
-      <section class="bg-[#070707] text-white p-6 sm:p-8 border border-gray-800 border-l-4 border-l-[#FAB218]">
-        <span class="text-xs font-bold uppercase tracking-widest text-[#FAB218] font-mono">
+      <section class="border-l-4 border-[#FAB218] bg-[#031525] p-6 text-white sm:p-8">
+        <span class="text-xs font-bold uppercase tracking-[0.18em] text-[#FAB218]">
           Laboratory Standards
         </span>
-        <h2 class="font-heading text-xl sm:text-2xl font-bold uppercase tracking-wide text-white mt-1 mb-2">
+        <h2 class="mb-2 mt-1 font-heading text-xl font-bold tracking-wide text-white sm:text-2xl">
           BSTI &amp; BUET Approved Testing Protocol
         </h2>
-        <p class="text-xs text-gray-400 mb-5 max-w-2xl font-sans">
+        <p class="mb-5 max-w-2xl text-sm leading-6 text-slate-300">
           Final tests executed strictly in accordance with IEC 76 on completely assembled transformers in our accredited facility.
         </p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2 border-t border-gray-800">
+        <div class="grid grid-cols-1 gap-6 border-t border-white/15 pt-5 md:grid-cols-2">
           <div>
-            <h3 class="font-heading text-sm font-bold uppercase tracking-wider text-[#FAB218] mb-2.5">
+            <h3 class="mb-2.5 font-heading text-sm font-bold tracking-wider text-[#FAB218]">
               Routine Tests (100% Units)
             </h3>
-            <ul class="space-y-1 text-xs text-gray-300 font-sans">
+            <ul class="space-y-1.5 text-sm text-slate-300">
               {productData.testsConducted.routineTests.map((t: string) => (
                 <li class="flex items-center gap-2">
                   <span class="text-[#FAB218] font-bold">&check;</span>
@@ -293,10 +249,10 @@ const productJsonLd = {
             </ul>
           </div>
           <div>
-            <h3 class="font-heading text-sm font-bold uppercase tracking-wider text-[#FAB218] mb-2.5">
+            <h3 class="mb-2.5 font-heading text-sm font-bold tracking-wider text-[#FAB218]">
               Type Tests (Per Production Lot)
             </h3>
-            <ul class="space-y-1 text-xs text-gray-300 font-sans">
+            <ul class="space-y-1.5 text-sm text-slate-300">
               {productData.testsConducted.typeTests.map((t: string) => (
                 <li class="flex items-center gap-2">
                   <span class="text-[#D81A21] font-bold">&bull;</span>
@@ -312,8 +268,8 @@ const productJsonLd = {
     <!-- Engineering Specification Table -->
     {specificationsTable && (
       <section>
-        <div class="border-b border-gray-300 pb-2 mb-4">
-          <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-gray-950">
+        <div class="mb-5 border-b border-slate-300 pb-3">
+          <h2 class="font-heading text-2xl font-bold tracking-tight text-[#031525] sm:text-3xl">
             Engineering Specification Matrix
           </h2>
         </div>
@@ -329,19 +285,19 @@ const productJsonLd = {
     <!-- Component Image Gallery -->
     {galleryImgMetas.length > 0 && (
       <section>
-        <div class="border-b border-gray-300 pb-2 mb-4">
-          <h2 class="font-heading text-xl font-bold uppercase tracking-tight text-gray-950">
+        <div class="mb-5 border-b border-slate-300 pb-3">
+          <h2 class="font-heading text-xl font-bold tracking-tight text-[#031525]">
             Assembly &amp; Hardware Details
           </h2>
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
           {galleryImgMetas.map((item) => (
             item.meta && (
-              <div class="bg-white border border-gray-300 p-1">
+              <div class="border border-slate-300 bg-white p-1">
                 <Image
                   src={item.meta}
                   alt={`${product.name} hardware`}
-                  class="w-full h-28 object-cover"
+                  class="h-28 w-full object-cover"
                   widths={[180, 320]}
                 />
               </div>

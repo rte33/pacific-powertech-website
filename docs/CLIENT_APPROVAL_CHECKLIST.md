@@ -1,90 +1,34 @@
-# Client Logo & Relationship Approval Checklist
+# Brand and Relationship Publication Log
 
-Per the governance policy for the Pacific Powertech Ltd. website, **no client logo or relationship claim may be displayed publicly until the website owner explicitly verifies and signs off on both the commercial relationship claim and the official brand asset.**
+The website must keep two different concepts separate:
 
-All entries in `src/content/settings/clients.yaml` are initially configured with `enabled: false`.
+1. **Technology and component brands** identify equipment brands shown in Pacific Powertech's supplied catalog artwork. They do not state or imply that the brand owner is a customer, formal partner, or endorser.
+2. **Client and partner relationships** require separate written owner approval before any company name, logo, or relationship claim is enabled.
 
----
+## Approved Technology & Component Brands
 
-## Sign-Off Protocol
+On 2026-09-08, the website owner supplied `Screenshot_3.png` and explicitly requested that the following marks appear in the bottom brand section. The public heading is “Technology & Component Brands,” not “Companies We've Worked With.”
 
-To approve an entry for public display:
-1. Verify that Pacific Powertech Ltd. has executed a formal contract, supply order, or authorized technical integration with the company.
-2. Ensure the logo mark is obtained exclusively from the company's official domain or authorized media kit.
-3. Mark the verification checkboxes below and obtain authorized website owner sign-off.
-4. Once signed off, update `enabled: true` in `src/content/settings/clients.yaml` and commit to publish.
+| Display order | Brand | Asset status | Publication status |
+| ---: | --- | --- | --- |
+| 1 | Mitsubishi Electric | Individual official vector | Approved |
+| 2 | ABB | Individual official vector | Approved |
+| 3 | Fuji Electric | Individual official vector | Approved |
+| 4 | LS Electric | Current official identity-kit asset | Approved |
+| 5 | Siemens | Official press-site asset | Approved |
+| 6 | Selec Controls | Individual official web asset | Approved |
+| 7 | Schneider Electric | Individual official 2024 vector | Approved |
+| 8 | CHINT | Individual official web asset | Approved |
+| 9 | Togami Electric | Individual official vector | Approved |
+| 10 | HD Hyundai Electric | Current official identity-kit asset | Approved |
 
----
+Source data, individual filenames, official website links, order, and enabled state are maintained in `src/content/settings/clients.yaml`. The former cropped screenshot is retained only as owner-supplied reference material and is not rendered on the public site.
 
-## Candidate Client & Partner Review Log
+## Client & Partner Relationship Claims
 
-### 1. Dhaka Electric Supply Company Limited (DESCO)
-- **Claim**: Utility Load Sanction Coordination & Substation Interconnection Partner
-- **Official Domain**: [https://www.desco.org.bd](https://www.desco.org.bd)
-- **Proposed Logo**: `pacific-powertech-logo-icon.jpeg` (Temporary placeholder; pending vector/PNG from official source)
-- **Category**: Utility
-- **Current Status**: 🔴 **Disabled (`enabled: false`)**
-- [ ] Relationship Claim Verified by Owner
-- [ ] Official Brand Mark Verified for Aspect Ratio and Contrast
-- **Owner Sign-Off**: ____________________  **Date**: ____________
+No client or partner relationship logos are currently enabled. Before publishing one:
 
----
-
-### 2. Dhaka Power Distribution Company Limited (DPDC)
-- **Claim**: Utility Load Sanction Documentation & Distribution Interconnection
-- **Official Domain**: [https://dpdc.org.bd](https://dpdc.org.bd)
-- **Proposed Logo**: `pacific-powertech-logo-icon.jpeg` (Temporary placeholder; pending vector/PNG from official source)
-- **Category**: Utility
-- **Current Status**: 🔴 **Disabled (`enabled: false`)**
-- [ ] Relationship Claim Verified by Owner
-- [ ] Official Brand Mark Verified for Aspect Ratio and Contrast
-- **Owner Sign-Off**: ____________________  **Date**: ____________
-
----
-
-### 3. Bangladesh Power Development Board (BPDB)
-- **Claim**: Regulatory Substation Specification & Power Distribution
-- **Official Domain**: [https://www.bpdb.gov.bd](https://www.bpdb.gov.bd)
-- **Proposed Logo**: `pacific-powertech-logo-icon.jpeg` (Temporary placeholder; pending vector/PNG from official source)
-- **Category**: Utility
-- **Current Status**: 🔴 **Disabled (`enabled: false`)**
-- [ ] Relationship Claim Verified by Owner
-- [ ] Official Brand Mark Verified for Aspect Ratio and Contrast
-- **Owner Sign-Off**: ____________________  **Date**: ____________
-
----
-
-### 4. Bangladesh Rural Electrification Board (BREB)
-- **Claim**: Rural Substation & Distribution Equipment Compliance
-- **Official Domain**: [http://www.reb.gov.bd](http://www.reb.gov.bd)
-- **Proposed Logo**: `pacific-powertech-logo-icon.jpeg` (Temporary placeholder; pending vector/PNG from official source)
-- **Category**: Utility
-- **Current Status**: 🔴 **Disabled (`enabled: false`)**
-- [ ] Relationship Claim Verified by Owner
-- [ ] Official Brand Mark Verified for Aspect Ratio and Contrast
-- **Owner Sign-Off**: ____________________  **Date**: ____________
-
----
-
-### 5. ABB Group
-- **Claim**: Component Integration Partner (Authorized integration of ABB VD4 Vacuum Circuit Breakers in 11kV Switchgear)
-- **Official Domain**: [https://global.abb](https://global.abb)
-- **Proposed Logo**: `pacific-powertech-logo-icon.jpeg` (Temporary placeholder)
-- **Category**: Component Manufacturer / OEM
-- **Current Status**: 🔴 **Disabled (`enabled: false`)**
-- [ ] Relationship Claim Verified by Owner
-- [ ] Official Brand Mark Verified for Aspect Ratio and Contrast
-- **Owner Sign-Off**: ____________________  **Date**: ____________
-
----
-
-### 6. Siemens AG
-- **Claim**: Automation Technology Supplier (PLC S7-1200/1500, HMI & SCADA hardware integration)
-- **Official Domain**: [https://www.siemens.com](https://www.siemens.com)
-- **Proposed Logo**: `pacific-powertech-logo-icon.jpeg` (Temporary placeholder)
-- **Category**: Component Manufacturer / OEM
-- **Current Status**: 🔴 **Disabled (`enabled: false`)**
-- [ ] Relationship Claim Verified by Owner
-- [ ] Official Brand Mark Verified for Aspect Ratio and Contrast
-- **Owner Sign-Off**: ____________________  **Date**: ____________
-
+1. Verify the commercial relationship and proposed wording with the website owner.
+2. Obtain the logo from an official company source or receive it directly from the owner.
+3. Record the approval, date, source URL, and approved claim in this file.
+4. Add the entry to `src/content/settings/clients.yaml` with a category other than `Technology & Component Brand` and set `enabled: true` only after sign-off.

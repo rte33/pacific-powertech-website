@@ -1,119 +1,84 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getServicesPage, formatUrl } from '../utils/content';
+import { Image } from 'astro:assets';
+import { resolveImage } from '../utils/assets';
 import CatalogDownloadBanner from '../components/CatalogDownloadBanner.astro';
 
 const servicesData = getServicesPage();
 const { meta, header, servicesList, industriesServed, utilitiesInfrastructure } = servicesData;
+const serviceImage = await resolveImage('electrical-panel-testing-multimeter.jpeg');
 ---
 
 <BaseLayout title={meta.title} description={meta.description}>
-  <!-- Page Header -->
-  <section class="bg-[#070707] text-white py-12 sm:py-16 border-b-2 border-[#0C53A4]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl space-y-2">
-        <span class="inline-block text-xs font-bold uppercase tracking-widest text-[#FAB218] font-mono">
-          Engineering &bull; Lifecycle Operations
-        </span>
-        <h1 class="font-heading text-3xl sm:text-5xl font-bold uppercase tracking-tight text-white leading-none">
-          {header.title}
-        </h1>
-        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-sans pt-2">
-          {header.subtitle}
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Core Engineering Services -->
-  <section class="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="border-b border-gray-300 pb-3 mb-8">
-      <span class="text-xs font-bold uppercase tracking-widest text-[#0C53A4] font-mono">
-        Field Engineering
-      </span>
-      <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-gray-950 mt-1">
-        Comprehensive Substation &amp; Automation Services
-      </h2>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {servicesList.map((service: any, sIdx: number) => (
-        <div class="bg-white p-6 border border-gray-300 border-t-2 border-t-[#0C53A4] flex flex-col justify-between space-y-3">
-          <div>
-            <span class="font-mono text-xs font-bold text-[#0C53A4]">SERVICE 0{sIdx + 1}</span>
-            <h3 class="font-heading text-lg font-bold uppercase text-gray-950 mt-1 mb-2">{service.title}</h3>
-            <p class="text-xs text-gray-600 leading-relaxed font-sans">{service.description}</p>
-          </div>
+  <section class="border-b border-slate-300 bg-white">
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <nav class="text-sm text-slate-500" aria-label="Breadcrumb"><ol class="flex items-center gap-2"><li><a href={formatUrl('/')} class="hover:text-[#0C53A4]">Home</a></li><li aria-hidden="true">/</li><li aria-current="page" class="text-[#031525]">Engineering Services</li></ol></nav>
+      <div class="mt-9 grid gap-10 pb-10 lg:grid-cols-12 lg:items-center lg:pb-16">
+        <div class="min-w-0 lg:col-span-7">
+          <p class="text-xs font-bold uppercase tracking-[0.22em] text-[#0C53A4]">Engineering · Lifecycle Operations</p>
+          <h1 class="mt-5 max-w-4xl font-heading text-[clamp(2.5rem,6vw,5.7rem)] font-bold leading-[0.95] tracking-[-0.05em] text-[#031525]">{header.title}</h1>
+          <p class="mt-7 max-w-2xl text-lg leading-8 text-slate-600">{header.subtitle}</p>
+          <a href={formatUrl('/contact')} class="mt-9 inline-flex min-h-12 items-center bg-[#0C53A4] px-6 font-bold text-white transition-colors hover:bg-[#084584]">Request a Site Assessment <span class="ml-3" aria-hidden="true">→</span></a>
         </div>
-      ))}
+        <div class="relative lg:col-span-5">
+          {serviceImage && <Image src={serviceImage} alt="Engineer testing an industrial electrical panel" class="aspect-[4/5] w-full object-cover" widths={[480, 720, 960]} loading="eager" />}
+          <div class="absolute inset-x-0 bottom-0 bg-[#031525]/[0.94] px-5 py-4 text-white backdrop-blur-sm"><span class="text-xs font-bold uppercase tracking-[0.16em] text-[#FAB218]">Site to Service</span><p class="mt-1 font-semibold">Design · Commissioning · AMC Support</p></div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Sector Experience Grid -->
-  <section class="py-12 bg-white border-y border-gray-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="border-b border-gray-200 pb-3 mb-8">
-        <span class="text-xs font-bold uppercase tracking-widest text-[#0C53A4] font-mono">
-          Industry Deployments
-        </span>
-        <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-gray-950 mt-1">
-          {industriesServed.title}
-        </h2>
-        <p class="text-xs text-gray-600 font-sans mt-0.5">
-          {industriesServed.subtitle}
-        </p>
+  <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+    <div class="grid gap-8 lg:grid-cols-12">
+      <div class="lg:col-span-4 lg:sticky lg:top-32 lg:self-start">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-[#0C53A4]">Field Engineering</p>
+        <h2 class="mt-3 font-heading text-3xl font-bold tracking-tight text-[#031525] sm:text-4xl">A complete operating lifecycle</h2>
+        <p class="mt-5 max-w-sm text-base leading-7 text-slate-600">One engineering team supports documentation, assembly, commissioning and long-term plant availability.</p>
       </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {industriesServed.sectors.map((sec: any) => (
-          <div class="p-4 bg-[#F6F6F6] border border-gray-200 border-l-2 border-l-[#D81A21]">
-            <h3 class="font-heading text-base font-bold uppercase text-gray-950 mb-1">{sec.name}</h3>
-            <p class="text-xs text-gray-600 font-sans leading-relaxed">{sec.description}</p>
-          </div>
+      <div class="border-t border-slate-300 lg:col-span-7 lg:col-start-6">
+        {servicesList.map((service: any) => (
+          <article class="border-b border-slate-300 py-7">
+            <h3 class="font-heading text-xl font-bold text-[#031525] sm:text-2xl">{service.title}</h3><p class="mt-3 text-sm leading-7 text-slate-600 sm:text-base">{service.description}</p>
+          </article>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Utilities & Environmental Infrastructure -->
-  <section class="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="border-b border-gray-300 pb-3 mb-6">
-      <h2 class="font-heading text-2xl font-bold uppercase tracking-tight text-gray-950">
-        {utilitiesInfrastructure.title}
-      </h2>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {utilitiesInfrastructure.items.map((util: any) => (
-        <div class="p-5 bg-white border border-gray-300">
-          <h3 class="font-heading text-base font-bold uppercase text-gray-950 mb-1">{util.name}</h3>
-          <p class="text-xs text-gray-600 font-sans leading-relaxed">{util.description}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- Direct AMC Callout Strip -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
-    <div class="bg-[#070707] text-white p-8 border-l-4 border-l-[#FAB218] border border-gray-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-      <div class="max-w-2xl space-y-1">
-        <span class="text-xs font-bold uppercase tracking-wider text-[#FAB218] font-mono">Preventive Maintenance</span>
-        <h2 class="font-heading text-2xl font-bold uppercase text-white">Need an Annual Maintenance Contract (AMC)?</h2>
-        <p class="text-xs text-gray-400 font-sans leading-relaxed">
-          Ensure zero downtime with scheduled thermographic scanning, transformer oil breakdown voltage testing, and 24/7 priority emergency response.
-        </p>
+  <section class="bg-[#031525] py-16 text-white sm:py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-5"><p class="text-xs font-bold uppercase tracking-[0.2em] text-[#FAB218]">Industry Experience</p><h2 class="mt-3 font-heading text-3xl font-bold sm:text-4xl">{industriesServed.title}</h2></div>
+        <p class="text-base leading-7 text-slate-300 lg:col-span-6 lg:col-start-7">{industriesServed.subtitle}</p>
       </div>
-      <a
-        href={formatUrl('/contact')}
-        class="px-5 py-3 text-xs font-bold uppercase tracking-wider rounded-none bg-[#D81A21] text-white hover:bg-[#b5151c] transition-colors whitespace-nowrap shadow-xs"
-      >
-        Inquire About AMC &rarr;
-      </a>
+      <div class="mt-12 grid border-t border-white/20 md:grid-cols-2">
+        {industriesServed.sectors.map((sector: any, index: number) => (
+          <article class:list={['border-b border-white/20 py-6 md:px-7', index % 2 === 0 ? 'md:border-r md:pl-0' : 'md:pr-0']}>
+            <h3 class="font-heading text-lg font-bold">{sector.name}</h3><p class="mt-2 text-sm leading-6 text-slate-300">{sector.description}</p>
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 
-  <!-- Catalog Banner -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <CatalogDownloadBanner />
-  </div>
+  <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-4"><p class="text-xs font-bold uppercase tracking-[0.2em] text-[#0C53A4]">Critical Infrastructure</p><h2 class="mt-3 font-heading text-3xl font-bold text-[#031525]">{utilitiesInfrastructure.title}</h2></div>
+      <div class="grid gap-x-10 border-t border-slate-300 md:grid-cols-2 lg:col-span-7 lg:col-start-6">
+        {utilitiesInfrastructure.items.map((item: any) => (
+          <article class="border-b border-slate-300 py-6"><h3 class="font-heading text-lg font-bold text-[#031525]">{item.name}</h3><p class="mt-3 text-sm leading-7 text-slate-600">{item.description}</p></article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
+    <div class="grid gap-7 border-l-4 border-[#FAB218] bg-[#031525] p-7 text-white md:grid-cols-[1fr_auto] md:items-center md:p-9">
+      <div><p class="text-xs font-bold uppercase tracking-[0.18em] text-[#FAB218]">Preventive Maintenance</p><h2 class="mt-2 font-heading text-2xl font-bold">Need an Annual Maintenance Contract?</h2><p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300">Plan thermographic scanning, transformer-oil breakdown testing and priority emergency response around your production schedule.</p></div>
+      <a href={formatUrl('/contact')} class="inline-flex min-h-12 items-center bg-[#0C53A4] px-6 font-bold text-white hover:bg-[#084584]">Discuss AMC Scope <span class="ml-3" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><CatalogDownloadBanner /></div>
 </BaseLayout>

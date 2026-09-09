@@ -1,73 +1,113 @@
-# Pacific Powertech Ltd. - Client & Partner Registry
-# IMPORTANT: Per governance rules, all client entries MUST remain disabled (enabled: false)
-# until both the relationship claim and official logo asset are explicitly verified and approved
-# by the website owner via docs/CLIENT_APPROVAL_CHECKLIST.md.
-# Disabled entries are strictly excluded from all public builds and the public carousel.
+# Technology and component brands approved by the website owner on 2026-09-08.
+# These entries identify equipment brands, not customer relationships.
 
 clients:
-  - id: "desco"
-    name: "Dhaka Electric Supply Company Limited (DESCO)"
-    shortName: "DESCO"
-    logo: "pacific-powertech-logo-icon.jpeg"
-    sourceUrl: "https://www.desco.org.bd"
-    altText: "DESCO official logo"
+  - id: "mitsubishi-electric"
+    name: "Mitsubishi Electric"
+    shortName: "Mitsubishi Electric"
+    logo: "mitsubishi-electric.svg"
+    sourceUrl: "https://www.mitsubishielectric.com/en/"
+    altText: "Mitsubishi Electric logo"
     order: 1
-    enabled: false
-    category: "Utility"
-    statusNote: "Pending website owner sign-off on relationship claim and brand asset."
-
-  - id: "dpdc"
-    name: "Dhaka Power Distribution Company Limited (DPDC)"
-    shortName: "DPDC"
-    logo: "pacific-powertech-logo-icon.jpeg"
-    sourceUrl: "https://dpdc.org.bd"
-    altText: "DPDC official logo"
-    order: 2
-    enabled: false
-    category: "Utility"
-    statusNote: "Pending website owner sign-off on relationship claim and brand asset."
-
-  - id: "bpdb"
-    name: "Bangladesh Power Development Board (BPDB)"
-    shortName: "BPDB"
-    logo: "pacific-powertech-logo-icon.jpeg"
-    sourceUrl: "https://www.bpdb.gov.bd"
-    altText: "BPDB official logo"
-    order: 3
-    enabled: false
-    category: "Utility"
-    statusNote: "Pending website owner sign-off on relationship claim and brand asset."
-
-  - id: "reb"
-    name: "Bangladesh Rural Electrification Board (BREB)"
-    shortName: "BREB"
-    logo: "pacific-powertech-logo-icon.jpeg"
-    sourceUrl: "http://www.reb.gov.bd"
-    altText: "BREB official logo"
-    order: 4
-    enabled: false
-    category: "Utility"
-    statusNote: "Pending website owner sign-off on relationship claim and brand asset."
+    enabled: true
+    category: "Technology & Component Brand"
+    statusNote: "Official corporate vector asset; publication approved by owner."
 
   - id: "abb"
-    name: "ABB Group (Technology Partner)"
+    name: "ABB"
     shortName: "ABB"
-    logo: "pacific-powertech-logo-icon.jpeg"
-    sourceUrl: "https://global.abb"
-    altText: "ABB official logo"
-    order: 5
-    enabled: false
-    category: "Component Manufacturer"
-    statusNote: "Pending confirmation of OEM / component integration partner attribution."
+    logo: "abb.svg"
+    sourceUrl: "https://www.abb.com/global/en"
+    altText: "ABB logo"
+    order: 2
+    enabled: true
+    category: "Technology & Component Brand"
+    statusNote: "Official corporate vector asset; publication approved by owner."
+
+  - id: "fuji-electric"
+    name: "Fuji Electric"
+    shortName: "Fuji Electric"
+    logo: "fuji-electric.svg"
+    sourceUrl: "https://www.fujielectric.com/"
+    altText: "Fuji Electric logo"
+    order: 3
+    enabled: true
+    category: "Technology & Component Brand"
+    statusNote: "Official corporate vector asset; publication approved by owner."
+
+  - id: "ls-electric"
+    name: "LS Electric"
+    shortName: "LS Electric"
+    logo: "ls-electric.png"
+    sourceUrl: "https://www.ls-electric.com/"
+    altText: "LS Electric logo"
+    order: 4
+    enabled: true
+    category: "Technology & Component Brand"
+    statusNote: "Current mark from the official LS Electric identity kit; publication approved by owner."
 
   - id: "siemens"
-    name: "Siemens AG (Automation Technology)"
+    name: "Siemens"
     shortName: "Siemens"
-    logo: "pacific-powertech-logo-icon.jpeg"
-    sourceUrl: "https://www.siemens.com"
-    altText: "Siemens official logo"
-    order: 6
-    enabled: false
-    category: "Component Manufacturer"
-    statusNote: "Pending confirmation of automation hardware supplier attribution."
+    logo: "siemens.png"
+    sourceUrl: "https://www.siemens.com/"
+    altText: "Siemens logo"
+    order: 5
+    enabled: true
+    category: "Technology & Component Brand"
+    statusNote: "Official Siemens press-site asset; publication approved by owner."
 
+  - id: "selec"
+    name: "Selec Controls"
+    shortName: "Selec"
+    logo: "selec.png"
+    sourceUrl: "https://www.selec.com/"
+    altText: "Selec Controls logo"
+    order: 6
+    enabled: true
+    category: "Technology & Component Brand"
+    statusNote: "Official corporate web asset; publication approved by owner."
+
+  - id: "schneider-electric"
+    name: "Schneider Electric"
+    shortName: "Schneider Electric"
+    logo: "schneider-electric.svg"
+    sourceUrl: "https://www.se.com/ww/en/"
+    altText: "Schneider Electric logo"
+    order: 7
+    enabled: true
+    category: "Technology & Component Brand"
+    statusNote: "Official 2024 Schneider Electric vector asset; publication approved by owner."
+
+  - id: "chint"
+    name: "CHINT"
+    shortName: "CHINT"
+    logo: "chint.png"
+    sourceUrl: "https://www.chintglobal.com/global/en/home.html"
+    altText: "CHINT logo"
+    order: 8
+    enabled: true
+    category: "Technology & Component Brand"
+    statusNote: "Official corporate web asset; publication approved by owner."
+
+  - id: "togami"
+    name: "Togami Electric"
+    shortName: "Togami"
+    logo: "togami.svg"
+    sourceUrl: "https://www.togami-elec.co.jp/en/"
+    altText: "Togami Electric logo"
+    order: 9
+    enabled: true
+    category: "Technology & Component Brand"
+    statusNote: "Official corporate vector asset; publication approved by owner."
+
+  - id: "hd-hyundai-electric"
+    name: "HD Hyundai Electric"
+    shortName: "HD Hyundai Electric"
+    logo: "hd-hyundai-electric.png"
+    sourceUrl: "https://www.hd-hyundaielectric.com/elect/en/index.jsp"
+    altText: "HD Hyundai Electric logo"
+    order: 10
+    enabled: true
+    category: "Technology & Component Brand"
+    statusNote: "Current mark from the official HD Hyundai Electric identity kit; publication approved by owner."

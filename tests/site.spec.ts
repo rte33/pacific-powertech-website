@@ -57,6 +57,8 @@ test.describe('Pacific Powertech Ltd. Comprehensive Test Suite', () => {
   });
 
   test('Verify all images load with valid sources and non-zero dimensions', async ({ page }) => {
+    // Use the static brand grid so moving marquee images are stable while inspected.
+    await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('');
     await page.waitForLoadState('networkidle');
 
@@ -66,15 +68,15 @@ test.describe('Pacific Powertech Ltd. Comprehensive Test Suite', () => {
 
     for (let i = 0; i < count; i++) {
       const img = images.nth(i);
+      const isVisible = await img.isVisible();
+      if (!isVisible) continue;
+
       // Scroll image into view to trigger lazy loading if needed
       await img.scrollIntoViewIfNeeded();
       await page.waitForTimeout(50);
-      const isVisible = await img.isVisible();
-      if (isVisible) {
-        const naturalWidth = await img.evaluate((el: HTMLImageElement) => el.naturalWidth);
-        const src = await img.getAttribute('src');
-        expect(naturalWidth, `Image with src "${src}" failed to render (naturalWidth === 0)`).toBeGreaterThan(0);
-      }
+      const naturalWidth = await img.evaluate((el: HTMLImageElement) => el.naturalWidth);
+      const src = await img.getAttribute('src');
+      expect(naturalWidth, `Image with src "${src}" failed to render (naturalWidth === 0)`).toBeGreaterThan(0);
     }
   });
 
@@ -152,16 +154,62 @@ test.describe('Pacific Powertech Ltd. Comprehensive Test Suite', () => {
     await expect(tableContainer).toBeVisible();
   });
 
-  test('Verify client carousel accessibility, duplicate hiding, and motion controls', async ({ page }) => {
+  test('Verify every route remains proportionate within the viewport', async ({ page }) => {
+    for (const route of ROUTES) {
+      await page.goto(route);
+      await page.waitForLoadState('networkidle');
+
+      const layout = await page.evaluate(() => {
+        const viewportWidth = window.innerWidth;
+        const header = document.querySelector('header')?.getBoundingClientRect();
+        const heading = document.querySelector('main h1')?.getBoundingClientRect();
+
+        return {
+          viewportWidth,
+          documentWidth: document.documentElement.scrollWidth,
+          headerLeft: header?.left ?? 0,
+          headerRight: header?.right ?? viewportWidth,
+          headingLeft: heading?.left ?? 0,
+          headingRight: heading?.right ?? viewportWidth,
+        };
+      });
+
+      expect(layout.documentWidth, `${route || '/'} has page-level horizontal overflow`).toBeLessThanOrEqual(layout.viewportWidth);
+      expect(layout.headerLeft, `${route || '/'} header extends beyond the left edge`).toBeGreaterThanOrEqual(-1);
+      expect(layout.headerRight, `${route || '/'} header extends beyond the right edge`).toBeLessThanOrEqual(layout.viewportWidth + 1);
+      expect(layout.headingLeft, `${route || '/'} primary heading extends beyond the left edge`).toBeGreaterThanOrEqual(-1);
+      expect(layout.headingRight, `${route || '/'} primary heading extends beyond the right edge`).toBeLessThanOrEqual(layout.viewportWidth + 1);
+    }
+  });
+
+  test('Verify individual technology logos render without autoplay controls', async ({ page }) => {
     await page.goto('');
 
-    const carouselSection = page.locator('section[aria-label="Clients and Partners"]');
-    if (await carouselSection.count() > 0) {
-      // If client logos are enabled, verify duplicate elements have aria-hidden="true"
-      const duplicateItems = carouselSection.locator('[aria-hidden="true"]');
-      const count = await duplicateItems.count();
-      expect(count).toBeGreaterThanOrEqual(0);
+    const brandSection = page.locator('[data-technology-brands]');
+    await expect(brandSection).toBeVisible();
+    await expect(brandSection.getByRole('heading', { name: 'Technology & Component Brands' })).toBeVisible();
+    await expect(brandSection.locator('li')).toHaveCount(10);
+    await expect(brandSection.locator('img')).toHaveCount(10);
+    await expect(brandSection.locator('#brand-carousel-toggle')).toHaveCount(0);
+    await expect(brandSection.locator('#brand-marquee-track')).toHaveCount(0);
+  });
+
+  test('Verify additional catalog products scroll horizontally without page overflow', async ({ page }) => {
+    await page.goto('');
+
+    const rail = page.getByRole('region', { name: 'Additional products from the Pacific Powertech catalog' });
+    await expect(rail).toBeVisible();
+    await expect(rail.locator('article')).toHaveCount(13);
+
+    const next = rail.locator('xpath=ancestor::section[1]').getByRole('button', { name: 'Scroll products forward' });
+    if (await next.isVisible()) {
+      const before = await rail.evaluate((element) => element.scrollLeft);
+      await next.click();
+      await expect.poll(() => rail.evaluate((element) => element.scrollLeft)).toBeGreaterThan(before);
     }
+
+    const hasPageOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+    expect(hasPageOverflow).toBe(false);
   });
 
   test('Verify keyboard focus navigation', async ({ page }) => {

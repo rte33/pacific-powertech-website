@@ -10,8 +10,8 @@ const { headers, rows, notes, caption = "Technical Engineering Specifications" }
 ---
 
 <div class="my-6">
-  <div class="flex items-center justify-between mb-1.5">
-    <span class="text-xs font-bold uppercase tracking-wider text-gray-700 font-heading">
+  <div class="mb-2 flex items-center justify-between">
+    <span class="text-xs font-bold uppercase tracking-[0.16em] text-slate-700">
       {caption}
     </span>
     <span class="text-xs text-[#0C53A4] md:hidden flex items-center font-medium font-sans">
@@ -19,7 +19,7 @@ const { headers, rows, notes, caption = "Technical Engineering Specifications" }
     </span>
   </div>
 
-  <div class="table-responsive-container border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#0C53A4]" tabindex="0" role="region" aria-label={caption}>
+  <div class="table-responsive-container border border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0C53A4]" tabindex="0" role="region" aria-label={caption}>
     <table class="w-full text-left border-collapse" role="table">
       <caption class="sr-only">{caption}</caption>
       <thead>
@@ -31,11 +31,11 @@ const { headers, rows, notes, caption = "Technical Engineering Specifications" }
           ))}
         </tr>
       </thead>
-      <tbody class="divide-y divide-gray-200 text-xs font-sans tabular-nums">
+      <tbody class="divide-y divide-slate-200 text-sm tabular-nums">
         {rows.map((row, idx) => (
-          <tr class={idx % 2 === 0 ? 'bg-white hover:bg-blue-50/50' : 'bg-gray-50/80 hover:bg-blue-50/50'}>
+          <tr class={idx % 2 === 0 ? 'bg-white hover:bg-blue-50/50' : 'bg-slate-50/80 hover:bg-blue-50/50'}>
             {row.map((cell, cellIdx) => (
-              <td class={`py-2 px-3.5 text-gray-800 whitespace-nowrap ${cellIdx === 0 ? 'font-semibold text-black bg-gray-50/50' : ''}`}>
+              <td class={`whitespace-nowrap px-3.5 py-2.5 text-slate-800 ${cellIdx === 0 ? 'bg-slate-50/50 font-semibold text-[#031525]' : ''}`}>
                 {cell}
               </td>
             ))}
@@ -46,7 +46,7 @@ const { headers, rows, notes, caption = "Technical Engineering Specifications" }
   </div>
 
   {notes && (
-    <p class="text-[11px] text-gray-700 italic mt-1 font-sans">
+    <p class="mt-2 text-xs italic leading-5 text-slate-600">
       * {notes}
     </p>
   )}

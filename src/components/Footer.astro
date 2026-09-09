@@ -1,162 +1,104 @@
 ---
-import { getSiteSettings, formatUrl } from '../utils/content';
 import { Image } from 'astro:assets';
+import { getSiteSettings, formatUrl } from '../utils/content';
 import { resolveImage } from '../utils/assets';
+import BrandLockup from './BrandLockup.astro';
 
 const site = getSiteSettings();
 const company = site.company;
 const currentYear = new Date().getFullYear();
-
-// Dynamically resolve logo image to eliminate mixed static/dynamic Vite warnings
-const logoStacked = await resolveImage(company.branding.logoStacked);
+const approvalTick = await resolveImage(company.branding.approvalTick);
+const approvalMarks = await Promise.all(
+  (company.approvalMarks || []).map(async (mark: any) => ({
+    ...mark,
+    imgMeta: await resolveImage(mark.logo),
+  }))
+);
 ---
 
-<footer class="bg-[#070707] text-gray-300 border-t-2 border-[#0C53A4]">
-  <!-- Main Content Strip -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-      <!-- Col 1: Corporate Profile & Brand Mark -->
-      <div class="space-y-3">
-        <div class="bg-white p-2 inline-block border border-gray-300 max-w-[190px]">
-          {logoStacked ? (
-            <Image
-              src={logoStacked}
-              alt={company.name}
-              class="h-12 w-auto object-contain"
-              height={48}
-            />
-          ) : (
-            <span class="font-heading font-bold text-[#0C53A4] text-lg uppercase tracking-wider">{company.name}</span>
-          )}
-        </div>
-        <p class="text-xs text-gray-400 leading-relaxed font-sans">
-          {company.tagline}
+<footer class="border-t border-white/10 bg-[#020d17] text-slate-300">
+  <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+      <div class="lg:col-span-4">
+        <a href={formatUrl('/')} class="inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAB218]" aria-label="Pacific Powertech home">
+          <BrandLockup />
+        </a>
+        <p class="mt-5 max-w-sm text-base leading-7 text-slate-300">{company.tagline}</p>
+        <p class="mt-5 text-sm leading-6 text-slate-400">
+          Established {company.established} · Dhaka, Bangladesh<br />
+          Engineered to IEC, BS, ANSI, VDE and BNBC requirements.
         </p>
-        <div class="text-xs text-gray-400 border-t border-gray-800 pt-2.5 space-y-1">
-          <p><strong class="text-gray-200">Established:</strong> 2013 in Dhaka, Bangladesh</p>
-          <p><strong class="text-gray-200">Engineering Staff:</strong> 23 Engineers &amp; Technicians</p>
-          <p><strong class="text-gray-200">Standards:</strong> IEC 76, BS, ANSI, VDE, BNBC</p>
-        </div>
       </div>
 
-      <!-- Col 2: Navigation Links -->
-      <div>
-        <h2 class="font-heading text-sm font-bold uppercase tracking-wider text-[#FAB218] mb-3 pb-1 border-b border-gray-800">
-          Navigation
-        </h2>
-        <ul class="space-y-1.5 text-xs text-gray-300 font-sans">
+      <div class="lg:col-span-2">
+        <h2 class="mb-4 text-sm font-bold tracking-wide text-[#FAB218]">Explore</h2>
+        <ul class="space-y-2.5 text-sm">
           {site.navigation.map((item: any) => (
-            <li>
-              <a href={formatUrl(item.path)} class="hover:text-white transition-colors flex items-center gap-1.5 py-0.5">
-                <span class="text-[#D81A21]">&rsaquo;</span>
-                {item.title}
-              </a>
+            <li><a href={formatUrl(item.path)} class="hover:text-white">{item.title}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="lg:col-span-3">
+        <h2 class="mb-4 text-sm font-bold tracking-wide text-[#FAB218]">Core Systems</h2>
+        <ul class="space-y-2.5 text-sm leading-6">
+          <li><a href={formatUrl('/products/transformers')} class="hover:text-white">Distribution Transformers</a></li>
+          <li><a href={formatUrl('/products/lt-switchgear')} class="hover:text-white">LT Switchgear &amp; ACB Panels</a></li>
+          <li><a href={formatUrl('/products/pfi-systems')} class="hover:text-white">PFI Plants &amp; Capacitor Banks</a></li>
+          <li><a href={formatUrl('/products/ht-switchgear')} class="hover:text-white">11 kV HT Switchgear</a></li>
+          <li><a href={formatUrl('/products/industrial-automation')} class="hover:text-white">PLC, SCADA &amp; Motor Control</a></li>
+        </ul>
+      </div>
+
+      <div class="lg:col-span-3">
+        <h2 class="mb-4 text-sm font-bold tracking-wide text-[#FAB218]">Engineering Desk</h2>
+        <address class="text-sm not-italic leading-6 text-slate-400">{company.address.full}</address>
+        <div class="mt-5 space-y-2 text-sm tabular-nums">
+          <p><span class="text-slate-400">Hotline</span><br /><a href={`tel:${company.contact.primaryPhone.replace(/\s+/g, '')}`} class="font-bold text-white hover:text-[#FAB218]">{company.contact.primaryPhone}</a></p>
+          <p><span class="text-slate-400">Email</span><br /><a href={`mailto:${company.contact.email}`} class="text-white hover:text-[#FAB218]">{company.contact.email}</a></p>
+        </div>
+      </div>
+    </div>
+
+    {approvalMarks.length > 0 && (
+      <div class="mt-10 border-t border-white/10 pt-6" aria-labelledby="certifications-heading">
+        <h2 id="certifications-heading" class="text-xs font-bold uppercase tracking-[0.18em] text-[#FAB218]">
+          Certifications &amp; Approvals
+        </h2>
+        <ul class="mt-5 grid gap-x-10 gap-y-5 sm:grid-cols-3" aria-label="Certification and approval bodies">
+          {approvalMarks.map((mark: any) => (
+            <li class="flex min-h-12 items-center gap-3 text-sm font-semibold leading-5 text-slate-200">
+              {mark.imgMeta ? (
+                <Image
+                  src={mark.imgMeta}
+                  alt={mark.altText}
+                  class="h-11 w-14 shrink-0 object-contain"
+                  width={56}
+                  height={44}
+                  loading="lazy"
+                />
+              ) : (
+                <span class="w-14 shrink-0 text-xs font-bold text-white">{mark.name}</span>
+              )}
+              {approvalTick && (
+                <span
+                  class="h-5 w-5 shrink-0 bg-[#FAB218]"
+                  style={`-webkit-mask: url(${approvalTick.src}) center / contain no-repeat; mask: url(${approvalTick.src}) center / contain no-repeat;`}
+                  aria-hidden="true"
+                ></span>
+              )}
+              <span>{mark.statement}</span>
             </li>
           ))}
-          <li>
-            <a href={formatUrl('/assets/PPL Catalog.pdf')} download="Pacific-Powertech-Catalog.pdf" class="hover:text-white transition-colors flex items-center gap-1.5 py-0.5 text-gray-200 font-semibold">
-              <span class="text-[#D81A21]">&rsaquo;</span>
-              Download Catalog PDF (1.2 MB)
-            </a>
-          </li>
         </ul>
       </div>
-
-      <!-- Col 3: Core Engineering Products -->
-      <div>
-        <h2 class="font-heading text-sm font-bold uppercase tracking-wider text-[#FAB218] mb-3 pb-1 border-b border-gray-800">
-          Products &amp; Equipment
-        </h2>
-        <ul class="space-y-1.5 text-xs text-gray-300 font-sans">
-          <li>
-            <a href={formatUrl('/products/transformers')} class="hover:text-white transition-colors block py-0.5">
-              Distribution Transformers (100–3000 kVA)
-            </a>
-          </li>
-          <li>
-            <a href={formatUrl('/products/lt-switchgear')} class="hover:text-white transition-colors block py-0.5">
-              LT Switchgear &amp; ACB Panels (800A–6300A)
-            </a>
-          </li>
-          <li>
-            <a href={formatUrl('/products/pfi-systems')} class="hover:text-white transition-colors block py-0.5">
-              Automatic PFI Plants &amp; Capacitor Banks
-            </a>
-          </li>
-          <li>
-            <a href={formatUrl('/products/ht-switchgear')} class="hover:text-white transition-colors block py-0.5">
-              11 kV HT Switchgear (ABB VD4 VCB)
-            </a>
-          </li>
-          <li>
-            <a href={formatUrl('/products/industrial-automation')} class="hover:text-white transition-colors block py-0.5">
-              PLC, SCADA &amp; Motor Control Centers
-            </a>
-          </li>
-          <li>
-            <a href={formatUrl('/services')} class="hover:text-white transition-colors block py-0.5">
-              Substation AMC &amp; Load Sanctions
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Col 4: Corporate Works & Contacts -->
-      <div>
-        <h2 class="font-heading text-sm font-bold uppercase tracking-wider text-[#FAB218] mb-3 pb-1 border-b border-gray-800">
-          Works &amp; Contacts
-        </h2>
-        <address class="not-italic text-xs text-gray-400 leading-relaxed font-sans">
-          Plot # 2249, Munshibari Goli, Shatarkul Road,<br />
-          Uttar Badda, Dhaka-1212, Bangladesh
-        </address>
-        <div class="mt-3 text-xs space-y-1 text-gray-300 font-sans tabular-nums">
-          <p>
-            <strong class="text-gray-200">24/7 Hotline:</strong>{' '}
-            <a href={`tel:${company.contact.primaryPhone.replace(/\s+/g, '')}`} class="text-[#FAB218] hover:underline">
-              {company.contact.primaryPhone}
-            </a>
-          </p>
-          <p>
-            <strong class="text-gray-200">Corporate:</strong>{' '}
-            <a href={`tel:${company.contact.secondaryPhone.replace(/\s+/g, '')}`} class="hover:text-white">
-              {company.contact.secondaryPhone}
-            </a>
-          </p>
-          <p>
-            <strong class="text-gray-200">Email:</strong>{' '}
-            <a href={`mailto:${company.contact.email}`} class="text-gray-300 hover:text-white">
-              {company.contact.email}
-            </a>
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Accreditations Strip -->
-    <div class="mt-8 pt-6 border-t border-gray-800">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 text-[11px] text-gray-400">
-        <div class="flex items-center gap-2 bg-black/50 px-3 py-2 border border-gray-800">
-          <span class="w-1.5 h-1.5 bg-[#FAB218]"></span>
-          <span>Approved Test Lab by BSTI</span>
-        </div>
-        <div class="flex items-center gap-2 bg-black/50 px-3 py-2 border border-gray-800">
-          <span class="w-1.5 h-1.5 bg-[#FAB218]"></span>
-          <span>BUET Tested &amp; Certified Instruments</span>
-        </div>
-        <div class="flex items-center gap-2 bg-black/50 px-3 py-2 border border-gray-800">
-          <span class="w-1.5 h-1.5 bg-[#FAB218]"></span>
-          <span>Ministry of Power Electrical Licensing Authority</span>
-        </div>
-      </div>
-    </div>
+    )}
   </div>
 
-  <!-- Bottom Legal Bar -->
-  <div class="bg-black py-3.5 px-4 sm:px-6 lg:px-8 border-t border-gray-900 text-[11px] text-gray-400">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
-      <p>&copy; {currentYear} {company.legalName}. All rights reserved.</p>
-      <p>Industrial Electrical Substation &amp; Automation Manufacturing &bull; Dhaka, Bangladesh</p>
+  <div class="border-t border-white/10 bg-black/30 px-4 py-4 text-xs text-slate-400 sm:px-6 lg:px-8">
+    <div class="mx-auto flex max-w-7xl flex-col justify-between gap-2 sm:flex-row sm:items-center">
+      <p>&copy; {currentYear} {company.legalName} All rights reserved.</p>
+      <a href={formatUrl('/assets/PPL Catalog.pdf')} download="Pacific-Powertech-Catalog.pdf" class="font-semibold text-slate-300 hover:text-white">Download technical catalog (PDF)</a>
     </div>
   </div>
 </footer>

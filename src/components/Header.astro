@@ -1,104 +1,67 @@
 ---
 import { getSiteSettings, formatUrl } from '../utils/content';
-import { Image } from 'astro:assets';
-import { resolveImage } from '../utils/assets';
+import BrandLockup from './BrandLockup.astro';
 
 interface Props {
   currentPath?: string;
+  variant?: 'default' | 'overlay';
 }
 
-const { currentPath = '/' } = Astro.props;
+const { currentPath = '/', variant = 'default' } = Astro.props;
 const site = getSiteSettings();
 const navItems = site.navigation;
-const primaryPhone = site.company.contact.primaryPhone;
-const email = site.company.contact.email;
-
-// Dynamically resolve logo image to eliminate mixed static/dynamic Vite warnings
-const logoImg = await resolveImage(site.company.branding.logoBannerMedium);
+const isOverlay = variant === 'overlay';
+const basePath = formatUrl('/').replace(/\/$/, '');
+const normalizedPath = basePath && currentPath.startsWith(basePath)
+  ? currentPath.slice(basePath.length) || '/'
+  : currentPath;
 ---
 
-<header class="sticky top-0 z-50 bg-white border-b border-gray-300">
-  <!-- Top Industrial Utility Strip -->
-  <div class="bg-[#070707] text-gray-300 text-xs py-1.5 px-4 sm:px-6 lg:px-8 border-b border-gray-800">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-1.5">
-      <div class="flex items-center space-x-3">
-        <span class="inline-flex items-center text-[#FAB218] font-medium tracking-wide">
-          <span class="inline-block w-2 h-2 bg-[#FAB218] mr-1.5 rounded-none"></span>
-          24/7 Substation Service &amp; Emergency Support
-        </span>
-        <span class="hidden md:inline text-gray-600">/</span>
-        <a href={`tel:${primaryPhone.replace(/\s+/g, '')}`} class="hover:text-white transition-colors focus:outline-none focus:ring-1 focus:ring-[#FAB218] px-1 tabular-nums">
-          Hotline: <strong class="text-white font-semibold">{primaryPhone}</strong>
-        </a>
-      </div>
-      <div class="hidden sm:flex items-center space-x-3 text-gray-400">
-        <a href={`mailto:${email}`} class="hover:text-white transition-colors focus:outline-none focus:ring-1 focus:ring-[#FAB218] px-1">
-          {email}
-        </a>
-        <span class="text-gray-600">/</span>
-        <span>Works: Uttar Badda, Dhaka</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main Navigation Bar -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-20">
-      <!-- Logo with proper clear space -->
-      <a href={formatUrl('/')} class="flex items-center py-2 pr-4 focus:outline-none focus:ring-2 focus:ring-[#0C53A4]" aria-label="Pacific Powertech Home">
-        {logoImg ? (
-          <Image
-            src={logoImg}
-            alt="Pacific Powertech Ltd."
-            class="h-11 sm:h-12 w-auto object-contain"
-            height={48}
-            loading="eager"
-          />
-        ) : (
-          <span class="text-xl font-heading font-bold text-[#0C53A4] tracking-wider uppercase">Pacific Powertech Ltd.</span>
-        )}
+<header
+  class:list={[
+    'top-0 z-50 w-full border-b border-white/15 text-white',
+    isOverlay ? 'absolute bg-[#031525]/[0.68] backdrop-blur-[3px]' : 'sticky bg-[#031525]',
+  ]}
+  data-header-variant={variant}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-20 items-center justify-between gap-2 min-[360px]:gap-5 sm:h-24">
+      <a
+        href={formatUrl('/')}
+        class="min-w-0 shrink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAB218]"
+        aria-label="Pacific Powertech home"
+      >
+        <BrandLockup compact />
       </a>
 
-      <!-- Desktop Navigation Menu -->
-      <nav class="hidden lg:flex items-center space-x-1" aria-label="Main Navigation">
+      <nav class="hidden items-center gap-0.5 lg:flex" aria-label="Main Navigation">
         {navItems.map((item: any) => {
-          const isActive = currentPath === item.path || (item.path !== '/' && currentPath.startsWith(item.path));
-          if (item.children && item.children.length > 0) {
+          const isActive = normalizedPath === item.path || (item.path !== '/' && normalizedPath.startsWith(item.path));
+          if (item.children?.length) {
             return (
-              <div class="relative group">
+              <div class="group relative">
                 <a
                   href={formatUrl(item.path)}
-                  class={`px-3.5 py-2 text-sm font-medium tracking-wide transition-colors flex items-center gap-1 border-b-2 ${
-                    isActive
-                      ? 'text-[#0C53A4] border-[#0C53A4] bg-blue-50/50'
-                      : 'text-gray-800 border-transparent hover:text-[#0C53A4] hover:border-gray-300'
-                  }`}
-                  aria-expanded="false"
+                  class:list={[
+                    'inline-flex min-h-11 items-center gap-1.5 border-b-2 px-3 py-2 text-sm font-semibold transition-colors',
+                    isActive ? 'border-[#FAB218] text-white' : 'border-transparent text-white/80 hover:border-white/40 hover:text-white',
+                  ]}
                   aria-haspopup="true"
+                  aria-current={isActive ? 'page' : undefined}
                 >
                   {item.title}
-                  <svg class="w-3.5 h-3.5 text-gray-500 group-hover:text-[#0C53A4] transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  <svg class="h-3.5 w-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
                   </svg>
                 </a>
-
-                <!-- Dropdown Menu -->
-                <div class="absolute left-0 mt-0.5 w-80 bg-white border border-gray-300 shadow-md opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-opacity duration-150 z-50 p-2">
-                  <div class="border-b border-gray-200 pb-2 mb-2 px-3 pt-1">
-                    <a href={formatUrl(item.path)} class="text-xs font-bold uppercase tracking-wider text-[#0C53A4] hover:underline flex items-center justify-between">
-                      <span>View All Solutions</span>
-                      <span>&rarr;</span>
-                    </a>
-                  </div>
+                <div class="invisible absolute left-0 top-full z-50 w-80 translate-y-2 border border-slate-200 bg-white p-2 text-[#031525] opacity-0 shadow-xl transition-[opacity,transform] duration-150 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+                  <a href={formatUrl(item.path)} class="mb-1 flex min-h-11 items-center justify-between border-b border-slate-200 px-3 text-xs font-bold uppercase tracking-[0.12em] text-[#0C53A4] hover:bg-slate-50">
+                    <span>View All Solutions</span><span aria-hidden="true">→</span>
+                  </a>
                   {item.children.map((sub: any) => (
-                    <a
-                      href={formatUrl(sub.path)}
-                      class="block px-3 py-2 hover:bg-gray-50 transition-colors focus:bg-gray-50 focus:outline-none border-l-2 border-transparent hover:border-[#0C53A4]"
-                    >
-                      <div class="text-sm font-semibold text-gray-900">{sub.title}</div>
-                      {sub.description && (
-                        <div class="text-xs text-gray-500 line-clamp-1 mt-0.5">{sub.description}</div>
-                      )}
+                    <a href={formatUrl(sub.path)} class="block border-l-2 border-transparent px-3 py-2.5 hover:border-[#0C53A4] hover:bg-slate-50 focus-visible:border-[#0C53A4]">
+                      <span class="block text-sm font-bold">{sub.title}</span>
+                      {sub.description && <span class="mt-0.5 block text-xs leading-5 text-slate-500">{sub.description}</span>}
                     </a>
                   ))}
                 </div>
@@ -109,11 +72,11 @@ const logoImg = await resolveImage(site.company.branding.logoBannerMedium);
           return (
             <a
               href={formatUrl(item.path)}
-              class={`px-3.5 py-2 text-sm font-medium tracking-wide transition-colors border-b-2 ${
-                isActive
-                  ? 'text-[#0C53A4] border-[#0C53A4] bg-blue-50/50 font-semibold'
-                  : 'text-gray-800 border-transparent hover:text-[#0C53A4] hover:border-gray-300'
-              }`}
+              class:list={[
+                'inline-flex min-h-11 items-center border-b-2 px-3 py-2 text-sm font-semibold transition-colors',
+                isActive ? 'border-[#FAB218] text-white' : 'border-transparent text-white/80 hover:border-white/40 hover:text-white',
+              ]}
+              aria-current={isActive ? 'page' : undefined}
             >
               {item.title}
             </a>
@@ -121,98 +84,48 @@ const logoImg = await resolveImage(site.company.branding.logoBannerMedium);
         })}
       </nav>
 
-      <!-- Action Buttons -->
-      <div class="hidden sm:flex items-center space-x-3">
-        <a
-          href={formatUrl('/assets/PPL Catalog.pdf')}
-          download="Pacific-Powertech-Catalog.pdf"
-          class="inline-flex items-center px-3.5 py-2 text-xs font-semibold rounded-none border border-gray-400 text-gray-800 hover:bg-gray-100 hover:border-gray-600 transition-colors focus:ring-2 focus:ring-[#0C53A4]"
-        >
-          <svg class="w-3.5 h-3.5 mr-1.5 text-[#D81A21]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-          </svg>
-          Catalog PDF
-        </a>
-
-        <a
-          href={formatUrl('/contact')}
-          class="inline-flex items-center px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-none bg-[#0C53A4] text-white hover:bg-[#213C94] transition-colors focus:ring-2 focus:ring-offset-1 focus:ring-[#0C53A4]"
-        >
-          Request RFQ
+      <div class="hidden shrink-0 items-center sm:flex">
+        <a href={formatUrl('/contact')} class="inline-flex min-h-11 items-center gap-3 bg-[#0C53A4] px-5 text-sm font-bold text-white transition-colors hover:bg-[#084584] focus-visible:ring-2 focus-visible:ring-[#FAB218]">
+          Request a Quote <span aria-hidden="true">→</span>
         </a>
       </div>
 
-      <!-- Mobile Hamburger Button -->
-      <div class="flex items-center lg:hidden">
-        <button
-          type="button"
-          id="mobile-menu-btn"
-          class="inline-flex items-center justify-center p-2 text-gray-800 hover:text-[#0C53A4] hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#0C53A4]"
-          aria-expanded="false"
-          aria-controls="mobile-nav"
-          aria-label="Toggle navigation menu"
-        >
-          <svg id="icon-menu" class="h-6 w-6 block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
-          <svg id="icon-close" class="h-6 w-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-      </div>
+      <button
+        type="button"
+        id="mobile-menu-btn"
+        class="inline-flex min-h-11 min-w-11 items-center justify-center text-white hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-[#FAB218] lg:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="Toggle navigation menu"
+      >
+        <svg id="icon-menu" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        <svg id="icon-close" class="hidden h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12" /></svg>
+      </button>
     </div>
   </div>
 
-  <!-- Mobile Navigation Drawer -->
-  <div id="mobile-nav" class="hidden lg:hidden border-t border-gray-300 bg-white shadow-lg px-4 pt-3 pb-6 max-h-[85vh] overflow-y-auto">
-    <div class="space-y-1">
+  <div id="mobile-nav" class="hidden max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-white/15 bg-[#031525] px-4 pb-6 pt-3 lg:hidden">
+    <nav class="mx-auto max-w-7xl" aria-label="Mobile navigation">
       {navItems.map((item: any) => {
-        const isActive = currentPath === item.path || (item.path !== '/' && currentPath.startsWith(item.path));
+        const isActive = normalizedPath === item.path || (item.path !== '/' && normalizedPath.startsWith(item.path));
         return (
-          <div class="py-1">
-            <a
-              href={formatUrl(item.path)}
-              class={`block px-3 py-2 text-base font-medium ${
-                isActive ? 'bg-blue-50 text-[#0C53A4] font-bold border-l-4 border-[#0C53A4]' : 'text-gray-900 hover:bg-gray-100'
-              }`}
-            >
+          <div class="border-b border-white/10 py-1.5">
+            <a href={formatUrl(item.path)} class:list={['flex min-h-11 items-center px-3 text-base font-semibold', isActive ? 'text-[#FAB218]' : 'text-white']} aria-current={isActive ? 'page' : undefined}>
               {item.title}
             </a>
-            {item.children && (
-              <div class="pl-4 mt-1 space-y-1 border-l border-gray-300 ml-3">
-                {item.children.map((sub: any) => (
-                  <a
-                    href={formatUrl(sub.path)}
-                    class="block px-3 py-1.5 text-sm text-gray-700 hover:text-[#0C53A4] hover:bg-gray-50"
-                  >
-                    {sub.title}
-                  </a>
-                ))}
+            {item.children?.length && (
+              <div class="mb-2 border-l border-white/20 pl-3">
+                {item.children.map((sub: any) => <a href={formatUrl(sub.path)} class="flex min-h-11 items-center px-3 text-sm text-slate-300 hover:text-white">{sub.title}</a>)}
               </div>
             )}
           </div>
         );
       })}
-    </div>
-
-    <div class="mt-6 pt-4 border-t border-gray-200 flex flex-col gap-2.5">
-      <a
-        href={formatUrl('/assets/PPL Catalog.pdf')}
-        download="Pacific-Powertech-Catalog.pdf"
-        class="flex items-center justify-center w-full px-4 py-2.5 text-sm font-semibold border border-gray-400 text-gray-900 hover:bg-gray-100"
-      >
-        <svg class="w-4 h-4 mr-2 text-[#D81A21]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-        </svg>
-        Download Catalog (1.2 MB PDF)
-      </a>
-      <a
-        href={formatUrl('/contact')}
-        class="flex items-center justify-center w-full px-4 py-2.5 text-sm font-bold uppercase tracking-wider bg-[#0C53A4] text-white hover:bg-[#213C94]"
-      >
-        Request Technical Quotation
-      </a>
-    </div>
+      <div class="mt-5 grid gap-3 sm:grid-cols-2">
+        <a href={formatUrl('/assets/PPL Catalog.pdf')} download="Pacific-Powertech-Catalog.pdf" class="inline-flex min-h-11 items-center justify-center border border-white/35 px-4 text-sm font-bold text-white hover:border-white">Download Catalog</a>
+        <a href={formatUrl('/contact')} class="inline-flex min-h-11 items-center justify-center bg-[#0C53A4] px-4 text-sm font-bold text-white hover:bg-[#084584]">Request a Quote</a>
+      </div>
+    </nav>
   </div>
 </header>
 
@@ -223,12 +136,18 @@ const logoImg = await resolveImage(site.company.branding.logoBannerMedium);
   const iconClose = document.getElementById('icon-close');
 
   if (btn && nav && iconMenu && iconClose) {
-    btn.addEventListener('click', () => {
-      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!isExpanded));
-      nav.classList.toggle('hidden');
-      iconMenu.classList.toggle('hidden');
-      iconClose.classList.toggle('hidden');
+    const setMenuOpen = (isOpen: boolean) => {
+      btn.setAttribute('aria-expanded', String(isOpen));
+      nav.classList.toggle('hidden', !isOpen);
+      iconMenu.classList.toggle('hidden', isOpen);
+      iconClose.classList.toggle('hidden', !isOpen);
+    };
+    btn.addEventListener('click', () => setMenuOpen(btn.getAttribute('aria-expanded') !== 'true'));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') {
+        setMenuOpen(false);
+        btn.focus();
+      }
     });
   }
 </script>

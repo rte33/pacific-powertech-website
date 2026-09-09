@@ -1,6 +1,6 @@
 import type { ImageMetadata } from 'astro';
 
-const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*.{jpeg,jpg,png,gif,webp}');
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*.{jpeg,jpg,png,gif,webp,svg}');
 
 export async function resolveImage(filename: string): Promise<ImageMetadata | null> {
   if (!filename) return null;
@@ -12,4 +12,3 @@ export async function resolveImage(filename: string): Promise<ImageMetadata | nu
   }
   return null;
 }
-

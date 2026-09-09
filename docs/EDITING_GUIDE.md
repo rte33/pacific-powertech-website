@@ -72,9 +72,18 @@ If you have a new photo to include on a product page:
 5. Commit the new file.
 6. Now reference that exact filename in your YAML file (e.g., `image: "dry-type-transformer-substation.jpeg"`).
 
+### Updating the Certifications & Approvals Row
+
+The three compact official marks at the bottom of the dark footer are maintained under `company.approvalMarks` in `src/content/settings/site.yaml`. Each entry contains the organization name, the exact approval statement, a local logo filename, accessible alternative text, and the official artwork source.
+
+- Upload replacement artwork to `src/assets/images/` before changing the `logo` filename.
+- Use only artwork obtained from the named organization's official website or official brand resources.
+- Keep `sourceUrl` as a private editorial record of where the artwork was obtained. The certification marks are intentionally non-interactive and must not be wrapped in links.
+- Do not change an approval statement unless the company has current documentation supporting the claim.
+
 ---
 
-## 5. Managing Client Logos ("Companies We've Worked With")
+## 5. Managing Technology & Component Brand Logos
 
 Per company governance, unapproved client logos must **never** appear publicly:
 
@@ -116,4 +125,3 @@ If you made a change and want to restore an earlier version:
 3. Click on the commit where the file was working correctly.
 4. Click the three dots (`...`) &rarr; **View file at this point**.
 5. Copy the contents, navigate back to the current file, edit, paste the known-good content, and commit.
-

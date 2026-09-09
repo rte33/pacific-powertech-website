@@ -4,12 +4,12 @@ import { getHomePage, formatUrl } from '../utils/content';
 import CatalogDownloadBanner from '../components/CatalogDownloadBanner.astro';
 import { Image } from 'astro:assets';
 import { resolveImage } from '../utils/assets';
+import HorizontalProductRail from '../components/HorizontalProductRail.astro';
 
 const homeData = getHomePage();
-const { meta, hero, featuredSolutions, manufacturingPillars, catalogCta } = homeData;
+const { meta, hero, featuredSolutions, additionalProducts, manufacturingPillars, catalogCta } = homeData;
 
-// Resolve hero image dynamically (Priority 6: eliminates mixed static/dynamic Vite warning)
-const heroBgImage = await resolveImage('substation-switchgear-control-room-lineup.jpeg');
+const heroBgImage = await resolveImage(hero.image);
 
 // Resolve featured solution images
 const solutionsWithImages = await Promise.all(
@@ -20,81 +20,66 @@ const solutionsWithImages = await Promise.all(
 );
 ---
 
-<BaseLayout title={meta.title} description={meta.description}>
-  <!-- Hero Section: Confident Editorial Engineering Composition -->
-  <section class="relative bg-[#070707] text-white border-b-2 border-[#0C53A4]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-        <!-- Editorial Left Column -->
-        <div class="lg:col-span-7 space-y-6">
-          <div class="inline-flex items-center gap-2 border-l-2 border-[#FAB218] pl-3 text-xs font-semibold uppercase tracking-widest text-[#FAB218]">
-            <span>Pacific Powertech Ltd. &bull; Substation &amp; Automation Works</span>
-          </div>
+<BaseLayout title={meta.title} description={meta.description} headerVariant="overlay">
+  <section
+    class="relative isolate overflow-hidden border-b-2 border-[#0C53A4] bg-[#031525] text-white"
+    aria-labelledby="home-hero-title"
+  >
+    {heroBgImage && (
+      <Image
+        src={heroBgImage}
+        alt=""
+        class="home-hero-image absolute inset-0 -z-30 h-full w-full object-cover"
+        widths={[640, 960, 1280, 1600, 1920]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+    )}
+    <div class="home-hero-overlay absolute inset-0 -z-20" aria-hidden="true"></div>
 
-          <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-white leading-none">
-            {hero.headline}
-          </h1>
-
-          <p class="text-sm sm:text-base text-gray-300 leading-relaxed font-sans max-w-2xl">
-            {hero.subheadline}
-          </p>
-
-          <!-- Direct Industrial Action Controls -->
-          <div class="pt-2 flex flex-wrap gap-3 items-center">
-            <a
-              href={formatUrl('/products')}
-              class="px-6 py-3 text-xs font-bold uppercase tracking-wider rounded-none bg-[#0C53A4] text-white hover:bg-[#213C94] transition-colors focus:ring-2 focus:ring-[#0C53A4]"
-            >
-              View Engineering Portfolio &rarr;
-            </a>
-
-            <a
-              href={formatUrl('/assets/PPL Catalog.pdf')}
-              download="Pacific-Powertech-Catalog.pdf"
-              class="px-5 py-3 text-xs font-semibold uppercase tracking-wider rounded-none border border-gray-600 text-gray-200 hover:bg-gray-800 transition-colors flex items-center gap-2"
-            >
-              <svg class="w-4 h-4 text-[#D81A21]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-              </svg>
-              Download Catalog (1.2 MB PDF)
-            </a>
-          </div>
+    <div class="mx-auto flex min-h-[640px] max-w-7xl items-center px-4 pb-20 pt-36 sm:px-6 sm:pb-24 sm:pt-40 lg:min-h-[690px] lg:px-8 lg:pb-28 lg:pt-44">
+      <div class="max-w-5xl">
+        <div class="mb-6 flex items-center gap-4 text-xs font-bold uppercase tracking-[0.24em] text-white/85 sm:text-sm">
+          <span class="h-8 w-1 bg-[#FAB218]" aria-hidden="true"></span>
+          <span>{hero.badge}</span>
         </div>
 
-        <!-- Real Photography Showcase (Right Column) -->
-        <div class="lg:col-span-5">
-          <div class="border border-gray-700 bg-gray-900 p-1.5 shadow-xl">
-            {heroBgImage && (
-              <Image
-                src={heroBgImage}
-                alt="Substation switchgear control room lineup manufactured by Pacific Powertech"
-                class="w-full h-auto object-cover max-h-[360px]"
-                loading="eager"
-              />
-            )}
-            <div class="p-2.5 bg-black text-[11px] text-gray-400 font-mono flex justify-between items-center border-t border-gray-800">
-              <span>FIG 01: SUBSTATION CONTROL LINEUP</span>
-              <span class="text-[#FAB218]">EST. 2013</span>
-            </div>
-          </div>
+        <h1 id="home-hero-title" class="home-hero-title max-w-5xl font-heading font-bold text-white">
+          {hero.headline}
+        </h1>
+
+        <p class="mt-7 max-w-3xl text-lg leading-relaxed text-white/85 sm:text-xl">
+          {hero.subheadline}
+        </p>
+
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <a
+            href={formatUrl(hero.primaryCta.url)}
+            class="inline-flex min-h-12 items-center justify-center gap-4 bg-[#0C53A4] px-7 py-3 text-base font-bold text-white transition-colors hover:bg-[#084584] focus-visible:ring-2 focus-visible:ring-[#FAB218]"
+          >
+            {hero.primaryCta.label}
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+
+          <a
+            href={formatUrl(hero.secondaryCta.url)}
+            download="Pacific-Powertech-Catalog.pdf"
+            class="inline-flex min-h-12 items-center justify-center bg-[#FAB218] px-7 py-3 text-base font-bold text-[#07131f] transition-colors hover:bg-[#f6c044] focus-visible:ring-2 focus-visible:ring-white"
+          >
+            {hero.secondaryCta.label}
+          </a>
         </div>
       </div>
     </div>
 
-    <!-- Integrated Ruled Technical Data Strip (Replaces floating cards) -->
-    <div class="border-t border-gray-800 bg-black/70">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-gray-800">
-          {hero.stats.map((stat: any) => (
-            <div class="py-4 px-3 sm:px-6 flex flex-col justify-center">
-              <span class="font-heading text-2xl sm:text-3xl font-bold uppercase text-[#FAB218] tabular-nums">
-                {stat.value}
-              </span>
-              <span class="font-sans text-xs font-bold uppercase tracking-wider text-white mt-0.5">
-                {stat.label}
-              </span>
-              <span class="font-sans text-[11px] text-gray-400 mt-0.5">
-                {stat.subtext}
+    <div class="relative z-10 border-t border-white/20 bg-[#031525]/[0.88]">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 divide-x divide-y divide-white/20 md:grid-cols-4 md:divide-y-0">
+          {hero.capabilities.map((capability: any) => (
+            <div class="flex min-h-24 items-center px-4 py-5 sm:px-6 lg:min-h-28 lg:px-8">
+              <span class="max-w-[11rem] text-xs font-bold uppercase leading-snug tracking-[0.15em] text-white sm:text-sm">
+                {capability.label}
               </span>
             </div>
           ))}
@@ -103,66 +88,68 @@ const solutionsWithImages = await Promise.all(
     </div>
   </section>
 
+  <HorizontalProductRail
+    title={additionalProducts.sectionTitle}
+    subtitle={additionalProducts.sectionSubtitle}
+    items={additionalProducts.items}
+  />
+
   <!-- Core Engineering Portfolio: Alternating Structured Rows (Breaks up repetitive card grid) -->
-  <section class="py-14 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="border-b-2 border-gray-300 pb-4 mb-10">
-      <span class="text-xs font-bold uppercase tracking-widest text-[#0C53A4] block">
+  <section class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+    <div class="mb-10 border-b border-slate-300 pb-6">
+      <span class="block text-xs font-bold uppercase tracking-[0.2em] text-[#0C53A4]">
         Engineering Capabilities &bull; Technical Index
       </span>
-      <h2 class="font-heading text-3xl sm:text-4xl font-bold uppercase tracking-tight text-[#070707] mt-1">
+      <h2 class="mt-2 font-heading text-3xl font-bold tracking-tight text-[#031525] sm:text-4xl">
         {featuredSolutions.sectionTitle}
       </h2>
-      <p class="text-xs sm:text-sm text-gray-600 mt-1 font-sans max-w-3xl">
+      <p class="mt-3 max-w-3xl text-base leading-7 text-slate-600">
         {featuredSolutions.sectionSubtitle}
       </p>
     </div>
 
-    <div class="space-y-12">
+    <div class="border-b border-slate-300">
       {solutionsWithImages.map((sol, index) => {
         const isReversed = index % 2 !== 0;
         return (
-          <article class="bg-white border border-gray-300 hover:border-[#0C53A4] transition-colors p-6 sm:p-8">
-            <div class={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-center ${isReversed ? 'lg:flex-row-reverse' : ''}`}>
+          <article class="border-t border-slate-300 py-9 sm:py-12">
+            <div class="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
               <!-- Image Column -->
               <div class={`lg:col-span-5 ${isReversed ? 'lg:order-2' : ''}`}>
-                <div class="border border-gray-200 bg-gray-100 aspect-[16/10] overflow-hidden">
+                <div class="aspect-[16/10] overflow-hidden bg-slate-100">
                   {sol.imgMeta ? (
                     <Image
                       src={sol.imgMeta}
                       alt={sol.title}
-                      class="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-200"
+                      class="h-full w-full object-cover transition-transform duration-200 hover:scale-[1.02]"
                       widths={[320, 480, 640]}
                     />
                   ) : (
-                    <div class="w-full h-full flex items-center justify-center text-xs text-gray-400">Photo pending</div>
+                    <div class="flex h-full w-full items-center justify-center text-sm text-slate-500">Photo pending</div>
                   )}
                 </div>
               </div>
 
               <!-- Information Column -->
-              <div class={`lg:col-span-7 space-y-4 ${isReversed ? 'lg:order-1' : ''}`}>
-                <div class="flex items-center gap-2">
-                  <span class="font-mono text-xs text-[#0C53A4] font-bold">SECTION 0{index + 1}</span>
-                  <span class="text-gray-300">/</span>
-                  <span class="text-xs text-gray-500 uppercase tracking-wider font-semibold">Industrial Power Systems</span>
-                </div>
+              <div class={`space-y-4 lg:col-span-7 ${isReversed ? 'lg:order-1' : ''}`}>
+                <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#0C53A4]">Industrial Power Systems</p>
 
-                <h3 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-gray-950">
-                  <a href={formatUrl(sol.url)} class="hover:text-[#0C53A4] focus:outline-none focus:underline">
+                <h3 class="font-heading text-2xl font-bold tracking-tight text-[#031525] sm:text-3xl">
+                  <a href={formatUrl(sol.url)} class="hover:text-[#0C53A4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0C53A4]">
                     {sol.title}
                   </a>
                 </h3>
 
-                <p class="text-xs sm:text-sm text-gray-700 leading-relaxed font-sans">
+                <p class="text-base leading-7 text-slate-600">
                   {sol.summary}
                 </p>
 
                 <!-- Technical Specification Highlights -->
                 {sol.highlights && sol.highlights.length > 0 && (
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-gray-100">
+                  <div class="grid grid-cols-1 gap-x-7 gap-y-2 border-t border-slate-200 pt-4 sm:grid-cols-2">
                     {sol.highlights.map((item: string) => (
-                      <div class="text-xs text-gray-800 flex items-start gap-1.5 font-sans">
-                        <span class="text-[#0C53A4] font-bold">&ndash;</span>
+                      <div class="flex items-start gap-2 text-sm leading-6 text-slate-700">
+                        <span class="font-bold text-[#0C53A4]">&ndash;</span>
                         <span>{item}</span>
                       </div>
                     ))}
@@ -172,7 +159,7 @@ const solutionsWithImages = await Promise.all(
                 <div class="pt-3">
                   <a
                     href={formatUrl(sol.url)}
-                    class="inline-flex items-center text-xs font-bold uppercase tracking-wider text-[#0C53A4] hover:text-[#213C94] border-b-2 border-[#0C53A4] pb-0.5"
+                    class="inline-flex min-h-11 items-center border-b-2 border-[#0C53A4] text-sm font-bold text-[#0C53A4] hover:border-[#031525] hover:text-[#031525]"
                   >
                     <span>View Technical Specifications &amp; Data Sheet</span>
                     <span class="ml-1.5">&rarr;</span>
@@ -187,26 +174,25 @@ const solutionsWithImages = await Promise.all(
   </section>
 
   <!-- Manufacturing & Infrastructure Engineering Standards (Ruled Industrial Band) -->
-  <section class="bg-[#070707] text-white py-14 sm:py-16 border-t-2 border-[#0C53A4] border-b border-gray-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="border-b border-gray-800 pb-4 mb-8">
-        <span class="text-xs font-bold uppercase tracking-widest text-[#FAB218]">
+  <section class="border-y border-white/10 bg-[#031525] py-14 text-white sm:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mb-9 border-b border-white/15 pb-5">
+        <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#FAB218]">
           Quality Assurance &bull; Factory Standards
         </span>
-        <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-white mt-1">
+        <h2 class="mt-2 font-heading text-2xl font-bold tracking-tight text-white sm:text-3xl">
           {manufacturingPillars.title}
         </h2>
-        <p class="text-xs sm:text-sm text-gray-300 mt-1 font-sans">
+        <p class="mt-3 max-w-3xl text-base leading-7 text-slate-300">
           {manufacturingPillars.subtitle}
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {manufacturingPillars.pillars.map((pillar: any, pIdx: number) => (
-          <div class="border-l-2 border-gray-700 hover:border-[#0C53A4] pl-4 py-1 transition-colors space-y-2">
-            <span class="font-mono text-xs text-[#FAB218] font-bold block">SPEC 0{pIdx + 1}</span>
-            <h3 class="font-heading text-lg font-bold uppercase tracking-wide text-white">{pillar.title}</h3>
-            <p class="text-xs text-gray-400 leading-relaxed font-sans">{pillar.description}</p>
+      <div class="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-4">
+        {manufacturingPillars.pillars.map((pillar: any) => (
+          <div class="space-y-2 border-l-2 border-white/25 py-1 pl-4 transition-colors hover:border-[#FAB218]">
+            <h3 class="font-heading text-lg font-bold text-white">{pillar.title}</h3>
+            <p class="text-sm leading-6 text-slate-300">{pillar.description}</p>
           </div>
         ))}
       </div>

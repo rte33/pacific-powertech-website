@@ -1,153 +1,63 @@
 ---
-import { getClients } from '../utils/content';
 import { Image } from 'astro:assets';
+import { getClients } from '../utils/content';
 import { resolveImage } from '../utils/assets';
 
 const clientsData = getClients();
-const allClients = clientsData.clients || [];
-// Strictly filter only approved clients (Never show unapproved or disabled clients publicly)
-const approvedClients = allClients.filter((c: any) => c.enabled === true);
+const approvedClients = (clientsData.clients || [])
+  .filter((client: any) => client.enabled === true)
+  .sort((a: any, b: any) => a.order - b.order);
 
-// Pre-resolve approved images if any exist
 const clientList = await Promise.all(
-  approvedClients.map(async (client: any) => {
-    const imgMeta = await resolveImage(client.logo);
-    return { ...client, imgMeta };
-  })
+  approvedClients.map(async (client: any) => ({
+    ...client,
+    imgMeta: await resolveImage(client.logo),
+  }))
 );
 ---
 
-{clientList.length > 0 ? (
-  <section class="py-12 bg-slate-100 border-t border-slate-200 overflow-hidden" aria-labelledby="clients-heading">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 text-center">
-      <h2 id="clients-heading" class="text-xs font-bold uppercase tracking-widest text-pptl-blue">
-        Companies We've Worked With
-      </h2>
-      <p class="text-lg font-bold text-slate-900 mt-1">
-        Trusted by Industrial Leaders & Utilities Across Bangladesh
-      </p>
-    </div>
-
-    <!-- Controls for Accessible Manual Pause/Play -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-end mb-4">
-      <button
-        id="carousel-toggle-btn"
-        class="text-xs font-semibold text-slate-600 hover:text-pptl-blue bg-white border border-slate-300 rounded px-2.5 py-1 flex items-center gap-1.5 focus:ring-2 focus:ring-pptl-blue"
-        aria-pressed="false"
-      >
-        <span id="carousel-toggle-text">Pause Animation</span>
-      </button>
-    </div>
-
-    <!-- Reduced-Motion Static Grid Fallback -->
-    <div class="hidden prefers-reduced-motion-block max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 items-center">
-        {clientList.map((client) => (
-          <div class="flex items-center justify-center p-4 bg-white rounded-lg border border-slate-200 shadow-sm h-24">
-            {client.imgMeta ? (
-              <Image
-                src={client.imgMeta}
-                alt={client.altText || client.name}
-                class="max-h-14 w-auto object-contain grayscale hover:grayscale-0 transition-all"
-                height={56}
-              />
-            ) : (
-              <span class="text-sm font-semibold text-slate-700 text-center">{client.name}</span>
-            )}
-          </div>
-        ))}
+{clientList.length > 0 && (
+  <section id="technology-brands" class="border-t border-slate-300 bg-[#eef1f3] py-14 sm:py-16" aria-labelledby="technology-brands-heading" data-technology-brands>
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="border-b border-[#031525]/20 pb-7">
+        <div class="max-w-3xl">
+          <h2 id="technology-brands-heading" class="font-heading text-2xl font-bold tracking-tight text-[#031525] sm:text-3xl">Technology &amp; Component Brands</h2>
+          <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">Current industrial brands specified across power distribution, switchgear and automation systems.</p>
+        </div>
       </div>
-    </div>
 
-    <!-- Animated Continuous Marquee Track -->
-    <div class="marquee-wrapper relative w-full overflow-hidden group py-2">
-      <!-- Gradient Fades on edges -->
-      <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-r from-slate-100 to-transparent z-10 pointer-events-none" aria-hidden="true"></div>
-      <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-l from-slate-100 to-transparent z-10 pointer-events-none" aria-hidden="true"></div>
-
-      <div id="marquee-track" class="marquee-track flex gap-8 w-max items-center animate-marquee group-hover:[animation-play-state:paused] focus-within:[animation-play-state:paused]">
-        <!-- Primary List (Accessible to Screen Readers) -->
-        <div class="flex gap-8 items-center" role="list" aria-label="Client company logos">
-          {clientList.map((client) => (
-            <div role="listitem" class="flex items-center justify-center bg-white px-6 py-4 rounded-lg border border-slate-200 shadow-sm h-24 min-w-[180px]">
+      <ul class="mt-10 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 md:grid-cols-5" aria-label="Technology and component brands">
+        {clientList.map((client) => (
+          <li>
+            <a href={client.sourceUrl} target="_blank" rel="noopener noreferrer" class="group flex min-h-28 items-center justify-center px-4 py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0C53A4]" aria-label={`${client.altText || client.name} — official website`}>
               {client.imgMeta ? (
                 <Image
                   src={client.imgMeta}
                   alt={client.altText || client.name}
-                  class="max-h-14 w-auto object-contain transition-all"
-                  height={56}
+                  class:list={[
+                    'h-12 w-36 object-contain transition-[filter,opacity] duration-200 group-hover:opacity-75',
+                    client.id === 'schneider-electric' && 'brand-logo--schneider',
+                    client.id === 'chint' && 'brand-logo--chint',
+                  ]}
+                  height={48}
                 />
               ) : (
-                <span class="text-sm font-semibold text-slate-800 text-center">{client.name}</span>
+                <span class="text-center text-sm font-bold text-[#031525]">{client.name}</span>
               )}
-            </div>
-          ))}
-        </div>
-
-        <!-- Duplicated List for Seamless Looping (Hidden from Screen Readers to prevent redundant announcements) -->
-        <div class="flex gap-8 items-center" aria-hidden="true">
-          {clientList.map((client) => (
-            <div class="flex items-center justify-center bg-white px-6 py-4 rounded-lg border border-slate-200 shadow-sm h-24 min-w-[180px]">
-              {client.imgMeta ? (
-                <Image
-                  src={client.imgMeta}
-                  alt=""
-                  class="max-h-14 w-auto object-contain transition-all"
-                  height={56}
-                />
-              ) : (
-                <span class="text-sm font-semibold text-slate-800 text-center">{client.name}</span>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-) : (
-  <!-- When zero clients are enabled per launch governance, render a discrete placeholder notice for owners or clean divider -->
-  <section class="py-6 bg-slate-50 border-t border-slate-200 text-center text-xs text-slate-400" aria-label="Client Sign-Off Section">
-    <div class="max-w-7xl mx-auto px-4">
-      <p class="font-medium text-slate-500">
-        Pacific Powertech Ltd. &bull; Engineered to IEC, BS, ANSI & VDE Standards &bull; Trusted Since 2013
-      </p>
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 )}
 
 <style>
-  @media (prefers-reduced-motion: reduce) {
-    .marquee-wrapper {
-      display: none !important;
-    }
-    .prefers-reduced-motion-block {
-      display: block !important;
-    }
+  .brand-logo--schneider {
+    filter: brightness(0) saturate(100%) invert(68%) sepia(78%) saturate(497%) hue-rotate(72deg) brightness(92%) contrast(91%);
   }
 
-  .paused {
-    animation-play-state: paused !important;
+  .brand-logo--chint {
+    transform: scale(1.35);
   }
 </style>
-
-<script>
-  const toggleBtn = document.getElementById('carousel-toggle-btn');
-  const marqueeTrack = document.getElementById('marquee-track');
-  const toggleText = document.getElementById('carousel-toggle-text');
-
-  if (toggleBtn && marqueeTrack && toggleText) {
-    toggleBtn.addEventListener('click', () => {
-      const isPaused = marqueeTrack.classList.contains('paused');
-      if (isPaused) {
-        marqueeTrack.classList.remove('paused');
-        toggleText.textContent = 'Pause Animation';
-        toggleBtn.setAttribute('aria-pressed', 'false');
-      } else {
-        marqueeTrack.classList.add('paused');
-        toggleText.textContent = 'Play Animation';
-        toggleBtn.setAttribute('aria-pressed', 'true');
-      }
-    });
-  }
-</script>
-
