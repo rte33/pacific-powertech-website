@@ -11,7 +11,8 @@
     "astro": "astro",
     "test:content": "node scripts/validate-content.mjs",
     "test": "playwright test",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "package:cpanel": "node scripts/package-cpanel.mjs"
   },
   "devDependencies": {
     "@astrojs/sitemap": "3.1.6",
