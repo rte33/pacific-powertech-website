@@ -1,8 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
 
 const PORT = 4321;
-const BASE_PATH = '/pacific-powertech-website';
-const rawBase = process.env.PLAYWRIGHT_TEST_BASE_URL || `http://localhost:${PORT}${BASE_PATH}`;
+const isCI = Boolean(process.env.CI || process.env.GITHUB_ACTIONS);
+const BASE_PATH = process.env.BASE_PATH !== undefined ? process.env.BASE_PATH : (isCI ? '/pacific-powertech-website' : '');
+const rawBase = process.env.PLAYWRIGHT_TEST_BASE_URL || `http://127.0.0.1:${PORT}${BASE_PATH}`;
 const BASE_URL = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 
 export default defineConfig({

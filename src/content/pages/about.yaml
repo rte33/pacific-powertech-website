@@ -14,6 +14,22 @@ story:
     - "We operate with a core team of 23 specialized electrical engineers, technicians, and assembly craftsmen. Our traditional business foundation rests on delivering uncompromising technical build quality, honest price offerings, and industry-leading after-sales support."
     - "Returning clients represent our greatest organizational asset. Because we design and build each product to withstand local power grid fluctuations and extreme tropical operating conditions, industrial facilities across manufacturing, utility, and commercial sectors place their ongoing trust in Pacific Powertech."
 
+managingDirector:
+  badge: "Leadership Perspective"
+  title: "Message from the Managing Director"
+  quote: "Reliability is not an afterthought in electrical power engineering—it is built into every millimeter of copper, every weld, and every safety interlock we deliver."
+  name: "MD. IBRAHIM KHALIL"
+  designation: "Managing Director"
+  company: "Pacific Powertech Ltd."
+  image: "md-ibrahim-khalil.png"
+  email: "ibrahim@pacificpower.com.bd"
+  phone: "+8801711464802"
+  phoneDisplay: "+880 1711 464 802"
+  paragraphs:
+    - "At Pacific Powertech Ltd., our journey since 2013 has been anchored in a singular conviction: dependable electrical power is the lifeblood of Bangladesh's industrial progress. From textile complexes and heavy manufacturing plants to critical commercial infrastructure, power instability or equipment failure is never an option. That understanding drives every engineering calculation, every coil winding, and every switchgear panel crafted on our production floor."
+    - "Over the past decade, we have built an enduring reputation not merely as an equipment supplier, but as a trusted engineering partner. We combine deep domestic manufacturing know-how with strict adherence to international IEC and BS benchmarks. By integrating tier-one components from global leaders such as ABB, Siemens, and Schneider Electric, and subjecting every assembly to rigorous BSTI and BUET-calibrated routine testing, we deliver power systems engineered to withstand demanding tropical operating environments."
+    - "As our nation accelerates toward modern automation, energy efficiency, and industrial self-reliance, Pacific Powertech remains steadfast in its engineering commitment. My personal guarantee, alongside that of our entire technical team, is uncompromising build quality, transparent pricing, and rapid 24/7 after-sales support. I warmly welcome you to visit our manufacturing works, examine our facilities, and partner with us to power your next milestone."
+
 visionMission:
   vision:
     title: "Our Vision"
