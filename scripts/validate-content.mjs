@@ -357,7 +357,7 @@ const ContactSchema = z.object({
 const LoadCalculatorSchema = z.object({
   meta: MetaSchema,
   header: z.object({
-    badge: z.string(),
+    badge: z.string().optional(),
     title: z.string(),
     subtitle: z.string(),
   }),

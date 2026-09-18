@@ -3,7 +3,6 @@ meta:
   description: "Calculate connected load in kW, monthly consumption in kWh, and determine required transformer kVA, LT switchgear, and PFI capacitor ratings for DESCO, DPDC & BPDB compliance."
 
 header:
-  badge: "DESCO & BPDB Sanction Compliance · Substation Engineering"
   title: "Electrical Load Calculator & Substation Sizing Tool"
   subtitle: "Interactive electrical load schedule and substation equipment sizing calculator. Compute connected load (kW), monthly energy consumption (kWh), and determine required Distribution Transformer capacity (kVA), Main LT Switchgear (Amperes), and PFI Capacitor Bank rating (kVAR) under Bangladesh National Building Code (BNBC) standards."
 
