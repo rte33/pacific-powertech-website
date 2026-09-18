@@ -1,0 +1,1059 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getLoadCalculatorPage, getSiteSettings, formatUrl } from '../utils/content';
+import CatalogDownloadBanner from '../components/CatalogDownloadBanner.astro';
+
+const pageData = getLoadCalculatorPage();
+const siteSettings = getSiteSettings();
+const { meta, header, complianceNotice, categories, presets, standardTransformers, standardBreakers, standardPfiRatings } = pageData;
+
+const jsonPayload = JSON.stringify({
+  categories,
+  presets,
+  standardTransformers,
+  standardBreakers,
+  standardPfiRatings,
+  contactEmail: siteSettings.company.contact.email,
+  contactPhone: siteSettings.company.contact.primaryPhone,
+});
+---
+
+<BaseLayout title={meta.title} description={meta.description}>
+  <!-- Technical Header & Breadcrumbs -->
+  <section class="border-b-4 border-[#0C53A4] bg-[#031525] text-white">
+    <div class="mx-auto max-w-7xl px-4 pb-12 pt-8 sm:px-6 sm:pb-16 lg:px-8">
+      <nav class="text-sm text-slate-300" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-2">
+          <li><a href={formatUrl('/')} class="hover:text-white">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li><a href={formatUrl('/services')} class="hover:text-white">Engineering</a></li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page" class="text-[#FAB218]">Load Calculator</li>
+        </ol>
+      </nav>
+
+      <div class="mt-8 grid gap-8 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-8">
+          <span class="inline-flex items-center gap-2 border border-[#FAB218]/40 bg-[#FAB218]/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-[#FAB218]">
+            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            {header.badge}
+          </span>
+          <h1 class="mt-4 font-heading text-[clamp(2.4rem,5vw,4.5rem)] font-bold leading-[0.98] tracking-[-0.04em] text-white">
+            {header.title}
+          </h1>
+          <p class="mt-5 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">
+            {header.subtitle}
+          </p>
+        </div>
+
+        <div class="lg:col-span-4 lg:text-right">
+          <div class="inline-block border border-white/20 bg-white/5 p-4 text-left backdrop-blur-sm sm:min-w-[280px]">
+            <p class="text-xs font-bold uppercase tracking-wider text-[#FAB218]">Utility Sanction Threshold</p>
+            <p class="mt-1 text-2xl font-bold tabular-nums text-white">&gt; 50 kW</p>
+            <p class="mt-1 text-xs leading-5 text-slate-300">
+              Mandatory 11kV Substation under DESCO / BREB / BPDB electricity service rules.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Calculator Workspace -->
+  <section class="bg-[#f6f7f8] py-8 sm:py-12 overflow-x-clip">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      
+      <!-- Preset Profile Toolbar -->
+      <div class="mb-8 border border-slate-300 bg-white p-4 shadow-sm sm:p-5 overflow-hidden">
+        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-[0.15em] text-[#0C53A4]">Quick Sizing Profiles</span>
+            <p class="text-sm text-slate-700">Populate standard Bangladesh utility load schedules with one click:</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            {presets.map((p: any) => (
+              <button
+                type="button"
+                data-preset={p.id}
+                class="preset-btn inline-flex min-h-9 items-center border border-slate-300 bg-[#f8fafc] px-3.5 py-1.5 text-xs font-bold text-[#031525] transition-colors hover:border-[#0C53A4] hover:bg-[#0C53A4] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0C53A4]"
+              >
+                {p.name}
+              </button>
+            ))}
+            <button
+              type="button"
+              id="btn-reset-all"
+              class="inline-flex min-h-9 items-center border border-rose-300 bg-rose-50 px-3.5 py-1.5 text-xs font-bold text-rose-700 transition-colors hover:bg-rose-700 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-600"
+            >
+              Reset All
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="mb-6 max-w-full overflow-hidden border-b-2 border-slate-300 bg-white">
+        <div class="overflow-x-auto" role="tablist" aria-label="Consumer Category Tabs">
+          <div class="flex min-w-max">
+            {categories.map((cat: any, idx: number) => (
+              <button
+                type="button"
+                role="tab"
+                id={`tab-${cat.id}`}
+                aria-controls="load-schedule-panel"
+                aria-selected={idx === 0 ? "true" : "false"}
+                data-category={cat.id}
+                class:list={[
+                  'cat-tab-btn flex min-h-12 items-center gap-2 border-b-4 px-5 py-3 text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0C53A4]',
+                  idx === 0
+                    ? 'border-[#0C53A4] bg-slate-50 text-[#0C53A4]'
+                    : 'border-transparent text-slate-700 hover:bg-slate-50 hover:text-[#031525]'
+                ]}
+              >
+                <span>{cat.name}</span>
+                <span class="cat-badge ml-1 hidden rounded bg-[#0C53A4]/10 px-1.5 py-0.5 text-xs font-semibold tabular-nums text-[#0C53A4]">0</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Layout: Table Area + Sticky Sizing Panel -->
+      <div class="grid gap-8 lg:grid-cols-12 lg:items-start">
+        
+        <!-- Left: Equipment & Appliance Table -->
+        <div class="min-w-0 lg:col-span-8">
+          <div id="load-schedule-panel" role="tabpanel" aria-labelledby="category-heading" class="border border-slate-300 bg-white shadow-sm overflow-hidden">
+            
+            <!-- Table Header Strip -->
+            <div class="flex flex-col gap-3 border-b border-slate-200 bg-slate-50 p-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+              <div>
+                <h2 id="category-heading" class="font-heading text-xl font-bold text-[#031525] sm:text-2xl">
+                  Industrial / Factory Load Schedule
+                </h2>
+                <p id="category-desc" class="text-xs text-slate-600 sm:text-sm">
+                  Manufacturing plants, textile &amp; RMG mills, steel fabrication, plastics, and processing factories.
+                </p>
+              </div>
+              <button
+                type="button"
+                id="btn-add-custom-row"
+                class="inline-flex min-h-10 items-center justify-center gap-1.5 border border-[#0C53A4] bg-white px-3.5 py-2 text-xs font-bold text-[#0C53A4] transition-colors hover:bg-[#0C53A4] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0C53A4]"
+              >
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Add Custom Equipment
+              </button>
+            </div>
+
+            <!-- Responsive Table Container -->
+            <div class="max-w-full overflow-x-auto" tabindex="0" aria-label="Electrical appliances table scroll container">
+              <table id="load-table" class="min-w-[720px] w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr class="border-b border-[#031525] bg-[#031525] text-xs uppercase tracking-wider text-white">
+                    <th scope="col" class="px-4 py-3.5 font-bold">Electrical Equipment</th>
+                    <th scope="col" class="w-28 px-3 py-3.5 text-right font-bold">Rating (W)</th>
+                    <th scope="col" class="w-24 px-3 py-3.5 text-right font-bold">Qty</th>
+                    <th scope="col" class="w-24 px-3 py-3.5 text-right font-bold">Daily (Hr)</th>
+                    <th scope="col" class="w-24 px-3 py-3.5 text-right font-bold">Days/Mo</th>
+                    <th scope="col" class="w-32 px-3 py-3.5 text-right font-bold">Total Load</th>
+                    <th scope="col" class="w-32 px-3 py-3.5 text-right font-bold">Monthly (kWh)</th>
+                    <th scope="col" class="w-12 px-2 py-3.5 text-center font-bold"></th>
+                  </tr>
+                </thead>
+                <tbody id="appliance-tbody" class="divide-y divide-slate-200">
+                  <!-- Dynamically Rendered Rows -->
+                </tbody>
+                <tfoot>
+                  <tr class="border-t-2 border-[#031525] bg-slate-100 font-bold text-[#031525]">
+                    <td colspan="5" class="px-4 py-3.5 text-right uppercase tracking-wider text-xs">Category Subtotal:</td>
+                    <td id="cat-subtotal-kw" class="px-3 py-3.5 text-right tabular-nums text-sm font-bold text-[#0C53A4]">0.00 kW</td>
+                    <td id="cat-subtotal-kwh" class="px-3 py-3.5 text-right tabular-nums text-sm font-bold text-[#031525]">0.00 kWh</td>
+                    <td></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <!-- Table Footer Notes -->
+            <div class="border-t border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-600 sm:px-6">
+              <span class="font-bold text-[#031525]">Engineering Note:</span> Default wattages align with DESCO &amp; BREB technical sanction ratings. You can edit individual wattage values to match your specific machinery nameplates.
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Industrial Substation Sizing Summary Panel (Sticky) -->
+        <div class="min-w-0 lg:col-span-4 lg:sticky lg:top-28">
+          <div class="border-2 border-[#0C53A4] bg-white shadow-lg">
+            
+            <!-- Panel Header -->
+            <div class="border-b border-[#0C53A4] bg-[#031525] p-5 text-white">
+              <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#FAB218]">Pacific Powertech</span>
+              <h3 class="mt-1 font-heading text-2xl font-bold tracking-tight text-white">
+                Substation Sizing Summary
+              </h3>
+              <p class="mt-1 text-xs text-slate-300">
+                Calculated per IEC 60076 &amp; BNBC 2020 Part 8 Chapter 2
+              </p>
+            </div>
+
+            <!-- Calculated Metrics Area -->
+            <div class="space-y-4 p-5 sm:p-6">
+              
+              <!-- Metric 1: Total Connected Load -->
+              <div class="flex items-baseline justify-between border-b border-slate-200 pb-3">
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-wider text-slate-700">Connected Load</span>
+                  <p class="text-xs text-slate-600">Sum of all active appliances</p>
+                </div>
+                <div class="text-right">
+                  <span id="summary-connected-kw" class="text-2xl font-bold tabular-nums text-[#031525]">0.00</span>
+                  <span class="text-sm font-bold text-slate-700">kW</span>
+                  <p id="summary-connected-w" class="text-xs tabular-nums text-slate-600">0 W</p>
+                </div>
+              </div>
+
+              <!-- Controls: Diversity Factor Slider -->
+              <div class="border-b border-slate-200 pb-3">
+                <div class="flex items-center justify-between">
+                  <label for="input-diversity" class="text-xs font-bold uppercase tracking-wider text-slate-700">
+                    Demand / Diversity Factor
+                  </label>
+                  <span id="display-diversity" class="text-sm font-bold tabular-nums text-[#0C53A4]">0.80</span>
+                </div>
+                <input
+                  type="range"
+                  id="input-diversity"
+                  min="0.50"
+                  max="1.00"
+                  step="0.05"
+                  value="0.80"
+                  class="mt-2 h-2 w-full cursor-pointer appearance-none bg-slate-200 accent-[#0C53A4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0C53A4]"
+                />
+                <div class="mt-1 flex justify-between text-[10px] text-slate-600">
+                  <span>0.50 (Low Coincidence)</span>
+                  <span>0.80 (Standard)</span>
+                  <span>1.00 (Continuous Max)</span>
+                </div>
+              </div>
+
+              <!-- Metric 2: Estimated Peak Demand Load -->
+              <div class="flex items-baseline justify-between border-b border-slate-200 pb-3">
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-wider text-slate-700">Estimated Peak Demand</span>
+                  <p class="text-xs text-slate-600">Connected kW × Diversity Factor</p>
+                </div>
+                <div class="text-right">
+                  <span id="summary-demand-kw" class="text-2xl font-bold tabular-nums text-[#0C53A4]">0.00</span>
+                  <span class="text-sm font-bold text-[#0C53A4]">kW</span>
+                </div>
+              </div>
+
+              <!-- Controls: Operating Power Factor -->
+              <div class="border-b border-slate-200 pb-3">
+                <div class="flex items-center justify-between">
+                  <label for="select-pf" class="text-xs font-bold uppercase tracking-wider text-slate-700">
+                    Operating Power Factor (cos φ)
+                  </label>
+                  <select
+                    id="select-pf"
+                    class="border border-slate-300 bg-slate-50 px-2 py-1 text-xs font-bold text-[#031525] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0C53A4]"
+                  >
+                    <option value="0.80" selected>0.80 (Uncorrected Utility Baseline)</option>
+                    <option value="0.85">0.85 (Partial Compensation)</option>
+                    <option value="0.90">0.90 (Commercial Standard)</option>
+                    <option value="0.95">0.95 (Industrial PFI Target)</option>
+                    <option value="0.98">0.98 (Optimal PPTL PFI Target)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Metric 3: Transformer Sizing Recommendation -->
+              <div class="rounded border border-amber-200 bg-amber-50/50 p-3.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold uppercase tracking-wider text-amber-900">Transformer Capacity</span>
+                  <span class="rounded bg-amber-200 px-1.5 py-0.5 text-[10px] font-bold text-amber-900">80% Continuous Limit</span>
+                </div>
+                <div class="mt-2 flex items-baseline justify-between">
+                  <span class="text-xs text-slate-600">Calculated Required:</span>
+                  <span id="summary-req-kva" class="text-sm font-bold tabular-nums text-slate-800">0.0 kVA</span>
+                </div>
+                <div class="mt-1 flex items-baseline justify-between">
+                  <span class="text-xs font-bold text-[#031525]">Recommended PPTL Rating:</span>
+                  <span id="summary-rec-transformer" class="text-lg font-bold tabular-nums text-[#0C53A4]">-- kVA</span>
+                </div>
+                <p class="mt-2 text-[11px] leading-4 text-slate-600">
+                  <a href={formatUrl('/products/transformers')} class="font-semibold text-[#0C53A4] underline hover:text-[#084584]">
+                    View Pacific Powertech Oil-Immersed / Dry Type Transformers →
+                  </a>
+                </p>
+              </div>
+
+              <!-- Metric 4: Main LT Switchgear Rating -->
+              <div class="rounded border border-slate-200 bg-slate-50 p-3.5">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-700">Main LT Switchgear (Incomer)</span>
+                <div class="mt-2 flex items-baseline justify-between">
+                  <span class="text-xs text-slate-600">Full Load Current (415V):</span>
+                  <span id="summary-flc-amps" class="text-sm font-bold tabular-nums text-slate-800">0.0 A</span>
+                </div>
+                <div class="mt-1 flex items-baseline justify-between">
+                  <span class="text-xs font-bold text-[#031525]">Recommended Breaker:</span>
+                  <span id="summary-rec-breaker" class="text-lg font-bold tabular-nums text-[#031525]">-- A</span>
+                </div>
+                <p class="mt-2 text-[11px] leading-4 text-slate-600">
+                  <a href={formatUrl('/products/lt-switchgear')} class="font-semibold text-[#0C53A4] underline hover:text-[#084584]">
+                    View PPTL ACB &amp; MCCB Low Voltage Switchgear Panels →
+                  </a>
+                </p>
+              </div>
+
+              <!-- Metric 5: PFI Capacitor Bank -->
+              <div class="rounded border border-slate-200 bg-slate-50 p-3.5">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-700">Power Factor Improvement (PFI)</span>
+                <div class="mt-2 flex items-baseline justify-between">
+                  <span class="text-xs text-slate-600">Correction (0.80 → 0.98):</span>
+                  <span id="summary-req-kvar" class="text-sm font-bold tabular-nums text-slate-800">0.0 kVAR</span>
+                </div>
+                <div class="mt-1 flex items-baseline justify-between">
+                  <span class="text-xs font-bold text-[#031525]">Recommended PFI Bank:</span>
+                  <span id="summary-rec-pfi" class="text-lg font-bold tabular-nums text-[#0C53A4]">-- kVAR</span>
+                </div>
+                <p class="mt-2 text-[11px] leading-4 text-slate-600">
+                  <a href={formatUrl('/products/pfi-systems')} class="font-semibold text-[#0C53A4] underline hover:text-[#084584]">
+                    View Microprocessor-Controlled PFI Plants →
+                  </a>
+                </p>
+              </div>
+
+              <!-- Metric 6: Monthly Energy Consumption -->
+              <div class="flex items-baseline justify-between border-t border-slate-200 pt-3">
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-wider text-slate-700">Monthly Consumption</span>
+                  <p class="text-xs text-slate-600">Total estimated energy</p>
+                </div>
+                <div class="text-right">
+                  <span id="summary-monthly-kwh" class="text-xl font-bold tabular-nums text-[#031525]">0.00</span>
+                  <span class="text-xs font-bold text-slate-700">kWh</span>
+                </div>
+              </div>
+
+              <!-- Dynamic Utility Sanction Badge -->
+              <div id="sanction-alert" class="rounded border p-3 text-xs leading-5">
+                <!-- Injected via script -->
+              </div>
+
+              <!-- CTAs -->
+              <div class="space-y-2 pt-2">
+                <a
+                  id="btn-rfq-inquiry"
+                  href={formatUrl('/contact')}
+                  class="flex min-h-12 w-full items-center justify-center gap-2 bg-[#0C53A4] px-4 py-3 text-center text-sm font-bold text-white transition-colors hover:bg-[#084584] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAB218]"
+                >
+                  <span>Request Engineering RFQ</span>
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+                
+                <div class="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    id="btn-copy-summary"
+                    class="inline-flex min-h-10 items-center justify-center gap-1.5 border border-slate-300 bg-white px-3 py-2 text-xs font-bold text-[#031525] transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0C53A4]"
+                  >
+                    <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                    <span id="copy-btn-text">Copy Summary</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    id="btn-print-sheet"
+                    class="inline-flex min-h-10 items-center justify-center gap-1.5 border border-slate-300 bg-white px-3 py-2 text-xs font-bold text-[#031525] transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0C53A4]"
+                  >
+                    <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                    </svg>
+                    <span>Print Sheet</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Standards & Sizing Guide Section -->
+  <section class="border-t border-slate-300 bg-white py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-8 lg:grid-cols-12">
+        <div class="lg:col-span-4">
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-[#0C53A4]">Engineering Reference</p>
+          <h2 class="mt-2 font-heading text-3xl font-bold tracking-tight text-[#031525]">
+            Substation Sizing Principles
+          </h2>
+          <p class="mt-4 text-sm leading-7 text-slate-600">
+            Pacific Powertech designs and fabricates electrical distribution switchgear and substation assemblies conforming to Bangladesh National Building Code (BNBC 2020) and international standards.
+          </p>
+        </div>
+
+        <div class="space-y-6 lg:col-span-8">
+          <div class="grid gap-6 sm:grid-cols-2">
+            <div class="border border-slate-200 bg-slate-50 p-5">
+              <h3 class="font-heading text-lg font-bold text-[#031525]">1. Transformer Loading Formula</h3>
+              <p class="mt-2 text-xs leading-6 text-slate-600">
+                To guarantee equipment longevity and prevent thermal degradation, transformers should not exceed 80% continuous rated capacity during maximum plant demand:
+              </p>
+              <div class="mt-3 bg-white p-2.5 font-mono text-xs text-[#0C53A4] border border-slate-200">
+                kVA (Rating) ≥ (Peak Demand kW / Power Factor) ÷ 0.80
+              </div>
+            </div>
+
+            <div class="border border-slate-200 bg-slate-50 p-5">
+              <h3 class="font-heading text-lg font-bold text-[#031525]">2. Full Load Current Calculation</h3>
+              <p class="mt-2 text-xs leading-6 text-slate-600">
+                Three-phase symmetrical full-load current determines primary breaker selection (ACB/MCCB) at standard secondary terminal voltage of 415 Volts:
+              </p>
+              <div class="mt-3 bg-white p-2.5 font-mono text-xs text-[#0C53A4] border border-slate-200">
+                I (Amperes) = (Transformer kVA × 1000) ÷ (√3 × 415V)
+              </div>
+            </div>
+
+            <div class="border border-slate-200 bg-slate-50 p-5">
+              <h3 class="font-heading text-lg font-bold text-[#031525]">3. PFI Capacitor Bank Sizing</h3>
+              <p class="mt-2 text-xs leading-6 text-slate-600">
+                DESCO and BPDB impose strict tariff penalties when operating power factor falls below 0.95. PFI plants inject reactive power (kVAR) to maintain 0.98 lag:
+              </p>
+              <div class="mt-3 bg-white p-2.5 font-mono text-xs text-[#0C53A4] border border-slate-200">
+                Q (kVAR) = P (kW) × [tan(cos⁻¹ 0.80) - tan(cos⁻¹ 0.98)] ≈ P × 0.547
+              </div>
+            </div>
+
+            <div class="border border-slate-200 bg-slate-50 p-5">
+              <h3 class="font-heading text-lg font-bold text-[#031525]">4. Utility Tariff Sanction Rules</h3>
+              <p class="mt-2 text-xs leading-6 text-slate-600">
+                Under DESCO / DPDC / BREB commercial regulations, connections exceeding 50 kW require dedicated HT metering and customer-owned 11kV substation infrastructure.
+              </p>
+              <div class="mt-3 bg-white p-2.5 font-mono text-xs text-[#0C53A4] border border-slate-200">
+                &gt; 50 kW = Mandatory 11kV HT Substation
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Catalog Banner -->
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <CatalogDownloadBanner
+      title="Request Pacific Powertech Substation Specifications"
+      description="Download detailed technical drawings, loss schedules, and switchgear dimensions for all 100 kVA to 3000 kVA substation packages."
+    />
+  </div>
+
+  <!-- Raw Data Payload for Client Script -->
+  <script type="application/json" id="calculator-data" set:html={jsonPayload} />
+
+  <!-- Client-Side Reactive Engine Script -->
+  <script>
+    interface Appliance {
+      id: string;
+      name: string;
+      watt: number;
+      category: string;
+      defaultQty: number;
+      defaultHours: number;
+      defaultDays: number;
+      isCustom?: boolean;
+    }
+
+    interface Category {
+      id: string;
+      name: string;
+      icon: string;
+      diversityFactorDefault: number;
+      description: string;
+      appliances: Appliance[];
+    }
+
+    interface PresetItem {
+      id: string;
+      qty: number;
+    }
+
+    interface Preset {
+      id: string;
+      name: string;
+      category: string;
+      badge: string;
+      description: string;
+      items: PresetItem[];
+    }
+
+    interface CalculatorConfig {
+      categories: Category[];
+      presets: Preset[];
+      standardTransformers: number[];
+      standardBreakers: number[];
+      standardPfiRatings: number[];
+      contactEmail: string;
+      contactPhone: string;
+    }
+
+    const dataEl = document.getElementById('calculator-data');
+    if (dataEl) {
+      const config: CalculatorConfig = JSON.parse(dataEl.textContent || '{}');
+      
+      let activeCategoryId = config.categories[0]?.id || 'industrial';
+      let activeDiversity = config.categories[0]?.diversityFactorDefault || 0.80;
+      let activePf = 0.80;
+
+      // State store: Map of appliance state by ID: { watt, qty, hours, days, isCustom, name, category }
+      const itemState = new Map<string, {
+        id: string;
+        name: string;
+        watt: number;
+        qty: number;
+        hours: number;
+        days: number;
+        categoryId: string;
+        isCustom: boolean;
+      }>();
+
+      // Initialize all appliances
+      config.categories.forEach(cat => {
+        cat.appliances.forEach(app => {
+          itemState.set(app.id, {
+            id: app.id,
+            name: app.name,
+            watt: app.watt,
+            qty: app.defaultQty || 0,
+            hours: app.defaultHours || 8,
+            days: app.defaultDays || 26,
+            categoryId: cat.id,
+            isCustom: false,
+          });
+        });
+      });
+
+      // DOM Elements
+      const tbody = document.getElementById('appliance-tbody');
+      const catHeading = document.getElementById('category-heading');
+      const catDesc = document.getElementById('category-desc');
+      const diversityInput = document.getElementById('input-diversity') as HTMLInputElement;
+      const diversityDisplay = document.getElementById('display-diversity');
+      const pfSelect = document.getElementById('select-pf') as HTMLSelectElement;
+      
+      const summaryConnectedKw = document.getElementById('summary-connected-kw');
+      const summaryConnectedW = document.getElementById('summary-connected-w');
+      const summaryDemandKw = document.getElementById('summary-demand-kw');
+      const summaryReqKva = document.getElementById('summary-req-kva');
+      const summaryRecTransformer = document.getElementById('summary-rec-transformer');
+      const summaryFlcAmps = document.getElementById('summary-flc-amps');
+      const summaryRecBreaker = document.getElementById('summary-rec-breaker');
+      const summaryReqKvar = document.getElementById('summary-req-kvar');
+      const summaryRecPfi = document.getElementById('summary-rec-pfi');
+      const summaryMonthlyKwh = document.getElementById('summary-monthly-kwh');
+      const catSubtotalKw = document.getElementById('cat-subtotal-kw');
+      const catSubtotalKwh = document.getElementById('cat-subtotal-kwh');
+      const sanctionAlert = document.getElementById('sanction-alert');
+      const rfqBtn = document.getElementById('btn-rfq-inquiry') as HTMLAnchorElement;
+      const copyBtn = document.getElementById('btn-copy-summary');
+      const copyBtnText = document.getElementById('copy-btn-text');
+      const printBtn = document.getElementById('btn-print-sheet');
+      const addCustomBtn = document.getElementById('btn-add-custom-row');
+      const resetBtn = document.getElementById('btn-reset-all');
+
+      let customCount = 0;
+
+      // Render Table Rows for Current Category
+      function renderTable() {
+        if (!tbody) return;
+        tbody.innerHTML = '';
+
+        const currentCat = config.categories.find(c => c.id === activeCategoryId);
+        if (catHeading && currentCat) catHeading.textContent = `${currentCat.name} Load Schedule`;
+        if (catDesc && currentCat) catDesc.textContent = currentCat.description;
+
+        // Collect all items in this category
+        const items = Array.from(itemState.values()).filter(i => i.categoryId === activeCategoryId);
+
+        items.forEach(item => {
+          const row = document.createElement('tr');
+          row.className = 'hover:bg-slate-50 transition-colors border-b border-slate-200';
+          row.id = `row-${item.id}`;
+
+          const isQtyActive = item.qty > 0;
+          const rowTotalWatt = item.watt * item.qty;
+          const rowTotalKw = rowTotalWatt / 1000;
+          const rowMonthlyKwh = (rowTotalWatt * (isQtyActive ? item.hours : 0) * (isQtyActive ? item.days : 0)) / 1000;
+
+          row.innerHTML = `
+            <td class="px-4 py-3">
+              ${item.isCustom
+                ? `<input type="text" class="input-name w-full border border-slate-300 px-2 py-1 text-sm font-semibold text-[#031525] focus-visible:ring-1 focus-visible:ring-[#0C53A4]" value="${item.name}" data-id="${item.id}" />`
+                : `<span class="font-semibold text-[#031525]">${item.name}</span>`
+              }
+            </td>
+            <td class="px-3 py-3 text-right">
+              <input
+                type="number"
+                min="1"
+                max="1000000"
+                class="input-watt w-24 border border-slate-300 px-2 py-1 text-right text-sm tabular-nums text-[#031525] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0C53A4]"
+                value="${item.watt}"
+                data-id="${item.id}"
+                aria-label="${item.name} wattage in watts"
+              />
+            </td>
+            <td class="px-3 py-3 text-right">
+              <input
+                type="number"
+                min="0"
+                max="10000"
+                class="input-qty w-20 border border-slate-300 px-2 py-1 text-right text-sm font-bold tabular-nums text-[#031525] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0C53A4]"
+                value="${item.qty}"
+                data-id="${item.id}"
+                aria-label="${item.name} quantity"
+              />
+            </td>
+            <td class="px-3 py-3 text-right">
+              <input
+                type="number"
+                min="1"
+                max="24"
+                ${!isQtyActive ? 'disabled' : ''}
+                class="input-hours w-16 border border-slate-300 px-2 py-1 text-right text-sm tabular-nums text-[#031525] disabled:bg-slate-100 disabled:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0C53A4]"
+                value="${item.hours}"
+                data-id="${item.id}"
+                aria-label="${item.name} daily hours"
+              />
+            </td>
+            <td class="px-3 py-3 text-right">
+              <input
+                type="number"
+                min="1"
+                max="31"
+                ${!isQtyActive ? 'disabled' : ''}
+                class="input-days w-16 border border-slate-300 px-2 py-1 text-right text-sm tabular-nums text-[#031525] disabled:bg-slate-100 disabled:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0C53A4]"
+                value="${item.days}"
+                data-id="${item.id}"
+                aria-label="${item.name} monthly days"
+              />
+            </td>
+            <td class="px-3 py-3 text-right font-bold tabular-nums text-[#0C53A4] row-total-kw">
+              ${rowTotalKw.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kW
+            </td>
+            <td class="px-3 py-3 text-right tabular-nums text-slate-700 row-monthly-kwh">
+              ${rowMonthlyKwh.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
+            </td>
+            <td class="px-2 py-3 text-center">
+              ${item.isCustom
+                ? `<button type="button" class="btn-del-row text-rose-600 hover:text-rose-800 p-1" data-id="${item.id}" title="Remove item" aria-label="Remove ${item.name}">
+                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                   </button>`
+                : ''
+              }
+            </td>
+          `;
+
+          tbody.appendChild(row);
+        });
+
+        recalculate();
+      }
+
+      // Calculations Engine
+      function recalculate() {
+        let totalConnectedW = 0;
+        let totalMonthlyKwh = 0;
+        let catConnectedW = 0;
+        let catMonthlyKwh = 0;
+
+        // Tally category counts for tab badges
+        const catCounts = new Map<string, number>();
+
+        itemState.forEach(item => {
+          const isQtyActive = item.qty > 0;
+          const rowW = item.watt * item.qty;
+          const rowKwh = (rowW * (isQtyActive ? item.hours : 0) * (isQtyActive ? item.days : 0)) / 1000;
+
+          totalConnectedW += rowW;
+          totalMonthlyKwh += rowKwh;
+
+          if (item.categoryId === activeCategoryId) {
+            catConnectedW += rowW;
+            catMonthlyKwh += rowKwh;
+          }
+
+          if (isQtyActive) {
+            catCounts.set(item.categoryId, (catCounts.get(item.categoryId) || 0) + item.qty);
+          }
+        });
+
+        // Update Category Tab Badges
+        document.querySelectorAll('.cat-tab-btn').forEach(btn => {
+          const catId = btn.getAttribute('data-category');
+          const badge = btn.querySelector('.cat-badge');
+          if (badge && catId) {
+            const count = catCounts.get(catId) || 0;
+            if (count > 0) {
+              badge.textContent = String(count);
+              badge.classList.remove('hidden');
+            } else {
+              badge.classList.add('hidden');
+            }
+          }
+        });
+
+        const totalConnectedKw = totalConnectedW / 1000;
+        const peakDemandKw = totalConnectedKw * activeDiversity;
+        const requiredKva = activePf > 0 ? (peakDemandKw / activePf) : 0;
+        
+        // 80% maximum continuous loading safety rule for standard distribution transformers
+        const designKva = requiredKva > 0 ? (requiredKva / 0.80) : 0;
+
+        // Find standard transformer rating
+        let recommendedTransformer = 0;
+        if (designKva > 0) {
+          recommendedTransformer = config.standardTransformers.find(rating => rating >= designKva) || config.standardTransformers[config.standardTransformers.length - 1];
+        }
+
+        // Full Load Current: I = (kVA * 1000) / (√3 * 415)
+        const flcAmps = recommendedTransformer > 0 ? (recommendedTransformer * 1000) / (1.73205 * 415) : 0;
+
+        // Find standard ACB / MCCB rating
+        let recommendedBreaker = 0;
+        if (flcAmps > 0) {
+          recommendedBreaker = config.standardBreakers.find(rating => rating >= flcAmps) || config.standardBreakers[config.standardBreakers.length - 1];
+        }
+
+        // PFI Capacitor Bank: To improve from 0.80 to 0.98
+        // tan(acos(0.80)) = 0.75; tan(acos(0.98)) = 0.20305; diff = 0.54695
+        const reqKvar = peakDemandKw * 0.547;
+        let recommendedPfi = 0;
+        if (reqKvar > 0) {
+          recommendedPfi = config.standardPfiRatings.find(rating => rating >= reqKvar) || config.standardPfiRatings[config.standardPfiRatings.length - 1];
+        }
+
+        // Update DOM elements
+        if (summaryConnectedKw) summaryConnectedKw.textContent = totalConnectedKw.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        if (summaryConnectedW) summaryConnectedW.textContent = `${Math.round(totalConnectedW).toLocaleString('en-US')} W`;
+        if (summaryDemandKw) summaryDemandKw.textContent = peakDemandKw.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        if (summaryReqKva) summaryReqKva.textContent = `${requiredKva.toFixed(1)} kVA`;
+        if (summaryRecTransformer) summaryRecTransformer.textContent = recommendedTransformer > 0 ? `${recommendedTransformer} kVA` : '-- kVA';
+        if (summaryFlcAmps) summaryFlcAmps.textContent = `${flcAmps.toFixed(1)} A`;
+        if (summaryRecBreaker) summaryRecBreaker.textContent = recommendedBreaker > 0 ? `${recommendedBreaker} A` : '-- A';
+        if (summaryReqKvar) summaryReqKvar.textContent = `${reqKvar.toFixed(1)} kVAR`;
+        if (summaryRecPfi) summaryRecPfi.textContent = recommendedPfi > 0 ? `${recommendedPfi} kVAR` : '-- kVAR';
+        if (summaryMonthlyKwh) summaryMonthlyKwh.textContent = Math.round(totalMonthlyKwh).toLocaleString('en-US');
+
+        if (catSubtotalKw) catSubtotalKw.textContent = `${(catConnectedW / 1000).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kW`;
+        if (catSubtotalKwh) catSubtotalKwh.textContent = `${catMonthlyKwh.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} kWh`;
+
+        // Update Sanction Guidance Alert
+        if (sanctionAlert) {
+          if (totalConnectedKw === 0) {
+            sanctionAlert.className = 'rounded border border-slate-200 bg-slate-50 p-3 text-xs leading-5 text-slate-500';
+            sanctionAlert.innerHTML = '<span class="font-bold">No Load Entered:</span> Enter electrical equipment quantities to view utility sanction eligibility and transformer specifications.';
+          } else if (totalConnectedKw <= 50) {
+            sanctionAlert.className = 'rounded border border-emerald-300 bg-emerald-50 p-3 text-xs leading-5 text-emerald-900';
+            sanctionAlert.innerHTML = `<span class="font-bold text-emerald-800">LT Direct Supply Eligible (${totalConnectedKw.toFixed(1)} kW):</span> Your load is within the ≤ 50 kW threshold for direct 415V/230V Low-Tension connection from DESCO/BPDB without requiring a private indoor substation.`;
+          } else {
+            sanctionAlert.className = 'rounded border border-amber-300 bg-amber-50 p-3 text-xs leading-5 text-amber-950';
+            sanctionAlert.innerHTML = `<span class="font-bold text-amber-900">Mandatory 11 kV Substation Required (${totalConnectedKw.toFixed(1)} kW):</span> Under Bangladesh utility rules, loads exceeding 50 kW mandate a dedicated customer-owned 11/0.415 kV substation with HT VCB switchgear, transformer (${recommendedTransformer} kVA), LT distribution panel (${recommendedBreaker}A), and PFI plant (${recommendedPfi} kVAR).`;
+          }
+        }
+
+        // Update RFQ Link URL with prefilled parameters
+        if (rfqBtn) {
+          const subject = encodeURIComponent(`Substation Sizing Quotation: ${recommendedTransformer || 250} kVA (${totalConnectedKw.toFixed(1)} kW)`);
+          const body = encodeURIComponent(
+            `Dear Pacific Powertech Team,\n\n` +
+            `I calculated my facility load requirements using the online Pacific Powertech Load Calculator:\n\n` +
+            `• Facility Category: ${activeCategoryId.toUpperCase()}\n` +
+            `• Total Connected Load: ${totalConnectedKw.toFixed(2)} kW (${Math.round(totalConnectedW)} W)\n` +
+            `• Estimated Peak Demand: ${peakDemandKw.toFixed(2)} kW (Diversity: ${activeDiversity})\n` +
+            `• Operating Power Factor: ${activePf}\n` +
+            `• Recommended Transformer Rating: ${recommendedTransformer} kVA (Oil-Immersed / Cast Resin)\n` +
+            `• Recommended LT Main Switchgear: ${recommendedBreaker} A Incomer (415V, 3-Phase)\n` +
+            `• Recommended PFI Capacitor Bank: ${recommendedPfi} kVAR\n` +
+            `• Estimated Monthly Energy: ${Math.round(totalMonthlyKwh).toLocaleString('en-US')} kWh/month\n\n` +
+            `Please prepare a formal technical and commercial quotation for the complete substation package.\n\n` +
+            `Contact Name:\n` +
+            `Company / Factory Name:\n` +
+            `Site Location:\n` +
+            `Phone Number:\n`
+          );
+          rfqBtn.href = `mailto:${config.contactEmail}?subject=${subject}&body=${body}`;
+        }
+      }
+
+      // Event Listeners for Table Inputs
+      if (tbody) {
+        tbody.addEventListener('input', (e) => {
+          const target = e.target as HTMLElement;
+          const id = target.getAttribute('data-id');
+          if (!id) return;
+          const item = itemState.get(id);
+          if (!item) return;
+
+          if (target.classList.contains('input-watt')) {
+            item.watt = Math.max(0, parseFloat((target as HTMLInputElement).value) || 0);
+          } else if (target.classList.contains('input-qty')) {
+            item.qty = Math.max(0, parseInt((target as HTMLInputElement).value, 10) || 0);
+            
+            // Enable / disable hours and days inputs in this row
+            const row = document.getElementById(`row-${id}`);
+            if (row) {
+              const hoursInp = row.querySelector('.input-hours') as HTMLInputElement;
+              const daysInp = row.querySelector('.input-days') as HTMLInputElement;
+              if (hoursInp && daysInp) {
+                if (item.qty > 0) {
+                  hoursInp.disabled = false;
+                  daysInp.disabled = false;
+                } else {
+                  hoursInp.disabled = true;
+                  daysInp.disabled = true;
+                }
+              }
+            }
+          } else if (target.classList.contains('input-hours')) {
+            let val = parseInt((target as HTMLInputElement).value, 10) || 0;
+            if (val > 24) { val = 24; (target as HTMLInputElement).value = '24'; }
+            if (val < 1) { val = 1; (target as HTMLInputElement).value = '1'; }
+            item.hours = val;
+          } else if (target.classList.contains('input-days')) {
+            let val = parseInt((target as HTMLInputElement).value, 10) || 0;
+            if (val > 31) { val = 31; (target as HTMLInputElement).value = '31'; }
+            if (val < 1) { val = 1; (target as HTMLInputElement).value = '1'; }
+            item.days = val;
+          } else if (target.classList.contains('input-name')) {
+            item.name = (target as HTMLInputElement).value || 'Custom Appliance';
+          }
+
+          // Update this specific row's display
+          const row = document.getElementById(`row-${id}`);
+          if (row) {
+            const isQtyActive = item.qty > 0;
+            const rowW = item.watt * item.qty;
+            const rowTotalKw = rowW / 1000;
+            const rowMonthlyKwh = (rowW * (isQtyActive ? item.hours : 0) * (isQtyActive ? item.days : 0)) / 1000;
+
+            const totalKwCell = row.querySelector('.row-total-kw');
+            const monthlyKwhCell = row.querySelector('.row-monthly-kwh');
+            if (totalKwCell) totalKwCell.textContent = `${rowTotalKw.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kW`;
+            if (monthlyKwhCell) monthlyKwhCell.textContent = rowMonthlyKwh.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+          }
+
+          recalculate();
+        });
+
+        // Delete button listener for custom items
+        tbody.addEventListener('click', (e) => {
+          const btn = (e.target as HTMLElement).closest('.btn-del-row');
+          if (!btn) return;
+          const id = btn.getAttribute('data-id');
+          if (id && itemState.has(id)) {
+            itemState.delete(id);
+            const row = document.getElementById(`row-${id}`);
+            if (row) row.remove();
+            recalculate();
+          }
+        });
+      }
+
+      // Diversity Slider Listener
+      if (diversityInput && diversityDisplay) {
+        diversityInput.addEventListener('input', () => {
+          activeDiversity = parseFloat(diversityInput.value);
+          diversityDisplay.textContent = activeDiversity.toFixed(2);
+          recalculate();
+        });
+      }
+
+      // Power Factor Selector Listener
+      if (pfSelect) {
+        pfSelect.addEventListener('change', () => {
+          activePf = parseFloat(pfSelect.value) || 0.80;
+          recalculate();
+        });
+      }
+
+      // Category Tabs Switching
+      document.querySelectorAll('.cat-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const catId = btn.getAttribute('data-category');
+          if (!catId || catId === activeCategoryId) return;
+
+          activeCategoryId = catId;
+          const currentCat = config.categories.find(c => c.id === catId);
+          if (currentCat) {
+            activeDiversity = currentCat.diversityFactorDefault;
+            if (diversityInput) diversityInput.value = String(activeDiversity);
+            if (diversityDisplay) diversityDisplay.textContent = activeDiversity.toFixed(2);
+          }
+
+          document.querySelectorAll('.cat-tab-btn').forEach(b => {
+            b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+            if (b === btn) {
+              b.classList.add('border-[#0C53A4]', 'bg-slate-50', 'text-[#0C53A4]');
+              b.classList.remove('border-transparent', 'text-slate-600');
+            } else {
+              b.classList.remove('border-[#0C53A4]', 'bg-slate-50', 'text-[#0C53A4]');
+              b.classList.add('border-transparent', 'text-slate-600');
+            }
+          });
+
+          renderTable();
+        });
+      });
+
+      // Preset Loading
+      document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const presetId = btn.getAttribute('data-preset');
+          const preset = config.presets.find(p => p.id === presetId);
+          if (!preset) return;
+
+          // Clear all current quantities
+          itemState.forEach(item => { item.qty = 0; });
+
+          // Set preset items
+          preset.items.forEach(pi => {
+            const item = itemState.get(pi.id);
+            if (item) item.qty = pi.qty;
+          });
+
+          // Switch to preset's primary category
+          if (activeCategoryId === preset.category) {
+            renderTable();
+          } else {
+            const targetCatBtn = document.querySelector(`.cat-tab-btn[data-category="${preset.category}"]`) as HTMLButtonElement;
+            if (targetCatBtn) targetCatBtn.click();
+            else renderTable();
+          }
+        });
+      });
+
+      // Reset All
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          itemState.forEach(item => { item.qty = 0; });
+          renderTable();
+        });
+      }
+
+      // Add Custom Equipment Row
+      if (addCustomBtn) {
+        addCustomBtn.addEventListener('click', () => {
+          customCount++;
+          const customId = `custom_${Date.now()}_${customCount}`;
+          itemState.set(customId, {
+            id: customId,
+            name: `Custom Machinery #${customCount}`,
+            watt: 5000,
+            qty: 1,
+            hours: 8,
+            days: 26,
+            categoryId: activeCategoryId,
+            isCustom: true,
+          });
+          renderTable();
+        });
+      }
+
+      // Copy Summary to Clipboard
+      if (copyBtn && copyBtnText) {
+        copyBtn.addEventListener('click', () => {
+          let totalConnectedW = 0;
+          let totalMonthlyKwh = 0;
+          itemState.forEach(item => {
+            const isQtyActive = item.qty > 0;
+            const rowW = item.watt * item.qty;
+            totalConnectedW += rowW;
+            totalMonthlyKwh += (rowW * (isQtyActive ? item.hours : 0) * (isQtyActive ? item.days : 0)) / 1000;
+          });
+
+          const totalConnectedKw = totalConnectedW / 1000;
+          const peakDemandKw = totalConnectedKw * activeDiversity;
+          const requiredKva = activePf > 0 ? (peakDemandKw / activePf) : 0;
+          const designKva = requiredKva > 0 ? (requiredKva / 0.80) : 0;
+          const recommendedTransformer = config.standardTransformers.find(r => r >= designKva) || 0;
+          const flcAmps = recommendedTransformer > 0 ? (recommendedTransformer * 1000) / (1.73205 * 415) : 0;
+          const recommendedBreaker = config.standardBreakers.find(r => r >= flcAmps) || 0;
+          const reqKvar = peakDemandKw * 0.547;
+          const recommendedPfi = config.standardPfiRatings.find(r => r >= reqKvar) || 0;
+
+          const text = 
+`PACIFIC POWERTECH LTD. - ELECTRICAL LOAD & SUBSTATION SIZING REPORT
+------------------------------------------------------------------
+Generated from: ${window.location.href}
+Timestamp: ${new Date().toLocaleString()}
+
+1. LOAD SCHEDULE SUMMARY:
+• Connected Load: ${totalConnectedKw.toFixed(2)} kW (${Math.round(totalConnectedW).toLocaleString()} Watts)
+• Operating Diversity Factor: ${activeDiversity.toFixed(2)}
+• Peak Demand Load: ${peakDemandKw.toFixed(2)} kW
+• Operating Power Factor: ${activePf}
+• Estimated Monthly Consumption: ${Math.round(totalMonthlyKwh).toLocaleString()} kWh/month
+
+2. RECOMMENDED SUBSTATION EQUIPMENT:
+• Distribution Transformer: ${recommendedTransformer} kVA (Oil-Immersed / Cast Resin Dry-Type)
+• Low Voltage Switchgear Incomer: ${recommendedBreaker} A (3-Phase, 415V ACB/MCCB, 50kA)
+• Power Factor Improvement (PFI): ${recommendedPfi} kVAR Automatic Capacitor Bank
+• Utility Sanction Requirement: ${totalConnectedKw > 50 ? 'Mandatory 11kV Substation (DESCO/BPDB)' : 'Low Voltage 415V Utility Sanction Eligible'}
+
+Pacific Powertech Ltd.
+Factory & Office: 2249, Munshibari, Shatarkul Road, Uttar Badda, Dhaka-1212
+Hotline: ${config.contactPhone} | Email: ${config.contactEmail}
+`;
+
+          navigator.clipboard.writeText(text).then(() => {
+            copyBtnText.textContent = 'Copied!';
+            setTimeout(() => { copyBtnText.textContent = 'Copy Summary'; }, 2000);
+          }).catch(() => {
+            alert('Unable to copy to clipboard.');
+          });
+        });
+      }
+
+      // Print Sheet
+      if (printBtn) {
+        printBtn.addEventListener('click', () => {
+          window.print();
+        });
+      }
+
+      // Initial Render
+      renderTable();
+    }
+  </script>
+
+  <style>
+    @media print {
+      header, footer, nav, #btn-reset-all, .preset-btn, #btn-add-custom-row, #btn-rfq-inquiry, #btn-copy-summary, #btn-print-sheet, .btn-del-row {
+        display: none !important;
+      }
+      body {
+        background: white !important;
+        color: black !important;
+      }
+      .lg\:sticky {
+        position: static !important;
+      }
+      #load-table {
+        min-width: 100% !important;
+      }
+    }
+  </style>
+</BaseLayout>

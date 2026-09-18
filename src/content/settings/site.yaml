@@ -74,6 +74,8 @@ navigation:
         description: "PLC, HMI, SCADA, MCC panels, VFDs, RTU, and automated control systems"
   - title: "Engineering Services"
     path: "/services"
+  - title: "Load Calculator"
+    path: "/load-calculator"
   - title: "Contact Us"
     path: "/contact"
 

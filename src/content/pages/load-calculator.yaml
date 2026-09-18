@@ -1,0 +1,607 @@
+meta:
+  title: "Electrical Load Calculator & Substation Sizing Tool | Pacific Powertech Ltd."
+  description: "Calculate connected load in kW, monthly consumption in kWh, and determine required transformer kVA, LT switchgear, and PFI capacitor ratings for DESCO, DPDC & BPDB compliance."
+
+header:
+  badge: "DESCO & BPDB Sanction Compliance · Substation Engineering"
+  title: "Electrical Load Calculator & Substation Sizing Tool"
+  subtitle: "Interactive electrical load schedule and substation equipment sizing calculator. Compute connected load (kW), monthly energy consumption (kWh), and determine required Distribution Transformer capacity (kVA), Main LT Switchgear (Amperes), and PFI Capacitor Bank rating (kVAR) under Bangladesh National Building Code (BNBC) standards."
+
+complianceNotice:
+  title: "Bangladesh Electricity Sanction & Substation Requirement"
+  thresholdKw: 50
+  textLt: "Loads up to 50 kW are typically eligible for direct Low Voltage (415V/230V) utility sanction from DESCO / DPDC / BREB / BPDB."
+  textHt: "Loads exceeding 50 kW (or 75 kW depending on utility zone) mandate a customer-owned 11 kV / 0.415 kV indoor substation comprising HT Switchgear (VCB/LBS), Distribution Transformer, LT Switchgear, and PFI plant under Bangladesh electricity rules."
+
+categories:
+  - id: "industrial"
+    name: "Industrial / Factory"
+    icon: "industrial"
+    diversityFactorDefault: 0.80
+    description: "Manufacturing plants, textile & RMG mills, steel fabrication, plastics, and processing factories."
+    appliances:
+      - id: "ind_motor_small"
+        name: "3-Phase Induction Motor (5 HP / 3.75 kW)"
+        watt: 3750
+        category: "Motive Power"
+        defaultQty: 0
+        defaultHours: 12
+        defaultDays: 26
+      - id: "ind_motor_med"
+        name: "3-Phase Induction Motor (15 HP / 11 kW)"
+        watt: 11000
+        category: "Motive Power"
+        defaultQty: 0
+        defaultHours: 12
+        defaultDays: 26
+      - id: "ind_motor_large"
+        name: "3-Phase Induction Motor (30 HP / 22 kW)"
+        watt: 22000
+        category: "Motive Power"
+        defaultQty: 0
+        defaultHours: 16
+        defaultDays: 26
+      - id: "ind_motor_heavy"
+        name: "Heavy Machinery Motor (50 HP / 37 kW)"
+        watt: 37000
+        category: "Motive Power"
+        defaultQty: 0
+        defaultHours: 16
+        defaultDays: 26
+      - id: "air_compressor"
+        name: "Industrial Screw Air Compressor (20 HP / 15 kW)"
+        watt: 15000
+        category: "Compressors"
+        defaultQty: 0
+        defaultHours: 16
+        defaultDays: 26
+      - id: "arc_welder"
+        name: "Industrial Arc / TIG Welding Machine"
+        watt: 8000
+        category: "Fabrication"
+        defaultQty: 0
+        defaultHours: 8
+        defaultDays: 26
+      - id: "cnc_machine"
+        name: "CNC Machine / Automated Tooling Center"
+        watt: 12000
+        category: "Machinery"
+        defaultQty: 0
+        defaultHours: 12
+        defaultDays: 26
+      - id: "ind_heater"
+        name: "Industrial Process Oven / Electrical Heater"
+        watt: 15000
+        category: "Thermal"
+        defaultQty: 0
+        defaultHours: 10
+        defaultDays: 26
+      - id: "ind_highbay"
+        name: "High-Bay Factory LED Luminaire (150W)"
+        watt: 150
+        category: "Lighting"
+        defaultQty: 0
+        defaultHours: 14
+        defaultDays: 26
+      - id: "ind_exhaust"
+        name: "Heavy Duty Industrial Exhaust Fan (30-inch)"
+        watt: 750
+        category: "Ventilation"
+        defaultQty: 0
+        defaultHours: 16
+        defaultDays: 26
+      - id: "cargo_lift"
+        name: "Industrial Goods / Cargo Lift (2 Ton)"
+        watt: 15000
+        category: "Vertical Transport"
+        defaultQty: 0
+        defaultHours: 6
+        defaultDays: 26
+      - id: "ind_aux"
+        name: "Factory Control Room & Auxiliary Utilities"
+        watt: 5000
+        category: "Auxiliary"
+        defaultQty: 0
+        defaultHours: 24
+        defaultDays: 30
+
+  - id: "commercial"
+    name: "Commercial Building / Office"
+    icon: "commercial"
+    diversityFactorDefault: 0.75
+    description: "Office towers, corporate headquarters, shopping malls, banks, and hospitality facilities."
+    appliances:
+      - id: "split_ac_1_5"
+        name: "Split Air Conditioner (1.5 Ton / 1800W)"
+        watt: 1800
+        category: "HVAC"
+        defaultQty: 0
+        defaultHours: 10
+        defaultDays: 26
+      - id: "split_ac_2"
+        name: "Split Air Conditioner (2.0 Ton / 2400W)"
+        watt: 2400
+        category: "HVAC"
+        defaultQty: 0
+        defaultHours: 10
+        defaultDays: 26
+      - id: "vrf_ac"
+        name: "Central VRF / Cassette HVAC Unit (5 Ton)"
+        watt: 6000
+        category: "HVAC"
+        defaultQty: 0
+        defaultHours: 10
+        defaultDays: 26
+      - id: "lift_upto_6"
+        name: "Passenger Elevator (Up to 6 Floors / 6000W)"
+        watt: 6000
+        category: "Vertical Transport"
+        defaultQty: 0
+        defaultHours: 12
+        defaultDays: 30
+      - id: "lift_7_to_10"
+        name: "Passenger Elevator (7 to 10 Floors / 8000W)"
+        watt: 8000
+        category: "Vertical Transport"
+        defaultQty: 0
+        defaultHours: 14
+        defaultDays: 30
+      - id: "lift_above_10"
+        name: "High-Speed Passenger Elevator (>10 Floors / 10 kW)"
+        watt: 10000
+        category: "Vertical Transport"
+        defaultQty: 0
+        defaultHours: 16
+        defaultDays: 30
+      - id: "server_rack"
+        name: "Data Center / Server Rack & Network UPS"
+        watt: 3500
+        category: "IT Equipment"
+        defaultQty: 0
+        defaultHours: 24
+        defaultDays: 30
+      - id: "workstation_pc"
+        name: "Workstation Computer with Dual Monitor"
+        watt: 250
+        category: "IT Equipment"
+        defaultQty: 0
+        defaultHours: 9
+        defaultDays: 26
+      - id: "comm_led_panel"
+        name: "Troffer / 2x2 Recessed LED Panel (36W)"
+        watt: 36
+        category: "Lighting"
+        defaultQty: 0
+        defaultHours: 10
+        defaultDays: 26
+      - id: "water_pump_comm"
+        name: "Commercial Booster Water Pump (5 HP)"
+        watt: 3750
+        category: "Plumbing"
+        defaultQty: 0
+        defaultHours: 5
+        defaultDays: 30
+      - id: "comm_power_socket"
+        name: "3-Pin Heavy Power Socket (15A / 1000W)"
+        watt: 1000
+        category: "Outlets"
+        defaultQty: 0
+        defaultHours: 6
+        defaultDays: 26
+      - id: "signboard_light"
+        name: "Facade Signboard / Architectural Exterior Lighting"
+        watt: 2000
+        category: "Exterior"
+        defaultQty: 0
+        defaultHours: 8
+        defaultDays: 30
+
+  - id: "domestic"
+    name: "Domestic / Residential"
+    icon: "domestic"
+    diversityFactorDefault: 0.65
+    description: "Apartments, residential housing complexes, villas, and multi-family residential towers."
+    appliances:
+      - id: "led_light_bulb"
+        name: "LED Bulb (9W - 15W)"
+        watt: 12
+        category: "Lighting"
+        defaultQty: 0
+        defaultHours: 6
+        defaultDays: 30
+      - id: "tube_light_4ft"
+        name: "Fluorescent / LED Tube Light (4 Feet)"
+        watt: 20
+        category: "Lighting"
+        defaultQty: 0
+        defaultHours: 6
+        defaultDays: 30
+      - id: "ceiling_fan"
+        name: "Ceiling Fan / Table Fan (56-inch)"
+        watt: 70
+        category: "Fans"
+        defaultQty: 0
+        defaultHours: 12
+        defaultDays: 30
+      - id: "refrigerator_res"
+        name: "Domestic Refrigerator / Deep Fridge"
+        watt: 250
+        category: "Kitchen"
+        defaultQty: 0
+        defaultHours: 12
+        defaultDays: 30
+      - id: "res_split_ac"
+        name: "Inverter Split Air Conditioner (1.5 Ton)"
+        watt: 1600
+        category: "Cooling"
+        defaultQty: 0
+        defaultHours: 8
+        defaultDays: 30
+      - id: "water_geyser"
+        name: "Electric Water Heater / Geyser (30–50L)"
+        watt: 2000
+        category: "Heating"
+        defaultQty: 0
+        defaultHours: 2
+        defaultDays: 30
+      - id: "electric_iron"
+        name: "Electric Iron"
+        watt: 1000
+        category: "Household"
+        defaultQty: 0
+        defaultHours: 1
+        defaultDays: 30
+      - id: "microwave_oven"
+        name: "Microwave Oven"
+        watt: 1200
+        category: "Kitchen"
+        defaultQty: 0
+        defaultHours: 1
+        defaultDays: 30
+      - id: "washing_machine"
+        name: "Automatic Washing Machine"
+        watt: 500
+        category: "Household"
+        defaultQty: 0
+        defaultHours: 2
+        defaultDays: 20
+      - id: "water_pump_res"
+        name: "Overhead Water Supply Pump (1.5 HP)"
+        watt: 1125
+        category: "Plumbing"
+        defaultQty: 0
+        defaultHours: 2
+        defaultDays: 30
+      - id: "res_tv"
+        name: "Smart LED Television (43-inch - 55-inch)"
+        watt: 100
+        category: "Entertainment"
+        defaultQty: 0
+        defaultHours: 5
+        defaultDays: 30
+      - id: "socket_convenience"
+        name: "Convenience 3-Pin Wall Socket (600W)"
+        watt: 600
+        category: "Outlets"
+        defaultQty: 0
+        defaultHours: 3
+        defaultDays: 30
+
+  - id: "charitable"
+    name: "Charitable & Educational"
+    icon: "charitable"
+    diversityFactorDefault: 0.60
+    description: "Universities, schools, colleges, non-profit diagnostic clinics, mosques, and religious centers."
+    appliances:
+      - id: "class_fan"
+        name: "Classroom / Hall Ceiling Fan"
+        watt: 75
+        category: "Fans"
+        defaultQty: 0
+        defaultHours: 7
+        defaultDays: 24
+      - id: "class_led"
+        name: "Classroom LED Batten Light (20W)"
+        watt: 20
+        category: "Lighting"
+        defaultQty: 0
+        defaultHours: 7
+        defaultDays: 24
+      - id: "projector"
+        name: "Interactive Multimedia Projector & Screen"
+        watt: 350
+        category: "AV Equipment"
+        defaultQty: 0
+        defaultHours: 5
+        defaultDays: 24
+      - id: "pa_system"
+        name: "Public Address (PA) & Sound Amplifier System"
+        watt: 1000
+        category: "AV Equipment"
+        defaultQty: 0
+        defaultHours: 4
+        defaultDays: 30
+      - id: "computer_lab"
+        name: "Computer Training Lab Terminal"
+        watt: 180
+        category: "IT Equipment"
+        defaultQty: 0
+        defaultHours: 6
+        defaultDays: 24
+      - id: "lab_sterilizer"
+        name: "Diagnostic Autoclave / Laboratory Sterilizer"
+        watt: 2500
+        category: "Medical"
+        defaultQty: 0
+        defaultHours: 4
+        defaultDays: 26
+      - id: "clinic_xray"
+        name: "Diagnostic Dental / Medical Imaging Unit"
+        watt: 4000
+        category: "Medical"
+        defaultQty: 0
+        defaultHours: 3
+        defaultDays: 26
+      - id: "auditorium_ac"
+        name: "Auditorium / Prayer Hall Central Air Conditioner"
+        watt: 8000
+        category: "Cooling"
+        defaultQty: 0
+        defaultHours: 4
+        defaultDays: 30
+
+  - id: "construction"
+    name: "Construction & Temporary"
+    icon: "construction"
+    diversityFactorDefault: 0.70
+    description: "Civil infrastructure sites, high-rise building projects, and temporary utility setups."
+    appliances:
+      - id: "tower_crane"
+        name: "Electric Tower Crane / Hoist Winch (40 HP)"
+        watt: 30000
+        category: "Lifting"
+        defaultQty: 0
+        defaultHours: 8
+        defaultDays: 26
+      - id: "concrete_mixer"
+        name: "Site Concrete Batching Mixer (10 HP)"
+        watt: 7500
+        category: "Civil Works"
+        defaultQty: 0
+        defaultHours: 7
+        defaultDays: 26
+      - id: "site_welder"
+        name: "Heavy Construction Rebar Welding Machine"
+        watt: 10000
+        category: "Fabrication"
+        defaultQty: 0
+        defaultHours: 8
+        defaultDays: 26
+      - id: "bar_bending"
+        name: "Steel Rebar Cutting & Bending Machine (5 HP)"
+        watt: 3750
+        category: "Fabrication"
+        defaultQty: 0
+        defaultHours: 6
+        defaultDays: 26
+      - id: "site_floodlight"
+        name: "Night Work Metal Halide / LED Floodlight (400W)"
+        watt: 400
+        category: "Lighting"
+        defaultQty: 0
+        defaultHours: 11
+        defaultDays: 30
+      - id: "dewatering_pump"
+        name: "Submersible Dewatering Basement Pump (7.5 HP)"
+        watt: 5500
+        category: "Pumping"
+        defaultQty: 0
+        defaultHours: 10
+        defaultDays: 30
+      - id: "site_office_ac"
+        name: "Temporary Site Office Container AC (1.5 Ton)"
+        watt: 1800
+        category: "Site Camp"
+        defaultQty: 0
+        defaultHours: 10
+        defaultDays: 26
+
+  - id: "irrigation"
+    name: "Irrigation & Agriculture"
+    icon: "irrigation"
+    diversityFactorDefault: 0.85
+    description: "Deep tube-well irrigation, cold storages, fisheries, poultry, and rural agribusiness."
+    appliances:
+      - id: "deep_tubewell"
+        name: "Deep Tube-Well (DTW) Submersible Pump (25 HP)"
+        watt: 18500
+        category: "Pumping"
+        defaultQty: 0
+        defaultHours: 12
+        defaultDays: 30
+      - id: "shallow_tubewell"
+        name: "Shallow Tube-Well (STW) Centrifugal Pump (7.5 HP)"
+        watt: 5500
+        category: "Pumping"
+        defaultQty: 0
+        defaultHours: 10
+        defaultDays: 30
+      - id: "cold_storage_comp"
+        name: "Cold Storage Ammonia / Freon Compressor (40 HP)"
+        watt: 30000
+        category: "Refrigeration"
+        defaultQty: 0
+        defaultHours: 20
+        defaultDays: 30
+      - id: "rice_mill_motor"
+        name: "Automatic Rice Mill De-husker Motor (30 HP)"
+        watt: 22000
+        category: "Processing"
+        defaultQty: 0
+        defaultHours: 12
+        defaultDays: 26
+      - id: "poultry_vent"
+        name: "Poultry Farm Controlled Ventilation Fan (1.5 HP)"
+        watt: 1100
+        category: "Farming"
+        defaultQty: 0
+        defaultHours: 24
+        defaultDays: 30
+
+  - id: "ev"
+    name: "EV Charging Station"
+    icon: "ev"
+    diversityFactorDefault: 0.85
+    description: "Electric vehicle charging hubs, commercial fleet depots, and public DC fast-charging bays."
+    appliances:
+      - id: "dc_fast_charger_60"
+        name: "CCS2 / GBT Commercial DC Fast Charger (60 kW)"
+        watt: 60000
+        category: "EV Charger"
+        defaultQty: 0
+        defaultHours: 14
+        defaultDays: 30
+      - id: "dc_fast_charger_120"
+        name: "Ultra-Fast Dual Gun DC Charger (120 kW)"
+        watt: 120000
+        category: "EV Charger"
+        defaultQty: 0
+        defaultHours: 12
+        defaultDays: 30
+      - id: "ac_type2_charger"
+        name: "AC Commercial Dual-Socket Charger (22 kW)"
+        watt: 22000
+        category: "EV Charger"
+        defaultQty: 0
+        defaultHours: 10
+        defaultDays: 30
+      - id: "ev_canopy_lighting"
+        name: "Forecourt High-Lumen Canopy Lighting (200W)"
+        watt: 200
+        category: "Lighting"
+        defaultQty: 0
+        defaultHours: 12
+        defaultDays: 30
+      - id: "ev_lounge_ac"
+        name: "Customer Waiting Lounge Air Conditioning"
+        watt: 3500
+        category: "Lounge"
+        defaultQty: 0
+        defaultHours: 16
+        defaultDays: 30
+
+presets:
+  - id: "rmg_factory"
+    name: "125 kW RMG / Garments Factory"
+    category: "industrial"
+    badge: "Industrial Preset"
+    description: "Standard knitwear sewing & cutting floor with 3-phase motors, screw compressor, high-bay LEDs, and goods lift."
+    items:
+      - id: "ind_motor_med"
+        qty: 4
+      - id: "ind_motor_small"
+        qty: 6
+      - id: "air_compressor"
+        qty: 2
+      - id: "ind_highbay"
+        qty: 60
+      - id: "ind_exhaust"
+        qty: 12
+      - id: "cargo_lift"
+        qty: 1
+      - id: "ind_aux"
+        qty: 1
+
+  - id: "commercial_tower"
+    name: "350 kW 12-Story Commercial Tower"
+    category: "commercial"
+    badge: "Commercial Preset"
+    description: "Corporate office building with central VRF air conditioning, 2 high-speed passenger elevators, server room, and LED lighting."
+    items:
+      - id: "vrf_ac"
+        qty: 35
+      - id: "lift_above_10"
+        qty: 2
+      - id: "server_rack"
+        qty: 4
+      - id: "comm_led_panel"
+        qty: 350
+      - id: "workstation_pc"
+        qty: 120
+      - id: "water_pump_comm"
+        qty: 2
+      - id: "signboard_light"
+        qty: 2
+
+  - id: "residential_building"
+    name: "160 kW 10-Story Residential Complex"
+    category: "domestic"
+    badge: "Residential Preset"
+    description: "20-unit luxury apartment building with inverter ACs, refrigerators, water geysers, pumps, and lift."
+    items:
+      - id: "res_split_ac"
+        qty: 40
+      - id: "refrigerator_res"
+        qty: 20
+      - id: "water_geyser"
+        qty: 20
+      - id: "ceiling_fan"
+        qty: 80
+      - id: "tube_light_4ft"
+        qty: 120
+      - id: "led_light_bulb"
+        qty: 100
+      - id: "washing_machine"
+        qty: 20
+      - id: "water_pump_res"
+        qty: 2
+      - id: "socket_convenience"
+        qty: 40
+
+standardTransformers:
+  - 100
+  - 160
+  - 200
+  - 250
+  - 315
+  - 400
+  - 500
+  - 630
+  - 800
+  - 1000
+  - 1250
+  - 1500
+  - 2000
+  - 2500
+  - 3000
+
+standardBreakers:
+  - 160
+  - 250
+  - 400
+  - 630
+  - 800
+  - 1000
+  - 1250
+  - 1600
+  - 2000
+  - 2500
+  - 3200
+  - 4000
+  - 5000
+
+standardPfiRatings:
+  - 50
+  - 100
+  - 150
+  - 200
+  - 250
+  - 300
+  - 400
+  - 450
+  - 600
+  - 750
+  - 900
+  - 1050
+  - 1200
+  - 1500

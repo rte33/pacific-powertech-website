@@ -354,6 +354,59 @@ const ContactSchema = z.object({
   }),
 });
 
+const LoadCalculatorSchema = z.object({
+  meta: MetaSchema,
+  header: z.object({
+    badge: z.string(),
+    title: z.string(),
+    subtitle: z.string(),
+  }),
+  complianceNotice: z.object({
+    title: z.string(),
+    thresholdKw: z.number(),
+    textLt: z.string(),
+    textHt: z.string(),
+  }),
+  categories: z.array(
+    z.object({
+      id: z.string(),
+      name: z.string(),
+      icon: z.string(),
+      diversityFactorDefault: z.number(),
+      description: z.string(),
+      appliances: z.array(
+        z.object({
+          id: z.string(),
+          name: z.string(),
+          watt: z.number(),
+          category: z.string(),
+          defaultQty: z.number(),
+          defaultHours: z.number(),
+          defaultDays: z.number(),
+        })
+      ),
+    })
+  ),
+  presets: z.array(
+    z.object({
+      id: z.string(),
+      name: z.string(),
+      category: z.string(),
+      badge: z.string(),
+      description: z.string(),
+      items: z.array(
+        z.object({
+          id: z.string(),
+          qty: z.number(),
+        })
+      ),
+    })
+  ),
+  standardTransformers: z.array(z.number()),
+  standardBreakers: z.array(z.number()),
+  standardPfiRatings: z.array(z.number()),
+});
+
 const ProductSchema = z.object({
   meta: MetaSchema,
   product: z
@@ -458,6 +511,7 @@ if (clientsData && Array.isArray(clientsData.clients)) {
 validateFile('pages/home.yaml', HomeSchema);
 validateFile('pages/about.yaml', AboutSchema);
 validateFile('pages/contact.yaml', ContactSchema);
+validateFile('pages/load-calculator.yaml', LoadCalculatorSchema);
 
 // Validate products
 const productsDir = path.join(CONTENT_DIR, 'pages', 'products');

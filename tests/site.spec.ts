@@ -12,6 +12,7 @@ const ROUTES = [
   'products/lt-switchgear/',
   'products/pfi-systems/',
   'products/transformers/',
+  'load-calculator/',
   '404.html',
 ];
 
@@ -231,7 +232,7 @@ test.describe('Pacific Powertech Ltd. Comprehensive Test Suite', () => {
   });
 
   test.describe('Automated Accessibility (axe-core WCAG 2.2 AA)', () => {
-    const keyPages = ['', 'about/', 'products/transformers/', 'contact/'];
+    const keyPages = ['', 'about/', 'products/transformers/', 'contact/', 'load-calculator/'];
 
     for (const pagePath of keyPages) {
       const displayName = pagePath === '' ? '/' : pagePath;
@@ -254,6 +255,97 @@ test.describe('Pacific Powertech Ltd. Comprehensive Test Suite', () => {
         expect(seriousViolations).toEqual([]);
       });
     }
+  });
+
+  test.describe('Load Calculator Functional & Sizing Tests', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('load-calculator/');
+      await page.waitForLoadState('networkidle');
+    });
+
+    test('Verify consumer category tab switching updates the table and heading', async ({ page }) => {
+      const commTab = page.locator('button[data-category="commercial"]');
+      await commTab.click();
+      await expect(commTab).toHaveAttribute('aria-selected', 'true');
+      const heading = page.locator('#category-heading');
+      await expect(heading).toContainText('Commercial Building');
+
+      const domTab = page.locator('button[data-category="domestic"]');
+      await domTab.click();
+      await expect(domTab).toHaveAttribute('aria-selected', 'true');
+      await expect(heading).toContainText('Domestic / Residential');
+    });
+
+    test('Verify preset profile loads quantities and triggers real-time substation calculations', async ({ page }) => {
+      const rmgPresetBtn = page.locator('button[data-preset="rmg_factory"]');
+      await rmgPresetBtn.click();
+
+      // Verify connected load is computed and displayed
+      const connectedKw = page.locator('#summary-connected-kw');
+      await expect(connectedKw).not.toHaveText('0.00');
+
+      // Transformer and Breaker recommendation should be populated
+      const recTransformer = page.locator('#summary-rec-transformer');
+      await expect(recTransformer).toContainText('kVA');
+      await expect(recTransformer).not.toHaveText('-- kVA');
+
+      const recBreaker = page.locator('#summary-rec-breaker');
+      await expect(recBreaker).toContainText('A');
+      await expect(recBreaker).not.toHaveText('-- A');
+
+      // Verify mandatory substation alert is displayed for loads > 50 kW
+      const alert = page.locator('#sanction-alert');
+      await expect(alert).toContainText('Mandatory 11 kV Substation Required');
+    });
+
+    test('Verify manual quantity input reactively updates calculations', async ({ page }) => {
+      // Find the first quantity input in the industrial table
+      const firstQty = page.locator('.input-qty').first();
+      await firstQty.fill('10');
+      await firstQty.dispatchEvent('input');
+
+      const connectedKw = page.locator('#summary-connected-kw');
+      await expect(connectedKw).not.toHaveText('0.00');
+
+      const recTransformer = page.locator('#summary-rec-transformer');
+      await expect(recTransformer).toContainText('kVA');
+    });
+
+    test('Verify Add Custom Equipment adds a new row and Delete removes it', async ({ page }) => {
+      const addBtn = page.locator('#btn-add-custom-row');
+      await addBtn.click();
+
+      const customInput = page.locator('.input-name');
+      await expect(customInput).toBeVisible();
+
+      // Delete custom row
+      const delBtn = page.locator('.btn-del-row').first();
+      await delBtn.click();
+      await expect(customInput).not.toBeVisible();
+    });
+
+    test('Verify Reset All button resets calculations to zero', async ({ page }) => {
+      // First populate a preset
+      await page.locator('button[data-preset="rmg_factory"]').click();
+      await expect(page.locator('#summary-connected-kw')).not.toHaveText('0.00');
+
+      // Click Reset All
+      await page.locator('#btn-reset-all').click();
+      await expect(page.locator('#summary-connected-kw')).toHaveText('0.00');
+      await expect(page.locator('#summary-rec-transformer')).toHaveText('-- kVA');
+      await expect(page.locator('#summary-rec-breaker')).toHaveText('-- A');
+    });
+
+    test('Verify 320px viewport has zero page-level horizontal overflow', async ({ page }) => {
+      await page.setViewportSize({ width: 320, height: 640 });
+      await page.goto('load-calculator/');
+      await page.waitForLoadState('networkidle');
+
+      const hasHorizontalScroll = await page.evaluate(() => {
+        return document.documentElement.scrollWidth > document.documentElement.clientWidth;
+      });
+      expect(hasHorizontalScroll).toBe(false);
+    });
   });
 
 });
