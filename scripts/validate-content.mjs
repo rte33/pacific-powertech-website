@@ -456,6 +456,85 @@ const ProductSchema = z.object({
     .optional(),
 });
 
+const RenewableEnergySchema = z.object({
+  meta: MetaSchema,
+  header: z.object({
+    badge: z.string(),
+    title: z.string(),
+    subtitle: z.string(),
+    heroImage: z.string(),
+    stats: z.array(
+      z.object({
+        value: z.string(),
+        label: z.string(),
+        subtext: z.string(),
+      })
+    ),
+  }),
+  solutions: z.object({
+    title: z.string(),
+    subtitle: z.string(),
+    items: z.array(
+      z.object({
+        title: z.string(),
+        badge: z.string(),
+        image: z.string(),
+        summary: z.string(),
+        highlights: z.array(z.string()),
+      })
+    ),
+  }),
+  advantages: z.object({
+    title: z.string(),
+    subtitle: z.string(),
+    items: z.array(
+      z.object({
+        icon: z.string(),
+        title: z.string(),
+        description: z.string(),
+      })
+    ),
+  }),
+  workflow: z.object({
+    title: z.string(),
+    subtitle: z.string(),
+    steps: z.array(
+      z.object({
+        number: z.string(),
+        title: z.string(),
+        description: z.string(),
+      })
+    ),
+  }),
+  gallery: z.object({
+    title: z.string(),
+    subtitle: z.string(),
+    images: z.array(
+      z.object({
+        image: z.string(),
+        title: z.string(),
+        category: z.string(),
+      })
+    ),
+  }),
+  faqs: z
+    .array(
+      z.object({
+        question: z.string(),
+        answer: z.string(),
+      })
+    )
+    .optional(),
+  cta: z.object({
+    title: z.string(),
+    description: z.string(),
+    buttonText: z.string(),
+    inquiryUrl: z.string(),
+    phone: z.string(),
+    email: z.string(),
+  }),
+});
+
 function validateFile(relPath, schema) {
   const fullPath = path.join(CONTENT_DIR, relPath);
   if (!fs.existsSync(fullPath)) {
@@ -525,6 +604,7 @@ validateFile('pages/home.yaml', HomeSchema);
 validateFile('pages/about.yaml', AboutSchema);
 validateFile('pages/contact.yaml', ContactSchema);
 validateFile('pages/load-calculator.yaml', LoadCalculatorSchema);
+validateFile('pages/renewable-energy.yaml', RenewableEnergySchema);
 
 // Validate products
 const productsDir = path.join(CONTENT_DIR, 'pages', 'products');

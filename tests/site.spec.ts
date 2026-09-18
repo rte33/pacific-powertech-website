@@ -12,6 +12,7 @@ const ROUTES = [
   'products/lt-switchgear/',
   'products/pfi-systems/',
   'products/transformers/',
+  'renewable-energy/',
   'load-calculator/',
   '404.html',
 ];
@@ -232,7 +233,7 @@ test.describe('Pacific Powertech Ltd. Comprehensive Test Suite', () => {
   });
 
   test.describe('Automated Accessibility (axe-core WCAG 2.2 AA)', () => {
-    const keyPages = ['', 'about/', 'products/transformers/', 'contact/', 'load-calculator/'];
+    const keyPages = ['', 'about/', 'renewable-energy/', 'products/transformers/', 'contact/', 'load-calculator/'];
 
     for (const pagePath of keyPages) {
       const displayName = pagePath === '' ? '/' : pagePath;
@@ -345,6 +346,26 @@ test.describe('Pacific Powertech Ltd. Comprehensive Test Suite', () => {
         return document.documentElement.scrollWidth > document.documentElement.clientWidth;
       });
       expect(hasHorizontalScroll).toBe(false);
+    });
+  });
+
+  test.describe('Renewable Energy Page Verification', () => {
+    test('Verify Renewable Energy page renders hero, solutions, gallery, and FAQs', async ({ page }) => {
+      await page.goto('renewable-energy/');
+      await page.waitForLoadState('networkidle');
+
+      await expect(page).toHaveTitle(/Renewable Energy|Solar/i);
+      const heading = page.locator('h1');
+      await expect(heading).toContainText(/Rooftop Solar PV|Renewable/i);
+
+      const solutionArticles = page.locator('article');
+      expect(await solutionArticles.count()).toBeGreaterThanOrEqual(4);
+
+      const galleryItems = page.locator('section:has-text("Field Installations") img');
+      expect(await galleryItems.count()).toBeGreaterThanOrEqual(6);
+
+      const ctaLink = page.locator('main a[href*="contact"]').first();
+      await expect(ctaLink).toBeVisible();
     });
   });
 

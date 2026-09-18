@@ -52,6 +52,10 @@ export function getLoadCalculatorPage() {
   return loadYaml('pages/load-calculator.yaml');
 }
 
+export function getRenewableEnergyPage() {
+  return loadYaml('pages/renewable-energy.yaml');
+}
+
 /**
  * Normalizes an internal path to account for Astro's base URL (e.g. for GitHub Pages subpath deployment)
  */
