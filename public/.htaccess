@@ -17,7 +17,7 @@ ErrorDocument 404 /404.html
 
   # Ensure directory URLs have a trailing slash if index.html exists
   RewriteCond %{REQUEST_FILENAME} -d
-  RewriteRule ^(.+[^/])$ // [R=301,L]
+  RewriteRule ^(.+[^/])$ /$1/ [R=301,L]
 </IfModule>
 
 # 3. Security Headers
