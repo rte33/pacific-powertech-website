@@ -28,13 +28,13 @@ const normalizedPath = basePath && currentPath.startsWith(basePath)
     <div class="flex h-20 items-center justify-between gap-2 min-[360px]:gap-5 sm:h-24">
       <a
         href={formatUrl('/')}
-        class="min-w-0 shrink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAB218]"
+        class="shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAB218]"
         aria-label="Pacific Powertech home"
       >
         <BrandLockup compact />
       </a>
 
-      <nav class="hidden items-center gap-0.5 lg:flex" aria-label="Main Navigation">
+      <nav class="hidden items-center gap-0.5 lg:flex xl:gap-1" aria-label="Main Navigation">
         {navItems.map((item: any) => {
           const isActive = normalizedPath === item.path || (item.path !== '/' && normalizedPath.startsWith(item.path));
           if (item.children?.length) {
@@ -43,7 +43,7 @@ const normalizedPath = basePath && currentPath.startsWith(basePath)
                 <a
                   href={formatUrl(item.path)}
                   class:list={[
-                    'inline-flex min-h-11 items-center gap-1.5 border-b-2 px-3 py-2 text-sm font-semibold transition-colors',
+                    'inline-flex min-h-11 items-center gap-1 whitespace-nowrap border-b-2 px-2 py-2 text-[13px] font-semibold transition-colors xl:gap-1.5 xl:px-2.5 xl:text-sm 2xl:px-3',
                     isActive ? 'border-[#FAB218] text-white' : 'border-transparent text-white/80 hover:border-white/40 hover:text-white',
                   ]}
                   aria-haspopup="true"
@@ -73,7 +73,7 @@ const normalizedPath = basePath && currentPath.startsWith(basePath)
             <a
               href={formatUrl(item.path)}
               class:list={[
-                'inline-flex min-h-11 items-center border-b-2 px-3 py-2 text-sm font-semibold transition-colors',
+                'inline-flex min-h-11 items-center whitespace-nowrap border-b-2 px-2 py-2 text-[13px] font-semibold transition-colors xl:px-2.5 xl:text-sm 2xl:px-3',
                 isActive ? 'border-[#FAB218] text-white' : 'border-transparent text-white/80 hover:border-white/40 hover:text-white',
               ]}
               aria-current={isActive ? 'page' : undefined}
@@ -84,8 +84,8 @@ const normalizedPath = basePath && currentPath.startsWith(basePath)
         })}
       </nav>
 
-      <div class="hidden shrink-0 items-center sm:flex">
-        <a href={formatUrl('/contact')} class="inline-flex min-h-11 items-center gap-3 bg-[#0C53A4] px-5 text-sm font-bold text-white transition-colors hover:bg-[#084584] focus-visible:ring-2 focus-visible:ring-[#FAB218]">
+      <div class="hidden shrink-0 items-center sm:flex lg:hidden xl:flex">
+        <a href={formatUrl('/contact')} class="inline-flex min-h-11 items-center gap-2 whitespace-nowrap bg-[#0C53A4] px-3.5 text-xs font-bold text-white transition-colors hover:bg-[#084584] focus-visible:ring-2 focus-visible:ring-[#FAB218] 2xl:gap-3 2xl:px-5 2xl:text-sm">
           Request a Quote <span aria-hidden="true">→</span>
         </a>
       </div>
