@@ -10,6 +10,12 @@ ErrorDocument 404 /404.html
   RewriteEngine On
   RewriteBase /
 
+  # Exclude ACME and Sectigo / Comodo PKI Domain Control Validation (DCV) from HTTPS redirect
+  RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/
+  RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/
+  RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/
+  RewriteCond %{REQUEST_URI} !^/\.well-known/
+
   # Redirect HTTP to HTTPS
   RewriteCond %{HTTPS} off
   RewriteCond %{HTTP:X-Forwarded-Proto} !https
